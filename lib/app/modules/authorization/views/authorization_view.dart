@@ -14,6 +14,8 @@ class AuthorizationView extends GetView<AuthorizationController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: false,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
@@ -86,7 +88,7 @@ class AuthorizationView extends GetView<AuthorizationController> {
                       message: "Register",
                       function: () async {
                         HapticFeedback.lightImpact();
-                        Get.toNamed(Routes.TEST);
+                        Get.toNamed(Routes.SINGUP);
                       },
                       color: Colors.white,
                     ),

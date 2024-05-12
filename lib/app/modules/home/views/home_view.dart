@@ -1,8 +1,15 @@
-import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:customer_bengkelly/app/componen/color.dart';
+import 'package:customer_bengkelly/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+
+import '../../history/views/history_view.dart';
+import '../../news/views/news_view.dart';
+import '../../profile/views/profile_view.dart';
+import 'page_home.dart';
+
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -19,38 +26,101 @@ class _HomeViewState extends State<HomeView> {
       _selectedIndex = index;
     });
   }
-
+  final List<Widget> _pages = [
+    HomePage(),
+    NewsView(),
+    HistoryView(),
+    ProfileView(),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: false,
       appBar: AppBar(
-        title: Text("Bottom Navigation Example"),
+        title: Text(""),
+        toolbarHeight: 0,
+        automaticallyImplyLeading: false,
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
+          systemNavigationBarColor: MyColors.appPrimaryColor,
+        ),
       ),
-      body: Center(
-        child: Text('Selected Index: $_selectedIndex'),
-      ),
+      body: _pages[_selectedIndex],
       bottomNavigationBar: BottomAppBar(
+        height: 100,
         color: MyColors.appPrimaryColor,
         shape: CircularNotchedRectangle(),
-        notchMargin: 6.0,
+        notchMargin: 2.0,
         child: Row(
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            IconButton(icon: SvgPicture.asset('assets/icons/octicon_home-16.svg'), onPressed: () => _onItemTapped(0)),
-            IconButton(icon: SvgPicture.asset('assets/icons/mingcute_news-line.svg'), onPressed: () => _onItemTapped(1)),
-            SizedBox(width: 48),  // Spacer for the floating action button
-            IconButton(icon: SvgPicture.asset('assets/icons/icon-park-outline_history-query.svg'), onPressed: () => _onItemTapped(3)),
-            IconButton(icon: SvgPicture.asset('assets/icons/gridicons_user.svg'), onPressed: () => _onItemTapped(4)),
+            _buildIconButton('assets/icons/octicon_home-16.svg', 'Home', 0),
+            SizedBox(width: 10), // S
+            _buildIconButton('assets/icons/mingcute_news-line.svg', 'News', 1),
+            SizedBox(width: 90), // Space for FAB
+            _buildIconButton('assets/icons/icon-park-outline_history-query.svg', 'History', 2),
+            SizedBox(width: 10), // S
+            _buildIconButton('assets/icons/gridicons_user.svg', 'Profile', 3),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: MyColors.redEmergencyMenu,
-        onPressed: () => _onItemTapped(2),
-        child: SvgPicture.asset('assets/icons/booking.svg'),
+      floatingActionButton: SizedBox(
+        width: 90, // Lebar FloatingActionButton
+        height: 90, // Tinggi FloatingActionButton
+        child:
+        FloatingActionButton(
+          onPressed: () {
+            Get.toNamed(Routes.BOOKING);
+          },
+          backgroundColor: Colors.white,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(706.0)),
+          ),
+          child:SizedBox(
+            height: 130,
+            child:
+          SvgPicture.asset('assets/icons/booking.svg'),),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    );
+  }
+
+  Widget _buildIconButton(String iconPath,String label, int index, ) {
+    bool isSelected = _selectedIndex == index;
+    return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IconButton(
+            icon: isSelected ? AnimatedContainer(
+              duration: Duration(milliseconds: 300), // Durasi animasi
+              curve: Curves.bounceIn,
+              padding: EdgeInsets.all(10),
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: MyColors.select,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: SvgPicture.asset(
+                iconPath,
+                color: MyColors.appPrimaryColor,
+                width: 30, // Adjust icon size
+                height: 30,
+              ),
+            ) : SvgPicture.asset(
+              iconPath,
+              color: Colors.white54,
+              width: 24, // Regular icon size
+              height: 24,
+            ),
+            onPressed: () => _onItemTapped(index),
+          ),
+          Text(label, style: TextStyle(color: Colors.white, fontSize: 12))
+        ]
     );
   }
 }

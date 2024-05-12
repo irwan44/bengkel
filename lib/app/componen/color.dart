@@ -12,6 +12,7 @@ class AppColors {
   static const Color borderColor = Colors.white54;
   static const Color gridLinesColor = Color(0x11FFFFFF);
   static const Color shammerColor = Color(0xFFBACDDB);
+  static const Color select = Color(0xFFD7E1FE);
 
   static const Color contentColorBlack = Colors.black;
   static const Color contentColorWhite = Colors.white;
@@ -48,6 +49,13 @@ class MyColors{
   static Color listChatColor = HexColor("2754C51A");
   static Color greyButton = HexColor("8391A1");
   static Color greyLanguage = HexColor('3C3C3C45');
+  static Color select = HexColor('D7E1FE');
+  static Color slider = HexColor('1010101A');
+  static Color slider2 = HexColor('F7F8F9');
+  static Color tabbar = HexColor('1F232F');
+  static Color card = HexColor('D7E1FE');
+  static Color bg = HexColor('F7F8F9');
+  static Color green = HexColor('5DCB6A');
 }
 
 class HexColor extends Color {
