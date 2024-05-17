@@ -78,88 +78,68 @@ class _TrandingTopikState extends State<TrandingTopik> {
         itemBuilder: (BuildContext context, int index) {
           Post post = posts[index];
           return InkWell(
-              onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DetailsNews(
-                  data: post,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailsNews(
+                    data: post,
+                  ),
                 ),
+              );
+            },
+            child: Card(
+              elevation: 0,
+              color: Colors.transparent,
+              surfaceTintColor: Theme.of(context).colorScheme.surface,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
               ),
-            );
-          },
-          child:
-            Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                height: 210,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.1),
-                      spreadRadius: 5,
-                      blurRadius: 10,
-                      offset: Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child : Column(
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.7,
-                      height: MediaQuery.of(context).size.width * 0.5 * 0.5,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                        image: DecorationImage(
-                          image: NetworkImage(post.imageUrl??""), // Gunakan URL gambar dari data post
-                          fit: BoxFit.cover,
-                        ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                      child: Image.network(
+                        post.imageUrl ?? "",
+                        fit: BoxFit.cover,
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Container(
-                      margin: EdgeInsets.only(right: 10, left: 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
+                  ),
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                         Container(
                           padding: EdgeInsets.all(5),
                           decoration: BoxDecoration(
                             color: Colors.orange,
                             borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.1),
-                                spreadRadius: 5,
-                                blurRadius: 10,
-                                offset: Offset(0, 3),
-                              ),
-                            ],
                           ),
-                          child: Text(post.articleSection?.join(', ') ?? '', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),),
-                           SizedBox(height: 8,),
+                          child: Text(
+                            post.articleSection?.join(', ') ?? '',
+                            style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        SizedBox(height: 8),
                         Text(
-                          post.title ?? '', // Gunakan judul dari data post
-                          textAlign: TextAlign.start,
+                          post.title ?? '',
                           style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                         ),
-                      ],),)
-
-                  ],),
-
+                      ],
+                    ),
+                  ),
+                ],
               ),
-
-            ],
             ),
           );
         },
       ),
+
     );
   }
   Widget _buildShimmerItem() {

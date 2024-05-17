@@ -1,10 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:customer_bengkelly/app/componen/color.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../modules/authorization/componen/common.dart';
+import '../modules/authorization/controllers/authorization_controller.dart';
 
 class CustomTextFormField extends StatefulWidget {
   final String hinttext;
@@ -22,19 +26,25 @@ class CustomTextFormField extends StatefulWidget {
 }
 
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
+  final controller = Get.find<AuthorizationController>();
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return Container(
+        padding: const EdgeInsets.all(3.0),
+    decoration: BoxDecoration(
+    border: Border.all(color: Colors.grey), // Change to your primary color
+    borderRadius: BorderRadius.circular(10),
+    ),
+    child:
+      TextFormField(
       controller: widget.controller,
       obscureText: widget.obsecuretext,
       decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(18),
-          // border: InputBorder.none,
-          border: OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.black),
-              borderRadius: BorderRadius.circular(12)),
-          hintText: widget.hinttext,
-          hintStyle: Common().hinttext),
+          border: InputBorder.none,
+          hintStyle: TextStyle(color: Colors.grey),
+          hintText: widget.hinttext),
+      ),
     );
   }
 }

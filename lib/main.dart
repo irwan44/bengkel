@@ -1,15 +1,25 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:get/get.dart';
-
+import 'package:get_storage/get_storage.dart';
 import 'app/componen/color.dart';
+import 'app/data/endpoint.dart';
+import 'app/data/publik.dart';
 import 'app/routes/app_pages.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:dio/dio.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.global = MyHttpOverrides();
+  startPollingNotifications(); // Mulai polling notifikasi
+  await GetStorage.init('token-mekanik');
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.dark,
@@ -19,11 +29,49 @@ void main() {
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight
   ]);
-  runApp(
-    GetMaterialApp(
+
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
+  final AndroidInitializationSettings initializationSettingsAndroid =
+  AndroidInitializationSettings('@mipmap/ic_launcher');
+  final InitializationSettings initializationSettings =
+  InitializationSettings(android: initializationSettingsAndroid);
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  await API();
+  startPollingNotifications();
+
+  runApp(const MyApp());
+}
+void startPollingNotifications() {
+  const pollingInterval = Duration(minutes: 1);
+
+  Timer.periodic(pollingInterval, (timer) async {
+    // await API.showBookingNotifications();
+  });
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Application",
-      initialRoute: AppPages.INITIAL,
+      title: "Mekanik Bengkelly",
+      initialRoute: Publics.controller.getToken.value.isEmpty
+          ? AppPages.INITIAL
+          : Routes.HOME,
       getPages: AppPages.routes,
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
@@ -32,6 +80,6 @@ void main() {
           iconTheme: IconThemeData(color: AppColors.contentColorBlack),
         ),
       ),
-    ),
-  );
+    );
+  }
 }

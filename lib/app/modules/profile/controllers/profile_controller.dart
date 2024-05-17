@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
 
+import '../../../data/localstorage.dart';
+import '../../../routes/app_pages.dart';
+
 class ProfileController extends GetxController {
   //TODO: Implement ProfileController
 
@@ -20,4 +23,8 @@ class ProfileController extends GetxController {
   }
 
   void increment() => count.value++;
+  void logoutakun() {
+    LocalStorages.deleteToken();
+    Get.offAllNamed(Routes.SINGIN);
+  }
 }

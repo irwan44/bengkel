@@ -30,7 +30,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  WillPopScope(
+        onWillPop: () async {
+      SystemNavigator.pop();
+      return true;
+    },
+    child:
+      Scaffold(
       extendBodyBehindAppBar: false,
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -112,6 +118,7 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
+      ),
       ),
     );
   }

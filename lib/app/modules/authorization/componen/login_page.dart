@@ -4,11 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../../componen/color.dart';
 import '../../../componen/custom_widget.dart';
+import '../../../data/endpoint.dart';
 import '../../../routes/app_pages.dart';
+import '../controllers/authorization_controller.dart';
 import 'common.dart';
 import 'fade_animationtest.dart';
-import 'forget_password.dart';
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -18,22 +18,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool obscureText = true;
-  late TextEditingController _passwordController;
-  late TextEditingController _emailController;
-
-  @override
-  void initState() {
-    super.initState();
-    _passwordController = TextEditingController();
-    _emailController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _passwordController.dispose();
-    _emailController.dispose();
-    super.dispose();
-  }
+  final controller = Get.find<AuthorizationController>();
 
   void togglePasswordVisibility() {
     setState(() {
@@ -64,10 +49,6 @@ class _LoginPageState extends State<LoginPage> {
         child: Container(
           height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/bg_welcome.png"),
-              fit: BoxFit.cover,
-            ),
           ),
           child: SingleChildScrollView(
             child: Container(
@@ -106,6 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                         ],
                       ),
                     ),
+
                     Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Form(
@@ -117,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                                 hinttext: 'Masukkan email Anda',
                                 obsecuretext: false,
                                 controller:
-                                    _emailController, // Tambahkan controller untuk TextFormField
+                                    controller.EmailController, // Tambahkan controller untuk TextFormField
                               ),
                             ),
                             const SizedBox(
@@ -126,12 +108,12 @@ class _LoginPageState extends State<LoginPage> {
                             FadeInAnimation(
                               delay: 2.2,
                               child: TextFormField(
-                                controller: _passwordController,
+                                controller: controller.PasswordController,
                                 obscureText: obscureText,
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.all(18),
                                   hintText: "Masukkan kata sandi Anda",
-                                  hintStyle: Common().hinttext,
+                                  hintStyle: TextStyle(color: Colors.grey),
                                   border: OutlineInputBorder(
                                     borderSide:
                                         const BorderSide(color: Colors.black),
@@ -170,10 +152,38 @@ class _LoginPageState extends State<LoginPage> {
                                 message: "Masuk",
                                 function: () async {
                                   HapticFeedback.lightImpact();
-                                  Get.toNamed(Routes.HOME);
+                                  if (controller.EmailController.text.isNotEmpty && controller.PasswordController.text.isNotEmpty) {
+                                    try {
+                                      String? token = await API.login(
+                                        email: controller.EmailController.text,
+                                        password: controller.PasswordController.text,
+                                      );
+
+                                      if (token != null) {
+                                        Get.offAllNamed(Routes.HOME);
+                                      } else {
+                                        Get.snackbar('Error', 'Terjadi kesalahan saat login',
+                                            backgroundColor: Colors.redAccent,
+                                            colorText: Colors.white
+                                        );
+                                      }
+                                    } catch (e) {
+                                      print('Error during login: $e');
+                                      Get.snackbar('Gagal Login', 'Terjadi kesalahan saat login',
+                                          backgroundColor: Colors.redAccent,
+                                          colorText: Colors.white
+                                      );
+                                    }
+                                  } else {
+                                    Get.snackbar('Gagal Login', 'Username dan Password harus diisi',
+                                        backgroundColor: Colors.redAccent,
+                                        colorText: Colors.white
+                                    );
+                                  }
                                 },
                                 color: MyColors.appPrimaryColor,
                               ),
+
                             ),
                           ],
                         ),

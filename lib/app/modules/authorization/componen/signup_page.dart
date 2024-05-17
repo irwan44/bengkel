@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../../../componen/custom_widget.dart';
 import '../../../routes/app_pages.dart';
+import '../controllers/authorization_controller.dart';
 import 'common.dart';
 import 'fade_animationtest.dart';
 import 'login_page.dart';
@@ -17,26 +18,16 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   bool obscureText = true;
-  late TextEditingController _passwordController;
-  late TextEditingController _emailController;
-
-  @override
-  void initState() {
-    super.initState();
-    _passwordController = TextEditingController();
-    _emailController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _passwordController.dispose();
-    _emailController.dispose();
-    super.dispose();
-  }
+  bool obscureText2 = true;
+  final controller = Get.find<AuthorizationController>();
 
   void togglePasswordVisibility() {
     setState(() {
       obscureText = !obscureText;
+    });
+  }  void togglePasswordVisibility2() {
+    setState(() {
+      obscureText2 = !obscureText2;
     });
   }
 
@@ -76,21 +67,23 @@ class _SignupPageState extends State<SignupPage> {
                   child: Form(
                     child: Column(
                       children: [
-                        const FadeInAnimation(
+                        FadeInAnimation(
                           delay: 1.5,
                           child: CustomTextFormField(
                             hinttext: 'Username',
                             obsecuretext: false,
+                            controller: controller.usernameController,
                           ),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                        const FadeInAnimation(
+                        FadeInAnimation(
                           delay: 1.8,
                           child: CustomTextFormField(
                             hinttext: 'Email',
                             obsecuretext: false,
+                            controller: controller.emailController,
                           ),
                         ),
                         const SizedBox(
@@ -98,18 +91,22 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         FadeInAnimation(
                           delay: 2.2,
-                          child: TextFormField(
-                            controller: _passwordController,
+                          child:
+                          Container(
+                            padding: const EdgeInsets.all(3.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey), // Change to your primary color
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child:
+                          TextFormField(
+                            controller: controller.passwordController,
                             obscureText: obscureText,
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.all(18),
                               hintText: "Password",
                               hintStyle: Common().hinttext,
-                              border: OutlineInputBorder(
-                                borderSide:
-                                const BorderSide(color: Colors.black),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
+                              border: InputBorder.none,
                               suffixIcon: IconButton(
                                 onPressed: togglePasswordVisibility,
                                 icon: Icon(
@@ -121,33 +118,39 @@ class _SignupPageState extends State<SignupPage> {
                               ),
                             ),
                           ),
+                          ),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
                         FadeInAnimation(
                           delay: 2.2,
-                          child: TextFormField(
-                            controller: _passwordController,
-                            obscureText: obscureText,
+                          child:
+                          Container(
+                            padding: const EdgeInsets.all(3.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey), // Change to your primary color
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child:
+                          TextFormField(
+                            controller: controller.confirmPasswordController,
+                            obscureText: obscureText2,
                             decoration: InputDecoration(
                               contentPadding: const EdgeInsets.all(18),
                               hintText: "Confirm Password",
                               hintStyle: Common().hinttext,
-                              border: OutlineInputBorder(
-                                borderSide:
-                                const BorderSide(color: Colors.black),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
+                              border: InputBorder.none,
                               suffixIcon: IconButton(
-                                onPressed: togglePasswordVisibility,
+                                onPressed: togglePasswordVisibility2,
                                 icon: Icon(
-                                  obscureText
+                                  obscureText2
                                       ? Icons.visibility_off
                                       : Icons.visibility,
                                   color: Colors.grey,
                                 ),
                               ),
+                            ),
                             ),
                           ),
                         ),
