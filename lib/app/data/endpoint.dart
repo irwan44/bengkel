@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ffi';
-import 'dart:ui';import 'package:dio/dio.dart';
+import 'dart:ui';import 'package:customer_bengkelly/app/data/publik.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -69,8 +70,8 @@ class API {
           } else {
             String token = responseData['token'];
             LocalStorages.setToken(token); // Simpan token
-            Get.snackbar('Selamat Datang', 'Menkanik Bengkelly',
-                backgroundColor: MyColors.appPrimaryColor,
+            Get.snackbar('Selamat Datang', 'Pelanggan Bengkelly',
+                backgroundColor:Colors.green,
                 colorText: Colors.white
             );
             Get.offAllNamed(Routes.HOME);
@@ -143,7 +144,7 @@ class API {
         Get.snackbar(
           'Hore',
           'Registrasi Akun Anda Berhasil!',
-          backgroundColor: MyColors.appPrimaryColor,
+          backgroundColor: Colors.green,
           colorText: Colors.white,
         );
       } else {

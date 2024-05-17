@@ -37,6 +37,7 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       extendBodyBehindAppBar: false,
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         title: Text(""),
         toolbarHeight: 0,
         automaticallyImplyLeading: false,
