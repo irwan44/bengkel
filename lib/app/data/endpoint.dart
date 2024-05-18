@@ -1,22 +1,16 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:ui';import 'package:customer_bengkelly/app/data/publik.dart';
-import 'package:customer_bengkelly/app/modules/profile/componen/pilih_kendaraan.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
-import '../componen/color.dart';
-import '../modules/news/componen/todaydeals.dart';
 import '../routes/app_pages.dart';
 import 'data_endpoint/customkendaraan.dart';
+import 'data_endpoint/history.dart';
 import 'data_endpoint/kategorikendaraan.dart';
-import 'data_endpoint/login.dart';
 import 'data_endpoint/merekkendaraan.dart';
 import 'data_endpoint/news.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'data_endpoint/profile.dart';
 import 'data_endpoint/register.dart';
 import 'data_endpoint/tipekendaraan.dart';
@@ -347,6 +341,39 @@ class API {
       throw e;
     }
   }
+  //Beda
+  static Future<HistoryBooking> HistoryBookingID() async {
+    try {
+      final token = Publics.controller.getToken.value ?? '';
+      print('Token: $token');
+
+      var response = await Dio().get(
+        _GetHistory,
+        options: Options(
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer $token",
+          },
+        ),
+      );
+
+      print('Response: ${response.data}');
+
+      final obj = HistoryBooking.fromJson(response.data);
+
+      if (obj.message == 'Invalid token: Expired') {
+        Get.offAllNamed(Routes.SINGIN);
+        Get.snackbar(
+          obj.message.toString(),
+          obj.message.toString(),
+        );
+      }
+      return obj;
+    } catch (e) {
+      print('Error: $e');
+      throw e;
+    }
+  } //Beda
   //Beda
   static Future<List<Post>> fetchPostsFromSource({
     required String url,
