@@ -1,17 +1,17 @@
 class CustomerKendaraan {
   bool? status;
   String? message;
-  List<Data>? data;
+  List<DataKendaraan>? datakendaraan;
 
-  CustomerKendaraan({this.status, this.message, this.data});
+  CustomerKendaraan({this.status, this.message, this.datakendaraan});
 
   CustomerKendaraan.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     if (json['data'] != null) {
-      data = <Data>[];
+      datakendaraan = <DataKendaraan>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        datakendaraan!.add(new DataKendaraan.fromJson(v));
       });
     }
   }
@@ -20,14 +20,14 @@ class CustomerKendaraan {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
     data['message'] = this.message;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    if (this.datakendaraan != null) {
+      data['data'] = this.datakendaraan!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Data {
+class DataKendaraan {
   int? id;
   String? kode;
   String? kodePelanggan;
@@ -39,20 +39,21 @@ class Data {
   String? transmisi;
   String? noRangka;
   String? noMesin;
-  Null? modelKaroseri;
+  String? modelKaroseri;
   String? drivingMode;
-  Null? power;
+  String? power;
   String? kategoriKendaraan;
-  Null? jenisKontrak;
+  String? jenisKontrak;
   int? deleted;
   String? createdBy;
   String? createdAt;
-  Null? updatedAt;
+  String? updatedAt;
+  String? picIdPelanggan;
   int? idCustomer;
-  Merks? merks;
-  List<Tipes>? tipes;
+  MerksKendaraan? merks;
+  List<TipeKendaraanCustommer>? tipes;
 
-  Data(
+  DataKendaraan(
       {this.id,
         this.kode,
         this.kodePelanggan,
@@ -73,11 +74,12 @@ class Data {
         this.createdBy,
         this.createdAt,
         this.updatedAt,
+        this.picIdPelanggan,
         this.idCustomer,
         this.merks,
         this.tipes});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  DataKendaraan.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     kode = json['kode'];
     kodePelanggan = json['kode_pelanggan'];
@@ -98,12 +100,13 @@ class Data {
     createdBy = json['created_by'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    picIdPelanggan = json['pic_id_pelanggan'];
     idCustomer = json['id_customer'];
-    merks = json['merks'] != null ? new Merks.fromJson(json['merks']) : null;
+    merks = json['merks'] != null ? new MerksKendaraan.fromJson(json['merks']) : null;
     if (json['tipes'] != null) {
-      tipes = <Tipes>[];
+      tipes = <TipeKendaraanCustommer>[];
       json['tipes'].forEach((v) {
-        tipes!.add(new Tipes.fromJson(v));
+        tipes!.add(new TipeKendaraanCustommer.fromJson(v));
       });
     }
   }
@@ -130,6 +133,7 @@ class Data {
     data['created_by'] = this.createdBy;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
+    data['pic_id_pelanggan'] = this.picIdPelanggan;
     data['id_customer'] = this.idCustomer;
     if (this.merks != null) {
       data['merks'] = this.merks!.toJson();
@@ -141,13 +145,13 @@ class Data {
   }
 }
 
-class Merks {
+class MerksKendaraan {
   int? id;
   String? namaMerk;
 
-  Merks({this.id, this.namaMerk});
+  MerksKendaraan({this.id, this.namaMerk});
 
-  Merks.fromJson(Map<String, dynamic> json) {
+  MerksKendaraan.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     namaMerk = json['nama_merk'];
   }
@@ -160,13 +164,13 @@ class Merks {
   }
 }
 
-class Tipes {
+class TipeKendaraanCustommer {
   int? id;
   String? namaTipe;
 
-  Tipes({this.id, this.namaTipe});
+  TipeKendaraanCustommer({this.id, this.namaTipe});
 
-  Tipes.fromJson(Map<String, dynamic> json) {
+  TipeKendaraanCustommer.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     namaTipe = json['nama_tipe'];
   }

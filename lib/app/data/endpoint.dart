@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ffi';
 import 'dart:ui';import 'package:customer_bengkelly/app/data/publik.dart';
+import 'package:customer_bengkelly/app/modules/profile/componen/pilih_kendaraan.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import 'package:http/http.dart' as http;
 import '../componen/color.dart';
 import '../modules/news/componen/todaydeals.dart';
 import '../routes/app_pages.dart';
+import 'data_endpoint/customkendaraan.dart';
 import 'data_endpoint/kategorikendaraan.dart';
 import 'data_endpoint/login.dart';
 import 'data_endpoint/merekkendaraan.dart';
@@ -278,7 +280,40 @@ class API {
       throw e;
     }
   }
+  //Beda
+  static Future<CustomerKendaraan> PilihKendaraan() async {
+    try {
+      final token = Publics.controller.getToken.value ?? '';
+      var data = {"token": token};
+      var response = await Dio().get(
+        _GetCustomKendaraan,
+        options: Options(
+          headers: {
+            "Content-Type": "application/json",
+          },
+        ),
+        queryParameters: data,
+      );
 
+      if (response.statusCode == 404) {
+        return CustomerKendaraan(status: false, message: "Tidak ada data booking untuk karyawan ini.");
+      }
+
+      final obj = CustomerKendaraan.fromJson(response.data);
+
+      if (obj.message == 'Invalid token: Expired') {
+        Get.offAllNamed(Routes.SINGIN);
+        Get.snackbar(
+          obj.message.toString(),
+          obj.message.toString(),
+        );
+      }
+
+      return obj;
+    } catch (e) {
+      throw e;
+    }
+  }
 //Beda
   static Future<Profile> profileiD() async {
     final token = Publics.controller.getToken.value ?? '';

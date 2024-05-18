@@ -34,6 +34,8 @@ class DetailsNews extends StatelessWidget {
 
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return AppBar(
+      forceMaterialTransparency: true,
+      backgroundColor: Colors.white,
       systemOverlayStyle: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent, // <-- SEE HERE
         statusBarIconBrightness: Brightness.dark, //<-- For Android SEE HERE (dark icons)
@@ -43,11 +45,11 @@ class DetailsNews extends StatelessWidget {
       elevation: 0,
       // leadingWidth: 45,
       actionsIconTheme: const IconThemeData(size: 20),
-      backgroundColor: Colors.transparent,
       title: Text(
         'News',
         style: TextStyle(
           fontWeight: FontWeight.bold,
+          color: MyColors.appPrimaryColor,
           fontFamily: 'Nunito',
         ),
       ),

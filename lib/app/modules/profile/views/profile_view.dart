@@ -199,7 +199,7 @@ class ProfileView extends GetView<ProfileController> {
             ),
       InkWell(
         onTap: () {
-          Get.toNamed(Routes.BANTUAN);
+          Get.toNamed(Routes.CHAT);
         },
         child:
             Row(
@@ -341,19 +341,16 @@ class ProfileView extends GetView<ProfileController> {
             ),
           ),
           children: [
-             Row(
+             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                InkWell(
-                  onTap: () => Get.toNamed(Routes.SINGIN),
-                  child:
-                const Row(
+                Row(
                   children: [
                     Icon(Icons.logout_rounded, color: Colors.red,),
                     SizedBox(width: 10,),
                     Text('Log Out', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),),
-                  ],),),
+                  ],),
                 Icon(Icons.arrow_forward_ios_rounded, color: Colors.redAccent,),
               ],
             ),],
