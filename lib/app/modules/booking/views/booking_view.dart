@@ -37,31 +37,37 @@ class BookingViewState extends State<BookingView> {
           children: [
             Container(
               width: double.infinity,
-              child: SizedBox(
-                height: 50, // <-- Your height
-                child: ElevatedButton(
-                  onPressed: () async {
-                   Get.toNamed(Routes.DETAILBOOKING);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: MyColors.appPrimaryColor,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    elevation: 4.0,
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(width: 10,),
-                      Text(
-                        'Booking Sekarang',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+              child: Obx(
+                    () => SizedBox(
+                  height: 50, // <-- Your height
+                  child: ElevatedButton(
+                    onPressed: controller.isFormValid()
+                        ? () {
+                      Get.toNamed(Routes.DETAILBOOKING);
+                    }
+                        : null,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: controller.isFormValid()
+                          ? MyColors.appPrimaryColor
+                          : Colors.grey,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      elevation: 4.0,
+                    ),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(width: 10,),
+                        Text(
+                          'Booking Sekarang',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -218,7 +224,7 @@ class BookingViewState extends State<BookingView> {
                                       builder: (BuildContext context, ScrollController scrollController) {
                                         return SingleChildScrollView(
                                           controller: scrollController,
-                                          child: CalendarPage(),
+                                          child: CalendarTimePickerPage(),
                                         );
                                       },
                                     );
@@ -244,7 +250,7 @@ class BookingViewState extends State<BookingView> {
                                     Text(
                                       controller.selectedDate.value == null
                                           ? 'Pilih Jadwal'
-                                          : DateFormat('yyyy-MM-dd').format(controller.selectedDate.value!),
+                                          : DateFormat('dd/MM/yyyy HH:mm').format(controller.selectedDate.value!),
                                       style: TextStyle(
                                         color: controller.selectedDate.value == null ? Colors.grey : Colors.black,
                                         fontWeight: FontWeight.bold,
@@ -310,7 +316,10 @@ class BookingViewState extends State<BookingView> {
                             child: SizedBox(
                               height: 200, // <-- TextField expands to this height.
                               child: TextField(
-                                controller: controller.Keluhan,
+                                controller: TextEditingController(text: controller.Keluhan.value),
+                                onChanged: (value) {
+                                  controller.Keluhan.value = value;
+                                },
                                 maxLines: null, // Set this
                                 expands: true, // and this
                                 keyboardType: TextInputType.multiline,

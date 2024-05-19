@@ -256,7 +256,7 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
               );
 
               return ListTile(
-                title: Text(data.name ?? 'Unknown'),
+                title: Text(data.name ?? 'Unknown', style: TextStyle(fontWeight: FontWeight.bold),),
                 subtitle: Text(data.vicinity ?? 'Unknown'),
                 trailing: Column(children: [
                   Icon(Icons.map_sharp),

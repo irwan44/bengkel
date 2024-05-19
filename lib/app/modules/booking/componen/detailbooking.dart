@@ -3,16 +3,8 @@ import 'package:customer_bengkelly/app/componen/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart'; // Import package intl
-import '../../../componen/custom_widget.dart';
-import '../../../data/data_endpoint/bookingcustomer.dart';
-import '../../../data/data_endpoint/customkendaraan.dart';
-import '../../../data/data_endpoint/jenisservice.dart';
-import '../../authorization/componen/common.dart';
+import 'package:intl/intl.dart';
 import '../../authorization/componen/fade_animationtest.dart';
-import '../../authorization/componen/login_page.dart';
-import '../componen/select_caleder.dart';
-import '../componen/select_maps.dart';
 import '../controllers/booking_controller.dart';
 
 class DetailBookingView extends StatefulWidget {
@@ -38,9 +30,7 @@ class DetailBookingViewState extends State<DetailBookingView> {
               child: SizedBox(
                 height: 50, // <-- Your height
                 child: ElevatedButton(
-                  onPressed: () async {
-                    // Your booking logic here
-                  },
+                  onPressed: () => controller.BookingID(),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
                     shape: RoundedRectangleBorder(
@@ -53,7 +43,7 @@ class DetailBookingViewState extends State<DetailBookingView> {
                     children: [
                       SizedBox(width: 10,),
                       Text(
-                        'Confirmasi Sekarang',
+                        'Konfirmasi Sekarang',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -64,6 +54,7 @@ class DetailBookingViewState extends State<DetailBookingView> {
                 ),
               ),
             ),
+
           ],
         ),
       ),
@@ -158,7 +149,7 @@ class DetailBookingViewState extends State<DetailBookingView> {
                                 border: Border.all(color: MyColors.bgformborder),
                                 borderRadius: BorderRadius.circular(10)),
                             child: GestureDetector(
-                              onTap: () {
+                              onTap: () async {
                               },
                               child: Obx(() => InputDecorator(
                                 decoration: InputDecoration(
@@ -171,16 +162,17 @@ class DetailBookingViewState extends State<DetailBookingView> {
                                   fillColor: Colors.transparent,
                                 ),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Text('${controller.selectedLocation.value}',style: TextStyle(fontWeight: FontWeight.bold),),
-                                        Text(DateFormat('yyyy-MM-dd').format(controller.selectedDate.value!)),
-                                      ],),
+                                    Text(
+                                      controller.selectedDate.value == null
+                                          ? 'Pilih Jadwal'
+                                          : DateFormat('dd/MM/yyyy HH:mm').format(controller.selectedDate.value!),
+                                      style: TextStyle(
+                                        color: controller.selectedDate.value == null ? Colors.grey : Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               )),
@@ -254,7 +246,7 @@ class DetailBookingViewState extends State<DetailBookingView> {
                                 expands: true,
                                 readOnly: true,
                                 style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                                controller: controller.Keluhan,
+                                controller: TextEditingController(text: controller.Keluhan.value),
                                 keyboardType: TextInputType.multiline,
                                 decoration: const InputDecoration(
                                     contentPadding: EdgeInsets.all(18),

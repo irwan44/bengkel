@@ -257,7 +257,7 @@ class _SelectBookingState extends State<SelectBooking> {
               );
 
               return ListTile(
-                title: Text(data.name ?? 'Unknown'),
+                title: Text(data.name ?? 'Unknown', style: TextStyle(fontWeight: FontWeight.bold),),
                 subtitle: Text(data.vicinity ?? 'Unknown'),
                 trailing: Column(
                   children: [

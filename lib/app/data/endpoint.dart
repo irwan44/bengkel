@@ -179,6 +179,80 @@ class API {
       throw e;
     }
   }
+  //Beda
+  static Future<BookingCustomer> BookingID({
+    required String idcabang,
+    required String idjenissvc,
+    required String keluhan,
+    required String tglbooking,
+    required String jambooking,
+    required String idkendaraan,
+  }) async {
+    final data = {
+      "id_cabang": idcabang,
+      "id_jenissvc": idjenissvc,
+      "keluhan": keluhan,
+      "tgl_booking": tglbooking,
+      "jam_booking": jambooking,
+      "id_kendaraan": idkendaraan,
+    };
+
+    try {
+      final token = Publics.controller.getToken.value ?? '';
+      print('Token: $token');
+
+      var response = await Dio().post(
+        _postCreateBooking,
+        data: data,
+        options: Options(
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer $token",
+          },
+        ),
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('Response data: ${response.data}');
+
+      if (response.statusCode == 200) {
+        Get.snackbar(
+          'Hore',
+          'Registrasi Akun Anda Berhasil!',
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
+      } else {
+        Get.snackbar(
+          'Error',
+          'Terjadi kesalahan saat registrasi',
+          backgroundColor: Colors.redAccent,
+          colorText: Colors.white,
+        );
+      }
+
+      final obj = BookingCustomer.fromJson(response.data);
+
+      if (obj.message == 'Invalid token: Expired') {
+        Get.offAllNamed(Routes.SINGIN);
+        Get.snackbar(
+          obj.message.toString(),
+          obj.message.toString(),
+        );
+      }
+
+      return obj;
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Gagal Registrasi',
+        'Terjadi kesalahan saat registrasi',
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+      throw e;
+    }
+  }
 
 //Beda
   static Future<MerekKendaraan> merekid() async {
