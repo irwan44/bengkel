@@ -97,7 +97,7 @@ class DetailBookingViewState extends State<DetailBookingView> {
                       children: [
                         FadeInAnimation(
                           delay: 1.8,
-                          child: Text('Pilih Kendaraan', style: TextStyle(),),
+                          child: Text('Detail Kendaraan', style: TextStyle(),),
                         ),
                         SizedBox(height: 10,),
                         FadeInAnimation(
@@ -122,17 +122,21 @@ class DetailBookingViewState extends State<DetailBookingView> {
                                   fillColor: Colors.transparent,
                                 ),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      controller.selectedTransmisi.value == null
-                                          ? 'Jenis Kendaraan'
-                                          : '${controller.selectedTransmisi.value!.merks?.namaMerk} - ${controller.selectedTransmisi.value!.tipes?.map((e) => e.namaTipe).join(", ")}',
-                                      style: TextStyle(
-                                        color: controller.selectedTransmisi.value == null ? Colors.grey : Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                      Text('${controller.selectedTransmisi.value!.merks?.namaMerk}',style: TextStyle(fontWeight: FontWeight.bold),),
+                                      Text('${controller.selectedTransmisi.value!.noPolisi}'),
+                                      Row(children: [
+                                        Text('${controller.selectedTransmisi.value!.warna}'),
+                                        Text(' - '),
+                                        Text('Tahun ${controller.selectedTransmisi.value!.tahun}'),
+                                      ],)
+                                    ],),
                                   ],
                                 ),
                               )),
@@ -142,7 +146,7 @@ class DetailBookingViewState extends State<DetailBookingView> {
                         const SizedBox(height: 10,),
                         const FadeInAnimation(
                           delay: 1.8,
-                          child: Text('Pilih Bengkelly', style: TextStyle(),),
+                          child: Text('Detail Lokasi, Tanggal dan Waktu', style: TextStyle(),),
                         ),
                         SizedBox(height: 10,),
                         FadeInAnimation(
@@ -154,7 +158,7 @@ class DetailBookingViewState extends State<DetailBookingView> {
                                 border: Border.all(color: MyColors.bgformborder),
                                 borderRadius: BorderRadius.circular(10)),
                             child: GestureDetector(
-                              onTap: () async {
+                              onTap: () {
                               },
                               child: Obx(() => InputDecorator(
                                 decoration: InputDecoration(
@@ -167,17 +171,16 @@ class DetailBookingViewState extends State<DetailBookingView> {
                                   fillColor: Colors.transparent,
                                 ),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      controller.selectedLocation.value == null
-                                          ? 'Pilih Lokasi Bengkel'
-                                          : '${controller.selectedLocation.value}',
-                                      style: TextStyle(
-                                        color: controller.selectedLocation.value == null ? Colors.grey : Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Text('${controller.selectedLocation.value}',style: TextStyle(fontWeight: FontWeight.bold),),
+                                        Text(DateFormat('yyyy-MM-dd').format(controller.selectedDate.value!)),
+                                      ],),
                                   ],
                                 ),
                               )),
@@ -187,52 +190,7 @@ class DetailBookingViewState extends State<DetailBookingView> {
                         const SizedBox(height: 10,),
                         const FadeInAnimation(
                           delay: 1.8,
-                          child: Text('Pilih Jadwal', style: TextStyle(),),
-                        ),
-                        SizedBox(height: 10,),
-                        FadeInAnimation(
-                          delay: 1.8,
-                          child: Container(
-                            padding: const EdgeInsets.all(3.0),
-                            decoration: BoxDecoration(
-                                color: MyColors.bg,
-                                border: Border.all(color: MyColors.bgformborder),
-                                borderRadius: BorderRadius.circular(10)),
-                            child: GestureDetector(
-                              onTap: () async {
-                              },
-                              child: Obx(() => InputDecorator(
-                                decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.transparent,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      controller.selectedDate.value == null
-                                          ? 'Pilih Jadwal'
-                                          : DateFormat('yyyy-MM-dd').format(controller.selectedDate.value!),
-                                      style: TextStyle(
-                                        color: controller.selectedDate.value == null ? Colors.grey : Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 10,),
-                        const FadeInAnimation(
-                          delay: 1.8,
-                          child: Text('Pilih Service', style: TextStyle(),),
+                          child: Text('Jenis Service', style: TextStyle(),),
                         ),
                         SizedBox(height: 10,),
                         FadeInAnimation(
