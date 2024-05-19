@@ -1,6 +1,5 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:customer_bengkelly/app/componen/color.dart';
-import 'package:customer_bengkelly/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -16,17 +15,16 @@ import '../componen/select_caleder.dart';
 import '../componen/select_maps.dart';
 import '../controllers/booking_controller.dart';
 
-class BookingView extends StatefulWidget {
+class DetailBookingView extends StatefulWidget {
   @override
-  BookingViewState createState() => BookingViewState();
+  DetailBookingViewState createState() => DetailBookingViewState();
 }
 
-class BookingViewState extends State<BookingView> {
+class DetailBookingViewState extends State<DetailBookingView> {
   final controller = Get.find<BookingController>();
 
   @override
   Widget build(BuildContext context) {
-    List<String> tipeList = ["AT", "MT"];
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar: BottomAppBar(
@@ -41,10 +39,10 @@ class BookingViewState extends State<BookingView> {
                 height: 50, // <-- Your height
                 child: ElevatedButton(
                   onPressed: () async {
-                   Get.toNamed(Routes.DETAILBOOKING);
+                    // Your booking logic here
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: MyColors.appPrimaryColor,
+                    backgroundColor: Colors.green,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
                     elevation: 4.0,
@@ -55,7 +53,7 @@ class BookingViewState extends State<BookingView> {
                     children: [
                       SizedBox(width: 10,),
                       Text(
-                        'Booking Sekarang',
+                        'Confirmasi Sekarang',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -70,19 +68,13 @@ class BookingViewState extends State<BookingView> {
         ),
       ),
       appBar: AppBar(
-        title: Text('Booking', style: TextStyle(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
+        title: Text('Detail Booking', style: TextStyle(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
         surfaceTintColor: Colors.transparent,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.dark,
           statusBarBrightness: Brightness.light,
           systemNavigationBarColor: Colors.white,
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.close, color: Colors.black),
-          onPressed: () {
-            Navigator.of(context).popUntil((route) => route.isFirst);
-          },
         ),
       ),
       body: SafeArea(
@@ -94,36 +86,30 @@ class BookingViewState extends State<BookingView> {
               children: [
                 FadeInAnimation(
                   delay: 1.8,
-                  child: Image.asset(
-                    "assets/images/booking.png",
-                    filterQuality: FilterQuality.high,
-                    height: 200,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                FadeInAnimation(
-                  delay: 1.8,
-                  child: Text('Booking Sekarang !!', style: TextStyle(fontWeight: FontWeight.bold, color: MyColors.appPrimaryColor),),
-                ),
-                FadeInAnimation(
-                  delay: 1.8,
-                  child: Text('Untuk Mendapatkan Kemudahan Service Kendaraan Anda', style: TextStyle(fontWeight: FontWeight.bold, color: MyColors.appPrimaryColor),),
+                  child: Text('Cek Kembali Data Booking Anda', style: TextStyle(fontWeight: FontWeight.bold, color: MyColors.appPrimaryColor, fontSize: 16),),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Form(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
+                        FadeInAnimation(
+                          delay: 1.8,
+                          child: Text('Pilih Kendaraan', style: TextStyle(),),
+                        ),
+                        SizedBox(height: 10,),
                         FadeInAnimation(
                           delay: 1.8,
                           child: Container(
                             padding: const EdgeInsets.all(3.0),
                             decoration: BoxDecoration(
+                                color: MyColors.bg,
                                 border: Border.all(color: MyColors.bgformborder),
                                 borderRadius: BorderRadius.circular(10)),
                             child: GestureDetector(
                               onTap: () {
-                                _showBottomSheet(context);
                               },
                               child: Obx(() => InputDecorator(
                                 decoration: InputDecoration(
@@ -147,7 +133,6 @@ class BookingViewState extends State<BookingView> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    const Icon(Icons.keyboard_arrow_down_rounded, color: Colors.grey),
                                   ],
                                 ),
                               )),
@@ -155,19 +140,21 @@ class BookingViewState extends State<BookingView> {
                           ),
                         ),
                         const SizedBox(height: 10,),
+                        const FadeInAnimation(
+                          delay: 1.8,
+                          child: Text('Pilih Bengkelly', style: TextStyle(),),
+                        ),
+                        SizedBox(height: 10,),
                         FadeInAnimation(
                           delay: 1.8,
                           child: Container(
                             padding: const EdgeInsets.all(3.0),
                             decoration: BoxDecoration(
+                                color: MyColors.bg,
                                 border: Border.all(color: MyColors.bgformborder),
                                 borderRadius: BorderRadius.circular(10)),
                             child: GestureDetector(
                               onTap: () async {
-                                final result = await Get.to(() => SelectBooking());
-                                if (result != null) {
-                                  controller.selectedLocation.value = result;
-                                }
                               },
                               child: Obx(() => InputDecorator(
                                 decoration: InputDecoration(
@@ -191,7 +178,6 @@ class BookingViewState extends State<BookingView> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    const Icon(Icons.keyboard_arrow_down_rounded, color: Colors.grey),
                                   ],
                                 ),
                               )),
@@ -199,34 +185,21 @@ class BookingViewState extends State<BookingView> {
                           ),
                         ),
                         const SizedBox(height: 10,),
+                        const FadeInAnimation(
+                          delay: 1.8,
+                          child: Text('Pilih Jadwal', style: TextStyle(),),
+                        ),
+                        SizedBox(height: 10,),
                         FadeInAnimation(
                           delay: 1.8,
                           child: Container(
                             padding: const EdgeInsets.all(3.0),
                             decoration: BoxDecoration(
+                                color: MyColors.bg,
                                 border: Border.all(color: MyColors.bgformborder),
                                 borderRadius: BorderRadius.circular(10)),
                             child: GestureDetector(
                               onTap: () async {
-                                final result = await showModalBottomSheet<DateTime>(
-                                  context: context,
-                                  showDragHandle: true,
-                                  isScrollControlled: true,
-                                  builder: (BuildContext context) {
-                                    return DraggableScrollableSheet(
-                                      expand: false,
-                                      builder: (BuildContext context, ScrollController scrollController) {
-                                        return SingleChildScrollView(
-                                          controller: scrollController,
-                                          child: CalendarPage(),
-                                        );
-                                      },
-                                    );
-                                  },
-                                );
-                                if (result != null) {
-                                  controller.selectedDate.value = result;
-                                }
                               },
                               child: Obx(() => InputDecorator(
                                 decoration: InputDecoration(
@@ -250,7 +223,6 @@ class BookingViewState extends State<BookingView> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    const Icon(Icons.keyboard_arrow_down_rounded, color: Colors.grey),
                                   ],
                                 ),
                               )),
@@ -258,16 +230,21 @@ class BookingViewState extends State<BookingView> {
                           ),
                         ),
                         const SizedBox(height: 10,),
+                        const FadeInAnimation(
+                          delay: 1.8,
+                          child: Text('Pilih Service', style: TextStyle(),),
+                        ),
+                        SizedBox(height: 10,),
                         FadeInAnimation(
                           delay: 1.8,
                           child: Container(
                             padding: const EdgeInsets.all(3.0),
                             decoration: BoxDecoration(
+                                color: MyColors.bg,
                                 border: Border.all(color: MyColors.bgformborder),
                                 borderRadius: BorderRadius.circular(10)),
                             child: GestureDetector(
                               onTap: () {
-                                _showBottomSheetService(context);
                               },
                               child: Obx(() => InputDecorator(
                                 decoration: InputDecoration(
@@ -291,7 +268,6 @@ class BookingViewState extends State<BookingView> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    const Icon(Icons.keyboard_arrow_down_rounded, color: Colors.grey),
                                   ],
                                 ),
                               )),
@@ -299,25 +275,35 @@ class BookingViewState extends State<BookingView> {
                           ),
                         ),
                         const SizedBox(height: 10,),
+                        const FadeInAnimation(
+                          delay: 1.8,
+                          child: Text('Keluhan', style: TextStyle(),),
+                        ),
+                        SizedBox(height: 10,),
                         FadeInAnimation(
                           delay: 1.8,
                           child: Container(
                             padding: const EdgeInsets.all(3.0),
                             decoration: BoxDecoration(
+                              color: MyColors.bg,
                               border: Border.all(color: MyColors.bgformborder), // Change to your primary color
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: SizedBox(
                               height: 200, // <-- TextField expands to this height.
-                              child: TextField(
+                              child: TextFormField(
+                                maxLines: null,
+                                expands: true,
+                                readOnly: true,
+                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                 controller: controller.Keluhan,
-                                maxLines: null, // Set this
-                                expands: true, // and this
                                 keyboardType: TextInputType.multiline,
                                 decoration: const InputDecoration(
                                     contentPadding: EdgeInsets.all(18),
                                     border: InputBorder.none,
-                                    hintStyle: TextStyle(color: Colors.grey),
+                                   fillColor: Colors.black,
+                                    labelStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                    hintStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                     hintText: 'Keluhan'
                                 ),
                               ),
@@ -350,125 +336,6 @@ class BookingViewState extends State<BookingView> {
           ),
         ),
       ),
-    );
-  }
-
-  void _showBottomSheetService(BuildContext context) {
-    showModalBottomSheet(
-      showDragHandle: true,
-      backgroundColor: Colors.white,
-      context: context,
-      builder: (BuildContext context) {
-        return Obx(() {
-          if (controller.isLoading.value) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (controller.serviceList.isEmpty) {
-            return const Center(child: Text('No data available'));
-          } else {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    'Pilih Jenis Service',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: controller.serviceList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      JenisServices item = controller.serviceList[index];
-                      bool isSelected = item == controller.selectedService.value;
-                      return ListTile(
-                        title: Text(
-                          item.namaJenissvc ?? 'Unknown',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        trailing: isSelected
-                            ? const Icon(Icons.check, color: Colors.green)
-                            : null,
-                        onTap: () {
-                          controller.selectService(item);
-                          Navigator.pop(context);
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ],
-            );
-          }
-        });
-      },
-    );
-  }
-
-  void _showBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      showDragHandle: true,
-      backgroundColor: Colors.white,
-      context: context,
-      builder: (BuildContext context) {
-        return Obx(() {
-          if (controller.isLoading.value) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (controller.tipeList.isEmpty) {
-            return const Center(child: Text('No data available'));
-          } else {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    'Pilih Kendaraan',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: controller.tipeList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      DataKendaraan item = controller.tipeList[index];
-                      bool isSelected = item == controller.selectedTransmisi.value;
-                      return ListTile(
-                        title: Row(
-                          children: [
-                            Text(
-                              '${item.merks?.namaMerk}',
-                              style: const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            const Text(
-                              ' - ',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            ...?item.tipes?.map((tipe) => Text(
-                              '${tipe.namaTipe}',
-                              style: const TextStyle(fontWeight: FontWeight.bold),
-                            )).toList(),
-                          ],
-                        ),
-                        subtitle: Text(
-                            'No Polisi: ${item.noPolisi}\nWarna: ${item.warna} - Tahun: ${item.tahun}'
-                        ),
-                        trailing: isSelected
-                            ? const Icon(Icons.check, color: Colors.green)
-                            : null,
-                        onTap: () {
-                          controller.selectTransmisi(item);
-                          Navigator.pop(context);
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ],
-            );
-          }
-        });
-      },
     );
   }
 }

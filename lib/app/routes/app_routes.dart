@@ -27,6 +27,8 @@ abstract class Routes {
   static const BANTUAN = _Paths.BANTUAN;
   static const DETAILLOKASIBENGKELLY = _Paths.DETAILLOKASIBENGKELLY;
   static const DETAILSPECIAL = _Paths.DETAILSPECIAL;
+  static const SELECTBOOKING = _Paths.SELECTBOOKING;
+  static const DETAILBOOKING = _Paths.DETAILBOOKING;
 }
 
 abstract class _Paths {
@@ -55,4 +57,6 @@ abstract class _Paths {
   static const BANTUAN = '/bantuan';
   static const DETAILLOKASIBENGKELLY = '/detaillokasibengkelly';
   static const DETAILSPECIAL = '/detailspecial';
+  static const SELECTBOOKING = '/selectbooking';
+  static const DETAILBOOKING = '/detailbooking';
 }

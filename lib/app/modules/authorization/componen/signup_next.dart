@@ -81,7 +81,7 @@ class RegisterPage extends StatelessWidget {
                           child: Container(
                             padding: const EdgeInsets.all(3.0),
                             decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
+                                border: Border.all(color: MyColors.bgformborder),
                                 borderRadius: BorderRadius.circular(10)),
                             child: FutureBuilder<MerekKendaraan>(
                               future: controller.futureMerek.value,
@@ -132,7 +132,7 @@ class RegisterPage extends StatelessWidget {
                           child: Container(
                             padding: const EdgeInsets.all(3.0),
                             decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
+                                border: Border.all(color: MyColors.bgformborder),
                                 borderRadius: BorderRadius.circular(10)),
                             child: FutureBuilder<TipeKendaraan>(
                               future: controller.futureTipeKendaraan.value,
@@ -170,8 +170,7 @@ class RegisterPage extends StatelessWidget {
                           child: Container(
                             padding: const EdgeInsets.all(3.0),
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey), // Change to your primary color
-                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: MyColors.bgformborder),
                             ),
                             child: FutureBuilder<KategoryKendaraan>(
                               future: API.kategorykendaraanID(),
@@ -209,7 +208,7 @@ class RegisterPage extends StatelessWidget {
                           child: Container(
                             padding: const EdgeInsets.all(3.0),
                             decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
+                                border: Border.all(color: MyColors.bgformborder),
                                 borderRadius: BorderRadius.circular(10)),
                             child: CustomDropdown.search(
                               hintText: 'Transmisi Kendaraan',

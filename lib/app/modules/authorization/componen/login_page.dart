@@ -105,20 +105,24 @@ class _LoginPageState extends State<LoginPage> {
                             const SizedBox(
                               height: 10,
                             ),
+
                             FadeInAnimation(
                               delay: 2.2,
-                              child: TextFormField(
+                              child:
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: MyColors.bgformborder),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child:
+                              TextFormField(
                                 controller: controller.PasswordController,
                                 obscureText: obscureText,
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.all(18),
                                   hintText: "Masukkan kata sandi Anda",
                                   hintStyle: TextStyle(color: Colors.grey),
-                                  border: OutlineInputBorder(
-                                    borderSide:
-                                        const BorderSide(color: Colors.black),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
+                                  border: InputBorder.none,
                                   suffixIcon: IconButton(
                                     onPressed: togglePasswordVisibility,
                                     icon: Icon(
@@ -130,6 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                               ),
+                            ),
                             ),
                             FadeInAnimation(
                               delay: 2.5,

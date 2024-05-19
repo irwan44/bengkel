@@ -1,24 +1,19 @@
-import 'package:customer_bengkelly/app/componen/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import '../../../data/data_endpoint/lokasi.dart'as LokasiEndpoint;
-
+import '../../../data/data_endpoint/lokasi.dart' as LokasiEndpoint;
 import '../../../data/endpoint.dart'; // Impor file lain jika diperlukan
 
-class LokasiBengkelly extends StatefulWidget {
-  const LokasiBengkelly({super.key});
-
+class SelectBooking extends StatefulWidget {
   @override
-  State<LokasiBengkelly> createState() => _LokasiBengkellyState();
+  State<SelectBooking> createState() => _SelectBookingState();
 }
 
-class _LokasiBengkellyState extends State<LokasiBengkelly> {
+class _SelectBookingState extends State<SelectBooking> {
   late GoogleMapController _controller;
   Position? _currentPosition;
   List<Marker> _markers = [];
@@ -32,6 +27,7 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
     _checkPermissions();
     _checkPermissions1();
   }
+
   Future<void> _getCurrentLocation() async {
     try {
       _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
@@ -42,6 +38,7 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
       print('Error getting current location: $e');
     }
   }
+
   Future<void> _getAddressFromLatLng() async {
     try {
       List<Placemark> placemarks = await placemarkFromCoordinates(
@@ -56,6 +53,7 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
       print('Error getting address: $e');
     }
   }
+
   Future<void> _checkPermissions() async {
     var status = await Permission.location.status;
     print('Permission status: $status');
@@ -88,6 +86,7 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
       print('Error getting current location: $e');
     }
   }
+
   Future<void> _checkPermissions1() async {
     var status = await Permission.location.status;
     print('Permission status: $status');
@@ -134,6 +133,9 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
                   title: data.name,
                   snippet: 'Jarak: ${distance.toStringAsFixed(2)} km',
                 ),
+                onTap: () {
+                  Navigator.pop(context, data.name); // Kembalikan nama lokasi ke halaman pertama
+                },
               ),
             );
           }
@@ -165,7 +167,7 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  AppBar(
+      appBar: AppBar(
         forceMaterialTransparency: true,
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
@@ -188,9 +190,9 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
           ],
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_rounded, color: Colors.black),
+          icon: const Icon(Icons.close, color: Colors.black),
           onPressed: () {
-            Navigator.of(context).popUntil((route) => route.isFirst);
+            Navigator.pop(context);
           },
         ),
       ),
@@ -205,7 +207,6 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
             compassEnabled: true,
             zoomControlsEnabled: true,
             myLocationButtonEnabled: true,
-            indoorViewEnabled: true,
             onMapCreated: (controller) {
               _controller = controller;
             },
@@ -258,17 +259,15 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
               return ListTile(
                 title: Text(data.name ?? 'Unknown'),
                 subtitle: Text(data.vicinity ?? 'Unknown'),
-                trailing: Column(children: [
-                  Icon(Icons.map_sharp),
-                  SizedBox(height: 10,),
-                  Text('${distance.toStringAsFixed(2)} km'),
-                ],),
+                trailing: Column(
+                  children: [
+                    Icon(Icons.map_sharp),
+                    SizedBox(height: 10),
+                    Text('${distance.toStringAsFixed(2)} km'),
+                  ],
+                ),
                 onTap: () {
-                  _moveCamera(
-                    double.parse(location.lat!),
-                    double.parse(location.lng!),
-                  );
-                  _panelController.close(); // Tutup panel setelah item dipilih
+                  Navigator.pop(context, data.name); // Kembalikan nama lokasi ke halaman pertama
                 },
               );
             },

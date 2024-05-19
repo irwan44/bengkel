@@ -77,46 +77,68 @@ class _HistoryViewState extends State<HistoryView> {
         length: 7,
         child: Column(
           children: [
-            InkWell(
-              onTap: () => showSearch(
-                context: context,
-                delegate: SearchPage<DataHis>(
-                  items: [], // Placeholder for search items
-                  searchLabel: 'Cari Booking',
-                  searchStyle: TextStyle(color: Colors.black),
-                  showItemsOnEmpty: true,
-                  failure: Center(
-                    child: Text(
-                      'Booking Tidak Ditemukan :(',
-                      style: TextStyle(),
-                    ),
-                  ),
-                  filter: (booking) => [
-                    booking.noPolisi,
-                  ],
-                  builder: (booking) => ListHistory(
-                    booking: booking,
-                  ),
-                ),
-              ),
-              child: Container(
-                width: double.infinity,
-                height: 40,
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.grey.shade100,
-                  border: Border.all(color: MyColors.select),
-                ),
-                child: Row(
-                  children: [
-                    SizedBox(width: 10),
-                    Icon(Icons.search_rounded, color: MyColors.appPrimaryColor),
-                    SizedBox(width: 10),
-                    Text('Cari Transaksi', style: TextStyle(color: Colors.grey)),
-                  ],
-                ),
-              ),
+            FutureBuilder(
+              future: API.HistoryBookingID(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center();
+                } else if (snapshot.hasData && snapshot.data != null) {
+                  final data = snapshot.data!.datahistory;
+
+                  if (data != null && data.isNotEmpty) {
+                    return InkWell(
+                      onTap: () => showSearch(
+                        context: context,
+                        delegate: SearchPage<DataHis>(
+                          items: data,
+                          searchLabel: 'Cari Booking',
+                          searchStyle: GoogleFonts.nunito(color: Colors.black),
+                          showItemsOnEmpty: true,
+                          failure: Center(
+                            child: Text(
+                              'Booking Tidak Dtemukan :(',
+                              style: GoogleFonts.nunito(),
+                            ),
+                          ),
+                          filter: (booking) => [
+                            booking.noPolisi,
+                          ],
+                          builder: (items) => ListHistory(
+                            booking: items,
+                          ),
+                        ),
+                      ),
+                      child: Container(
+                        width: double.infinity,
+                        height: 40,
+                        margin: EdgeInsets.symmetric(horizontal: 20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.grey.shade100,
+                          border: Border.all(color: MyColors.select),
+                        ),
+                        child: Row(
+                          children: [
+                            SizedBox(width: 10),
+                            Icon(Icons.search_rounded, color: MyColors.appPrimaryColor),
+                            SizedBox(width: 10),
+                            Text('Cari Transaksi', style: TextStyle(color: Colors.grey)),
+                          ],
+                        ),
+                      ),
+                    );
+                  } else {
+                    return Center(
+                      child: Text(
+                        'Pencarian',
+                        style: GoogleFonts.nunito(fontSize: 16),
+                      ),
+                    );
+                  }
+                } else {
+                  return const Center();
+                }
+              },
             ),
             SizedBox(height: 20),
             Container(

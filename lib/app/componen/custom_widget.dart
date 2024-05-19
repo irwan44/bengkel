@@ -29,9 +29,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.all(3.0),
     decoration: BoxDecoration(
-    border: Border.all(color: Colors.grey), // Change to your primary color
+    border: Border.all(color: MyColors.bgformborder),
     borderRadius: BorderRadius.circular(10),
     ),
     child:
@@ -47,6 +46,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     );
   }
 }
+
 
 class CustomElevatedButton extends StatefulWidget {
   final String message;

@@ -31,6 +31,8 @@ class MyColors{
   static Color appPrimaryColor = HexColor("2B407D");
   static Color greenSnackBar = HexColor("4AC000");
   static Color orangeSnackBar = HexColor("EF9300");
+  static Color bgform = HexColor("F7F8F9");
+  static Color bgformborder = HexColor("E8ECF4");
   static Color redSnackBar = HexColor("E01A1A");
   static Color greenPinPut = HexColor("35C2C1");
   static Color redOpacity = HexColor("FF9191");

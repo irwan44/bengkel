@@ -5,14 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../../data/data_endpoint/news.dart';
 import '../../../data/dummy_data.dart';
 import '../../../data/endpoint.dart';
 import '../../news/componen/news.dart';
 import '../../news/componen/todaydeals.dart';
-import '../detail/detailbengkelly/lokasibengkelly.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -21,6 +23,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
+  String _currentAddress = 'Mengambil lokasi...';
+  Position? _currentPosition;
   final List<String> imgList = [
     'assets/images/slide-2.jpg',
     'assets/images/slide-3.jpg',
@@ -29,96 +33,159 @@ class _HomePageState extends State<HomePage> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _checkPermissions();
+  }
+
+  Future<void> _checkPermissions() async {
+    var status = await Permission.location.status;
+    print('Permission status: $status');
+    if (status.isGranted) {
+      print('Permission already granted');
+      await _getCurrentLocation();
+    } else {
+      var requestedStatus = await Permission.location.request();
+      print('Requested permission status: $requestedStatus');
+      if (requestedStatus.isGranted) {
+        print('Permission granted');
+        await _getCurrentLocation();
+      } else {
+        print('Permission denied');
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Permission denied'),
+        ));
+      }
+    }
+  }
+
+  Future<void> _getCurrentLocation() async {
+    try {
+      _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      print('Current position: $_currentPosition');
+      _getAddressFromLatLng();
+      setState(() {});
+    } catch (e) {
+      print('Error getting current location: $e');
+    }
+  }
+
+  Future<void> _getAddressFromLatLng() async {
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+          _currentPosition!.latitude, _currentPosition!.longitude);
+
+      Placemark place = placemarks[0];
+
+      setState(() {
+        _currentAddress = "${place.locality}, ${place.subAdministrativeArea}";
+      });
+    } catch (e) {
+      print('Error getting address: $e');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return  WillPopScope(
-        onWillPop: () async {
-      SystemNavigator.pop();
-      return true;
-    },
-    child:
-      Scaffold(
-      extendBodyBehindAppBar: false,
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        forceMaterialTransparency: true,
-        automaticallyImplyLeading: false,
+    return WillPopScope(
+      onWillPop: () async {
+        SystemNavigator.pop();
+        return true;
+      },
+      child: Scaffold(
+        extendBodyBehindAppBar: false,
         backgroundColor: Colors.white,
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-          statusBarIconBrightness: Brightness.dark,
-          statusBarBrightness: Brightness.light,
-          systemNavigationBarColor: MyColors.appPrimaryColor,
-        ),
-        title: Row(
-          children: [
-            SvgPicture.asset('assets/icons/lokasi.svg', width: 26,),
-            SizedBox(width: 10,),
-            const Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Lokasi Saat ini', style: TextStyle(fontSize: 12),),
-                Text('Jakarta Selatan', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
-              ],)
-          ],),
-        actions: [
-          Row(
+        appBar: AppBar(
+          forceMaterialTransparency: true,
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            statusBarIconBrightness: Brightness.dark,
+            statusBarBrightness: Brightness.light,
+            systemNavigationBarColor: MyColors.appPrimaryColor,
+          ),
+          title: Row(
             children: [
-              InkWell(
-                onTap: () {
-                  Get.toNamed(Routes.CHAT);
-                },
-                child:
-                SvgPicture.asset('assets/icons/massage.svg', width: 26,),),
-              SizedBox(width: 20,),
-              InkWell(
-                onTap: () {
-                  Get.toNamed(Routes.NOTIFIKASI);
-                },
-                child:
-                SvgPicture.asset('assets/icons/notif.svg', width: 26,),),
-              SizedBox(width: 10,),
-            ],),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: AnimationConfiguration.toStaggeredList(
-            duration: const Duration(milliseconds: 475),
-            childAnimationBuilder: (widget) => SlideAnimation(
-              child: SlideAnimation(
-                child: widget,
+              SvgPicture.asset('assets/icons/lokasi.svg', width: 26),
+              SizedBox(width: 10),
+              Expanded( // Gunakan Expanded atau Flexible di sini
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Lokasi Saat ini', style: TextStyle(fontSize: 12)),
+                    Text(
+                      _currentAddress,
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            children: [
-              _Slider(context),
-              SizedBox(height: 20),
-              _sectionTitle2('Menu'),
-              SizedBox(height: 20),
-              _menuItemsRow(),
-              SizedBox(height: 20),
-              _menuItemsRow2(),
-              SizedBox(height: 20),
-              _sectionTitle('Lokasi Bengkelly'),
-              SizedBox(height: 20),
-              _SliderLokasi(context),
-              SizedBox(height: 20),
-              _sectionTitle('Spesialis Offer'),
-              SizedBox(height: 20),
-              _SliderOffer(context),
-              SizedBox(height: 20),
-              _sectionTitle('Today Deals'),
-              SizedBox(height: 20),
-              TodayDeals(),
-              SizedBox(height: 40),
-              // _sectionTitle('News'),
-              // SizedBox(height: 20),
-              // News(),
             ],
           ),
+          actions: [
+            Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    Get.toNamed(Routes.CHAT);
+                  },
+                  child: SvgPicture.asset('assets/icons/massage.svg', width: 26),
+                ),
+                SizedBox(width: 20),
+                InkWell(
+                  onTap: () {
+                    Get.toNamed(Routes.NOTIFIKASI);
+                  },
+                  child: SvgPicture.asset('assets/icons/notif.svg', width: 26),
+                ),
+                SizedBox(width: 10),
+              ],
+            ),
+          ],
         ),
-      ),
+
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: AnimationConfiguration.toStaggeredList(
+              duration: const Duration(milliseconds: 475),
+              childAnimationBuilder: (widget) => SlideAnimation(
+                child: SlideAnimation(
+                  child: widget,
+                ),
+              ),
+              children: [
+                _Slider(context),
+                SizedBox(height: 20),
+                _sectionTitle2('Menu'),
+                SizedBox(height: 20),
+                _menuItemsRow(),
+                SizedBox(height: 20),
+                _menuItemsRow2(),
+                SizedBox(height: 20),
+                _sectionTitle('Lokasi Bengkelly'),
+                SizedBox(height: 20),
+                _SliderLokasi(context),
+                SizedBox(height: 20),
+                _sectionTitle('Spesialis Offer'),
+                SizedBox(height: 20),
+                _SliderOffer(context),
+                SizedBox(height: 20),
+                _sectionTitle('Today Deals'),
+                SizedBox(height: 20),
+                TodayDeals(),
+                SizedBox(height: 40),
+                // _sectionTitle('News'),
+                // SizedBox(height: 20),
+                // News(),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -401,17 +468,18 @@ class _HomePageState extends State<HomePage> {
                             Text(product['Harga'], style: TextStyle(color: Colors.green)),
                             Row(
                               children: [
-                              Container(
-                                padding: EdgeInsets.all(3),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    color: MyColors.green
+                                Container(
+                                  padding: EdgeInsets.all(3),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: MyColors.green
+                                  ),
+                                  child: Text('${product['diskon']}',style: TextStyle(color: Colors.white),),
                                 ),
-                                child: Text('${product['diskon']}',style: TextStyle(color: Colors.white),),
-                              ),
-                              SizedBox(width: 10,),
-                              Text('Rp ${product['harga_asli']}',style: TextStyle(decoration: TextDecoration.lineThrough,),),
-                            ],),
+                                SizedBox(width: 10,),
+                                Text('Rp ${product['harga_asli']}',style: TextStyle(decoration: TextDecoration.lineThrough,),),
+                              ],
+                            ),
                             SizedBox(height: 10),
                             Row(children: [
                               Icon(Icons.star, color: Colors.yellow,),

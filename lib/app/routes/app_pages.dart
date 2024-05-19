@@ -7,6 +7,8 @@ import '../modules/authorization/componen/signup_next.dart';
 import '../modules/authorization/componen/signup_page.dart';
 import '../modules/authorization/views/authorization_view.dart';
 import '../modules/booking/bindings/booking_binding.dart';
+import '../modules/booking/componen/detailbooking.dart';
+import '../modules/booking/componen/select_maps.dart';
 import '../modules/booking/views/booking_view.dart';
 import '../modules/chat/bindings/chat_binding.dart';
 import '../modules/chat/views/chat_view.dart';
@@ -104,7 +106,13 @@ class AppPages {
     GetPage(
       transition: Transition.downToUp,
       name: _Paths.BOOKING,
-      page: () => const BookingView(),
+      page: () => BookingView(),
+      binding: BookingBinding(),
+    ),
+    GetPage(
+      transition: Transition.downToUp,
+      name: _Paths.SELECTBOOKING,
+      page: () => SelectBooking(),
       binding: BookingBinding(),
     ),
     GetPage(
@@ -171,6 +179,12 @@ class AppPages {
       transition: Transition.rightToLeftWithFade,
       name: _Paths.DETAILSPECIAL,
       page: () => DetailSpecialOffer(),
+      binding: BookingBinding(),
+    ),
+    GetPage(
+      transition: Transition.rightToLeftWithFade,
+      name: _Paths.DETAILBOOKING,
+      page: () => DetailBookingView(),
       binding: BookingBinding(),
     ),
   ];

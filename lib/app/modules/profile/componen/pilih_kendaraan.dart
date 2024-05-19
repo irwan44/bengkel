@@ -29,6 +29,9 @@ class _PilihKendaraanState extends State<PilihKendaraan> {
             Container(
               width: double.infinity,
               child:
+              SizedBox(
+                height: 50, // <-- Your height
+                child:
             ElevatedButton(
               onPressed: () async {
               },
@@ -52,6 +55,7 @@ class _PilihKendaraanState extends State<PilihKendaraan> {
                   ),
                 ),
               ],)
+            ),
             ),
             ),
           ],

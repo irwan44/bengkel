@@ -1,5 +1,7 @@
 import 'dart:convert';
-import 'dart:ui';import 'package:customer_bengkelly/app/data/publik.dart';
+import 'dart:ui';import 'package:customer_bengkelly/app/data/data_endpoint/bookingcustomer.dart';
+import 'package:customer_bengkelly/app/data/publik.dart';
+import 'package:customer_bengkelly/app/modules/home/menu/lokasi_bengkelly.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +9,9 @@ import 'package:http/http.dart' as http;
 import '../routes/app_pages.dart';
 import 'data_endpoint/customkendaraan.dart';
 import 'data_endpoint/history.dart';
+import 'data_endpoint/jenisservice.dart';
 import 'data_endpoint/kategorikendaraan.dart';
+import 'data_endpoint/lokasi.dart';
 import 'data_endpoint/merekkendaraan.dart';
 import 'data_endpoint/news.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,6 +40,7 @@ class API {
   static const _GetMerek = '$_baseUrl/merk';
   static const _GetTipe = '$_baseUrl/tipe';
   static const _GetCustomKendaraan = '$_baseUrl/customer-kendaraan';
+  static const _GetJenisService = '$_baseUrl/get-jenis-service';
 
 
   static Future<String?> login({required String email, required String password}) async {
@@ -360,6 +365,70 @@ class API {
       print('Response: ${response.data}');
 
       final obj = HistoryBooking.fromJson(response.data);
+
+      if (obj.message == 'Invalid token: Expired') {
+        Get.offAllNamed(Routes.SINGIN);
+        Get.snackbar(
+          obj.message.toString(),
+          obj.message.toString(),
+        );
+      }
+      return obj;
+    } catch (e) {
+      print('Error: $e');
+      throw e;
+    }
+  } //Beda
+  static Future<Lokasi> LokasiBengkellyID() async {
+    try {
+      final token = Publics.controller.getToken.value ?? '';
+      print('Token: $token');
+
+      var response = await Dio().get(
+        _GetLokasi,
+        options: Options(
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer $token",
+          },
+        ),
+      );
+
+      print('Response: ${response.data}');
+
+      final obj = Lokasi.fromJson(response.data);
+
+      if (obj.message == 'Invalid token: Expired') {
+        Get.offAllNamed(Routes.SINGIN);
+        Get.snackbar(
+          obj.message.toString(),
+          obj.message.toString(),
+        );
+      }
+      return obj;
+    } catch (e) {
+      print('Error: $e');
+      throw e;
+    }
+  } //Beda
+  static Future<JenisServiceResponse> JenisServiceID() async {
+    try {
+      final token = Publics.controller.getToken.value ?? '';
+      print('Token: $token');
+
+      var response = await Dio().get(
+        _GetJenisService,
+        options: Options(
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer $token",
+          },
+        ),
+      );
+
+      print('Response: ${response.data}');
+
+      final obj = JenisServiceResponse.fromJson(response.data);
 
       if (obj.message == 'Invalid token: Expired') {
         Get.offAllNamed(Routes.SINGIN);
