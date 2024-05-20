@@ -101,7 +101,7 @@ class AppPages {
     GetPage(
       transition: Transition.downToUp,
       name: _Paths.NOTIFIKASI,
-      page: () => const NotifikasiView(),
+      page: () => const MyApp(),
       binding: NotifikasiBinding(),
     ),
     GetPage(

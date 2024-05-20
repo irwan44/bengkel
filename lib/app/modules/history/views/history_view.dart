@@ -119,10 +119,10 @@ class _HistoryViewState extends State<HistoryView> {
                         ),
                         child: Row(
                           children: [
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Icon(Icons.search_rounded, color: MyColors.appPrimaryColor),
-                            SizedBox(width: 10),
-                            Text('Cari Transaksi', style: TextStyle(color: Colors.grey)),
+                            const SizedBox(width: 10),
+                            const Text('Cari Transaksi', style: TextStyle(color: Colors.grey)),
                           ],
                         ),
                       ),
@@ -147,9 +147,9 @@ class _HistoryViewState extends State<HistoryView> {
                     ),
                     child: Row(
                       children: [
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Icon(Icons.search_rounded, color: MyColors.appPrimaryColor),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text('Cari Transaksi', style: TextStyle(color: Colors.grey)),
                       ],
                     ),
@@ -157,9 +157,9 @@ class _HistoryViewState extends State<HistoryView> {
                 }
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Container(
-              height: 60,
+              height: 50,
               color: Colors.white,
               padding: EdgeInsets.only(left: 10, bottom: 5, right: 10),
               child: TabBar(
@@ -267,7 +267,9 @@ class _HistoryViewState extends State<HistoryView> {
                           'alamat': booking.alamat ?? '',
                           'nama_cabang': booking.namaCabang ?? '',
                           'nama_jenissvc': booking.namaJenissvc ?? '',
+                          'nama_status': booking.namaStatus ?? '',
                           'jasa': booking.jasa?.map((item) => item.toJson()).toList() ?? [],
+                          'part': booking.part?.map((item) => item.toJson()).toList() ?? [],
                         },
                       );
                     },

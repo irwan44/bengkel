@@ -36,8 +36,8 @@ class DataHis {
   String? namaStatus;
   String? namaJenissvc;
   List<Jasa>? jasa;
+  List<Part>? part;
   String? message;
-  List<Null>? part;
 
   DataHis(
       {this.id,
@@ -48,8 +48,8 @@ class DataHis {
         this.namaStatus,
         this.namaJenissvc,
         this.jasa,
-        this.message,
-        this.part});
+        this.part,
+        this.message});
 
   DataHis.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -65,13 +65,13 @@ class DataHis {
         jasa!.add(new Jasa.fromJson(v));
       });
     }
-    message = json['message'];
     if (json['part'] != null) {
-      part = <Null>[];
+      part = <Part>[];
       json['part'].forEach((v) {
-        part!.add((v));
+        part!.add(new Part.fromJson(v));
       });
     }
+    message = json['message'];
   }
 
   Map<String, dynamic> toJson() {
@@ -86,10 +86,10 @@ class DataHis {
     if (this.jasa != null) {
       data['jasa'] = this.jasa!.map((v) => v.toJson()).toList();
     }
-    data['message'] = this.message;
     if (this.part != null) {
-      data['part'] = this.part!.map((v) => v!).toList();
+      data['part'] = this.part!.map((v) => v.toJson()).toList();
     }
+    data['message'] = this.message;
     return data;
   }
 }
@@ -117,6 +117,39 @@ class Jasa {
     data['kode_jasa'] = this.kodeJasa;
     data['nama_jasa'] = this.namaJasa;
     data['qty_jasa'] = this.qtyJasa;
+    data['harga'] = this.harga;
+    return data;
+  }
+}
+
+class Part {
+  String? tgl;
+  String? kodeSparepart;
+  String? namaSparepart;
+  int? qtySparepart;
+  int? harga;
+
+  Part(
+      {this.tgl,
+        this.kodeSparepart,
+        this.namaSparepart,
+        this.qtySparepart,
+        this.harga});
+
+  Part.fromJson(Map<String, dynamic> json) {
+    tgl = json['tgl'];
+    kodeSparepart = json['kode_sparepart'];
+    namaSparepart = json['nama_sparepart'];
+    qtySparepart = json['qty_sparepart'];
+    harga = json['harga'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['tgl'] = this.tgl;
+    data['kode_sparepart'] = this.kodeSparepart;
+    data['nama_sparepart'] = this.namaSparepart;
+    data['qty_sparepart'] = this.qtySparepart;
     data['harga'] = this.harga;
     return data;
   }
