@@ -1,7 +1,7 @@
 class Lokasi {
   bool? status;
   String? message;
-  List<Data>? data;
+  List<DataLokasi>? data;
 
   Lokasi({this.status, this.message, this.data});
 
@@ -9,9 +9,9 @@ class Lokasi {
     status = json['status'];
     message = json['message'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <DataLokasi>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new DataLokasi.fromJson(v));
       });
     }
   }
@@ -27,15 +27,15 @@ class Lokasi {
   }
 }
 
-class Data {
+class DataLokasi {
   String? name;
   Geometry? geometry;
   String? vicinity;
   String? wa;
 
-  Data({this.name, this.geometry, this.vicinity, this.wa});
+  DataLokasi({this.name, this.geometry, this.vicinity, this.wa});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  DataLokasi.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     geometry = json['geometry'] != null
         ? new Geometry.fromJson(json['geometry'])

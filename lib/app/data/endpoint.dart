@@ -180,7 +180,7 @@ class API {
     }
   }
   //Beda
-  static Future<BookingCustomer> BookingID({
+  static Future<BookingCustomer?> BookingID({
     required String idcabang,
     required String idjenissvc,
     required String keluhan,
@@ -216,41 +216,45 @@ class API {
       print('Response data: ${response.data}');
 
       if (response.statusCode == 200) {
-        Get.snackbar(
-          'Hore',
-          'Registrasi Akun Anda Berhasil!',
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-        );
+        final obj = BookingCustomer.fromJson(response.data);
+
+        // Check for specific message in response
+        if (obj.message == 'Invalid token: Expired') {
+          Get.offAllNamed(Routes.SINGIN);
+          Get.snackbar(
+            obj.message.toString(),
+            obj.message.toString(),
+            backgroundColor: Colors.yellow,
+            colorText: Colors.black,
+          );
+        } else {
+          Get.snackbar(
+            'Hore',
+            'Registrasi Akun Anda Berhasil!',
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+          );
+        }
+
+        return obj;
       } else {
         Get.snackbar(
           'Error',
-          'Terjadi kesalahan saat registrasi',
+          'Terjadi kesalahan saat registrasi: ${response.statusMessage}',
           backgroundColor: Colors.redAccent,
           colorText: Colors.white,
         );
+        throw Exception('Failed to register booking: ${response.statusMessage}');
       }
-
-      final obj = BookingCustomer.fromJson(response.data);
-
-      if (obj.message == 'Invalid token: Expired') {
-        Get.offAllNamed(Routes.SINGIN);
-        Get.snackbar(
-          obj.message.toString(),
-          obj.message.toString(),
-        );
-      }
-
-      return obj;
     } catch (e) {
       print('Error: $e');
       Get.snackbar(
         'Gagal Registrasi',
-        'Terjadi kesalahan saat registrasi',
+        'Terjadi kesalahan saat registrasi: $e',
         backgroundColor: Colors.redAccent,
         colorText: Colors.white,
       );
-      throw e;
+      throw Exception('Error during registration: $e');
     }
   }
 

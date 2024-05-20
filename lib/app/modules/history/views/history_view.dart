@@ -136,7 +136,24 @@ class _HistoryViewState extends State<HistoryView> {
                     );
                   }
                 } else {
-                  return const Center();
+                  return Container(
+                    width: double.infinity,
+                    height: 40,
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.grey.shade100,
+                      border: Border.all(color: MyColors.select),
+                    ),
+                    child: Row(
+                      children: [
+                        SizedBox(width: 10),
+                        Icon(Icons.search_rounded, color: MyColors.appPrimaryColor),
+                        SizedBox(width: 10),
+                        Text('Cari Transaksi', style: TextStyle(color: Colors.grey)),
+                      ],
+                    ),
+                  );
                 }
               },
             ),
@@ -156,6 +173,7 @@ class _HistoryViewState extends State<HistoryView> {
                 ),
                 tabs: [
                   _buildTab('Semua'),
+                  _buildTab('Booking'),
                   _buildTab('Approve'),
                   _buildTab('Diproses'),
                   _buildTab('Estimasi'),
@@ -169,12 +187,13 @@ class _HistoryViewState extends State<HistoryView> {
               child: TabBarView(
                 children: [
                   _buildTabContent('Semua', 0),
-                  _buildTabContent('Approve', 1),
-                  _buildTabContent('Diproses', 2),
-                  _buildTabContent('Estimasi', 3),
-                  _buildTabContent('Invoice', 4),
-                  _buildTabContent('Lunas', 5),
-                  _buildTabContent('Ditolak', 6),
+                  _buildTabContent('Booking', 1),
+                  _buildTabContent('Approve', 2),
+                  _buildTabContent('Diproses', 3),
+                  _buildTabContent('Estimasi', 4),
+                  _buildTabContent('Invoice', 5),
+                  _buildTabContent('Lunas', 6),
+                  _buildTabContent('Ditolak', 7),
                 ],
               ),
             ),
@@ -213,7 +232,7 @@ class _HistoryViewState extends State<HistoryView> {
             },
           );
         } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
+          return Center(child: Text('Belum ada Data History Booking'));
         } else if (!snapshot.hasData || snapshot.data!.datahistory!.isEmpty) {
           return Center(child: Text('No data available'));
         }

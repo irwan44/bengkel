@@ -10,10 +10,11 @@ import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../../../data/data_endpoint/lokasi.dart';
-import '../../../data/data_endpoint/lokasi.dart' as LokasiEndpoint;
-import '../../../data/data_endpoint/jenisservice.dart';
+import '../../../data/data_endpoint/bookingcustomer.dart';
 import '../../../data/data_endpoint/customkendaraan.dart';
+import '../../../data/data_endpoint/lokasi.dart' as LokasiEndpoint;
+import '../../../data/data_endpoint/lokasi.dart';
+import '../../../data/data_endpoint/jenisservice.dart';
 import '../../../data/endpoint.dart';
 import '../../../routes/app_pages.dart';
 
@@ -22,7 +23,7 @@ class BookingController extends GetxController {
   var selectedTransmisi = Rx<DataKendaraan?>(null);
   var selectedService = Rx<JenisServices?>(null);
   var selectedLocation = Rx<String?>(null);
-  var selectedLocationID = Rx<Data?>(null);
+  var selectedLocationID = Rx<DataLokasi?>(null);
   var selectedDate = Rx<DateTime?>(null);
   var selectedTime = Rx<TimeOfDay?>(null);
   var tipeList = <DataKendaraan>[].obs;
@@ -36,7 +37,7 @@ class BookingController extends GetxController {
   late GoogleMapController mapController;
   var currentPosition = Rxn<Position>();
   var markers = <Marker>[].obs;
-  var locationData = <LokasiEndpoint.Data>[].obs;
+  var locationData = <LokasiEndpoint.DataLokasi>[].obs;
   var currentAddress = 'Mengambil lokasi...'.obs;
   final panelController = PanelController();
 
@@ -56,7 +57,7 @@ class BookingController extends GetxController {
     selectedService.value = value;
   }
 
-  void selectLocation(Data locationData) {
+  void selectLocation(DataLokasi locationData) {
     selectedLocationID.value = locationData;
     final id = locationData.geometry?.location?.id ?? '';
     final name = locationData.name ?? '';
@@ -124,7 +125,7 @@ class BookingController extends GetxController {
         print('idcabang: $idcabang');
         print('idjenissvc: ${selectedService.value!.id}');
         print('keluhan: ${Keluhan.value}');
-        print('tglbooking: ${DateFormat('dd/MM/yyyy').format(selectedDateTime)}');
+        print('tglbooking: ${ DateFormat('yyyy-MM-dd').format(selectedDateTime)}');
         print('jambooking: ${DateFormat('HH:mm').format(selectedDateTime)}');
         print('idkendaraan: ${selectedTransmisi.value!.id}');
 
@@ -133,7 +134,7 @@ class BookingController extends GetxController {
           idcabang: idcabang,
           idjenissvc: selectedService.value!.id.toString(),
           keluhan: Keluhan.value,
-          tglbooking: DateFormat('yyyy/MM/dd').format(selectedDateTime),
+          tglbooking: DateFormat('yyyy-MM-dd').format(selectedDateTime),
           jambooking: DateFormat('HH:mm').format(selectedDateTime),
           idkendaraan: selectedTransmisi.value!.id.toString(),
         );
@@ -146,12 +147,8 @@ class BookingController extends GetxController {
         }
       } on DioError catch (e) {
         if (e.response != null) {
-          // Print response data
           print('Error Response data: ${e.response!.data}');
-          print('Error Response headers: ${e.response!.headers}');
-          print('Error Response request: ${e.response!.requestOptions}');
         } else {
-          // Error due to setting up or sending the request
           print('Error sending request: ${e.message}');
         }
         Get.snackbar('Gagal Booking', 'Terjadi kesalahan saat Booking',
@@ -166,7 +163,6 @@ class BookingController extends GetxController {
           backgroundColor: Colors.redAccent, colorText: Colors.white);
     }
   }
-
 
   Future<void> fetchServiceList() async {
     isLoading.value = true;

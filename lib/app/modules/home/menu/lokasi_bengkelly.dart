@@ -22,7 +22,7 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
   late GoogleMapController _controller;
   Position? _currentPosition;
   List<Marker> _markers = [];
-  List<LokasiEndpoint.Data> _locationData = []; // Gunakan alias untuk tipe data
+  List<LokasiEndpoint.DataLokasi> _locationData = []; // Gunakan alias untuk tipe data
   final PanelController _panelController = PanelController();
   String _currentAddress = 'Mengambil lokasi...';
 

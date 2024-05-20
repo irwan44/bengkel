@@ -113,6 +113,8 @@ class ListHistory extends StatelessWidget {
     switch (status.toLowerCase()) {
       case 'approve':
         return Colors.green;
+        case 'booking':
+        return Colors.blue;
       case 'diproses':
         return Colors.orange;
       case 'estimasi':
