@@ -252,8 +252,8 @@ class _HomePageState extends State<HomePage> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         _menuItemHelp(() => Get.toNamed(Routes.EMERGENCY), 'assets/icons/help.png', "Emergency\nService"),
-        _menuItem(() => Get.toNamed(Routes.BOOKINGSERVICE), 'assets/icons/bookingservice.png', "Booking\nService"),
-        _menuItem(() => Get.toNamed(Routes.REPAIRMAINTENANCE), 'assets/icons/repear.png', "Repair &\nMaintenance"),
+        _menuItem(() => Get.toNamed(Routes.BOOKING), 'assets/icons/bookingservice.png', "Booking\nService"),
+        _menuItem(() => Get.toNamed(Routes.BOOKING), 'assets/icons/repear.png', "Repair &\nMaintenance"),
         _menuItem(() => Get.toNamed(Routes.LOKASIBENGKELLY), 'assets/icons/drop.png', "Lokasi\nBengkelly"),
       ],
     );
@@ -385,7 +385,13 @@ class _HomePageState extends State<HomePage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Row(children: [
-                              Image.asset(area['logo'], width: 50),
+                            ClipOval(
+                            child:  Image.asset(
+                            area['logo'],
+                                fit: BoxFit.cover,
+                                height: 50,
+                                width: 50),
+                            ),
                               SizedBox(width: 10),
                               Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -61,6 +61,29 @@ class ListHistory extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           fontSize: 16),
                     ),
+                    Row(children: [
+                      const Text(
+                        'No Polisi :',
+                        style: TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 16),
+                      ),
+                        const SizedBox(width: 10,),
+                        Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                          ),
+                          child:
+                      Text(
+                        '${booking.noPolisi}',
+                        style: TextStyle(
+                            fontWeight: FontWeight.normal, color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
                 Container(
