@@ -125,7 +125,7 @@ class BookingController extends GetxController {
         print('idcabang: $idcabang');
         print('idjenissvc: ${selectedService.value!.id}');
         print('keluhan: ${Keluhan.value}');
-        print('tglbooking: ${ DateFormat('yyyy-MM-dd').format(selectedDateTime)}');
+        print('tglbooking: ${DateFormat('dd/MM/yyyy').format(selectedDateTime)}');
         print('jambooking: ${DateFormat('HH:mm').format(selectedDateTime)}');
         print('idkendaraan: ${selectedTransmisi.value!.id}');
 
@@ -144,10 +144,12 @@ class BookingController extends GetxController {
         } else {
           Get.snackbar('Error', 'Terjadi kesalahan saat Booking',
               backgroundColor: Colors.redAccent, colorText: Colors.white);
+
         }
       } on DioError catch (e) {
         if (e.response != null) {
           print('Error Response data: ${e.response!.data}');
+          print('Error sending request: ${e.message}');
         } else {
           print('Error sending request: ${e.message}');
         }

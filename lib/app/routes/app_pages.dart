@@ -13,6 +13,7 @@ import '../modules/booking/views/booking_view.dart';
 import '../modules/chat/bindings/chat_binding.dart';
 import '../modules/chat/views/chat_view.dart';
 import '../modules/history/bindings/history_binding.dart';
+import '../modules/history/componen/detail_history.dart';
 import '../modules/history/views/history_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/detail/detailbengkelly/lokasibengkelly.dart';
@@ -185,6 +186,12 @@ class AppPages {
       transition: Transition.rightToLeftWithFade,
       name: _Paths.DETAILBOOKING,
       page: () => DetailBookingView(),
+      binding: BookingBinding(),
+    ),
+    GetPage(
+      transition: Transition.rightToLeftWithFade,
+      name: _Paths.DETAILHISTORY,
+      page: () => DetailHistory(),
       binding: BookingBinding(),
     ),
   ];

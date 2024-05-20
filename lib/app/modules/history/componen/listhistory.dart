@@ -6,11 +6,15 @@ import '../../../data/endpoint.dart';
 
 class ListHistory extends StatelessWidget {
   final DataHis booking;
-  const ListHistory({super.key, required this.booking});
+  final VoidCallback onTap;
+  const ListHistory({super.key, required this.booking, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    Color statusColor = StatusColor.getColor(booking.namaStatus??'');
+    return InkWell(
+        onTap: onTap ,
+    child: Container(
       width: double.infinity,
       padding: EdgeInsets.all(10),
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -42,7 +46,6 @@ class ListHistory extends StatelessWidget {
                     '${booking.namaJenissvc}',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: MyColors.appPrimaryColor,
                         fontSize: 16),
                   ),
                   Text(
@@ -58,15 +61,7 @@ class ListHistory extends StatelessWidget {
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: getStatusColor(booking.namaStatus??''),
-                  boxShadow: [
-                    BoxShadow(
-                      color: getStatusColor(booking.namaStatus??'').withOpacity(0.1),
-                      spreadRadius: 5,
-                      blurRadius: 10,
-                      offset: Offset(0, 3),
-                    ),
-                  ],
+                  color: statusColor,
                 ),
                 child: Text(
                   '${booking.namaStatus}',
@@ -106,27 +101,41 @@ class ListHistory extends StatelessWidget {
           ),
         ],
       ),
+      ),
     );
   }
-
-  Color getStatusColor(String status) {
+}
+class StatusColor {
+  static Color getColor(String status) {
     switch (status.toLowerCase()) {
+      case 'booking':
+        return Colors.blue;
       case 'approve':
         return Colors.green;
-        case 'booking':
-        return Colors.blue;
       case 'diproses':
         return Colors.orange;
       case 'estimasi':
-        return MyColors.appPrimaryColor;
+        return Colors.lime;
+      case 'estimasi':
+        return Colors.orange;
+      case 'selesai dikerjakan':
+        return Colors.blue;
+      case 'pkb':
+        return Colors.yellow;
+      case 'pkb tutup':
+        return Colors.yellow;
       case 'invoice':
-        return Colors.blue;
+        return Colors.yellow;
       case 'lunas':
-        return Colors.blue;
+        return Colors.yellow;
+      case 'ditolak by sistem':
+        return Colors.red;
       case 'ditolak':
         return Colors.red;
+      case 'selesai dikerjakan':
+        return Colors.green;
       default:
-        return Colors.grey;
+        return Colors.transparent;
     }
   }
 }

@@ -1,6 +1,5 @@
 import 'package:customer_bengkelly/app/data/endpoint.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -27,7 +26,7 @@ class _HistoryViewState extends State<HistoryView> {
   @override
   void initState() {
     super.initState();
-    _refreshControllers = List.generate(7, (index) => RefreshController());
+    _refreshControllers = List.generate(8, (index) => RefreshController());
   }
 
   @override
@@ -74,7 +73,7 @@ class _HistoryViewState extends State<HistoryView> {
         ],
       ),
       body: DefaultTabController(
-        length: 7,
+        length: 8,
         child: Column(
           children: [
             FutureBuilder(
@@ -96,7 +95,7 @@ class _HistoryViewState extends State<HistoryView> {
                           showItemsOnEmpty: true,
                           failure: Center(
                             child: Text(
-                              'Booking Tidak Dtemukan :(',
+                              'Booking Tidak Ditemukan :(',
                               style: GoogleFonts.nunito(),
                             ),
                           ),
@@ -105,6 +104,7 @@ class _HistoryViewState extends State<HistoryView> {
                           ],
                           builder: (items) => ListHistory(
                             booking: items,
+                            onTap: () {},
                           ),
                         ),
                       ),
@@ -226,7 +226,7 @@ class _HistoryViewState extends State<HistoryView> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return ListView.builder(
-            itemCount: 5, // Number of shimmer items
+            itemCount: 5,
             itemBuilder: (context, index) {
               return const ShimmerListHistory();
             },
@@ -258,13 +258,26 @@ class _HistoryViewState extends State<HistoryView> {
                   ),
                 ),
                 children: filteredBookings!.map((booking) {
-                  return ListHistory(booking: booking); // Use the new widget
+                  return ListHistory(
+                    booking: booking,
+                    onTap: () {
+                      Get.toNamed(
+                        Routes.DETAILHISTORY,
+                        arguments: {
+                          'alamat': booking.alamat ?? '',
+                          'nama_cabang': booking.namaCabang ?? '',
+                          'nama_jenissvc': booking.namaJenissvc ?? '',
+                          'jasa': booking.jasa?.map((item) => item.toJson()).toList() ?? [],
+                        },
+                      );
+                    },
+                  );
                 }).toList(),
               ),
             ),
           ),
-
-        );},
+        );
+      },
     );
   }
 

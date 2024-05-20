@@ -140,6 +140,7 @@ class DetailBookingViewState extends State<DetailBookingView> {
                           child: Text('Detail Lokasi, Tanggal dan Waktu', style: TextStyle(),),
                         ),
                         SizedBox(height: 10,),
+
                         FadeInAnimation(
                           delay: 1.8,
                           child: Container(
@@ -161,9 +162,12 @@ class DetailBookingViewState extends State<DetailBookingView> {
                                   filled: true,
                                   fillColor: Colors.transparent,
                                 ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    Text('${controller.selectedLocation.value!}', style: TextStyle(fontWeight: FontWeight.bold),),
+                                    SizedBox(height: 10,),
                                     Text(
                                       controller.selectedDate.value == null
                                           ? 'Pilih Jadwal'

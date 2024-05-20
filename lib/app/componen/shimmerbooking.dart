@@ -12,7 +12,7 @@ class ShimmerListHistory extends StatelessWidget {
       child: Container(
         width: double.infinity,
         padding: EdgeInsets.all(10),
-        margin: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,
