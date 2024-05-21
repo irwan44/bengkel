@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../data/data_endpoint/customkendaraan.dart';
 import '../../../data/data_endpoint/merekkendaraan.dart';
 import '../../../data/data_endpoint/tipekendaraan.dart';
 import '../../../data/endpoint.dart';
@@ -17,7 +18,7 @@ class ProfileController extends GetxController {
   final dio.Dio _dio = dio.Dio();
   var futureMerek = Future<MerekKendaraan>.value(MerekKendaraan(data: [])).obs;
   var futureTipeKendaraan = Future<TipeKendaraan>.value(TipeKendaraan(data: [])).obs;
-  var selectedMerek = ''.obs;
+  var selectedMerek = Rx<DataKendaraan?>(null);
   var selectedTipe = ''.obs;
   var selectedMerekId = 0.obs;
   var selectedTipeID = 0.obs;
@@ -45,12 +46,11 @@ class ProfileController extends GetxController {
 
   Future<void> CreateKendaraan() async {
     if (nopolController.text.isNotEmpty &&
-        selectedMerek.value.isNotEmpty &&
         selectedKategory.value.isNotEmpty &&
         selectedTransmisi.value.isNotEmpty &&
         tahunController.text.isNotEmpty) {
-      print('nopolisi: ${nopolController.text}');
-      print('idmerk: ${selectedMerekId.value}');
+      print('nopolisi: $nopolController');
+      print('idmerk: ${selectedMerek.value}');
       print('idtipe: ${selectedTipeID.value}');
       print('warna: ${warnaController.text}');
       print('tahun: ${tahunController.text}');
@@ -58,8 +58,9 @@ class ProfileController extends GetxController {
       print('transmission: ${selectedTransmisi.value}');
       try {
         final registerResponse = await API.CreateKendaraanID(
+
           nopolisi: nopolController.text,
-          idmerk: selectedMerekId.value.toString(),
+          idmerk: selectedMerek.value!.id.toString(),
           idtipe: selectedTipeID.value.toString(),
           warna: warnaController.text,
           tahun: tahunController.text,

@@ -1,12 +1,15 @@
 import 'dart:convert';
 import 'dart:ui';import 'package:customer_bengkelly/app/data/data_endpoint/bookingcustomer.dart';
+import 'package:customer_bengkelly/app/data/data_endpoint/createkendaraan.dart';
 import 'package:customer_bengkelly/app/data/publik.dart';
+import 'package:customer_bengkelly/app/modules/home/menu/emergency_service.dart';
 import 'package:customer_bengkelly/app/modules/home/menu/lokasi_bengkelly.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../routes/app_pages.dart';
+import 'data_endpoint/bookingemergency.dart';
 import 'data_endpoint/customkendaraan.dart';
 import 'data_endpoint/history.dart';
 import 'data_endpoint/jenisservice.dart';
@@ -27,11 +30,12 @@ class API {
   static const _katagorikendaraan = 'https://api-vale.techthinkhub.com/api/kategori-kendaraan';
   //API ------------------------------------------------------------------------------------
   static const _url = 'https://mobile.techthinkhub.id';
-  static const _urlbe = 'https://be.techthinkhub.id';
+  // static const _urlbe = 'https://be.techthinkhub.id';
   static const _baseUrl = '$_url/api';
   static const _PostLogin = '$_baseUrl/customer/login';
   static const _Getprofile = '$_baseUrl/customer-get-profile';
   static const _PostRegister = '$_baseUrl/register-kendaraan';
+  static const _PostCreateKendaraan = '$_baseUrl/customer-create-kendaraan';
   static const _postCreateBooking = '$_baseUrl/booking/book-rest-area';
   static const _GetLokasi = '$_baseUrl/get-lokasi';
   static const _GetHistory = '$_baseUrl/history';
@@ -180,6 +184,7 @@ class API {
     }
   }
   //Beda
+// Kodingan 4: BookingID Method
   static Future<BookingCustomer?> BookingID({
     required String idcabang,
     required String idjenissvc,
@@ -200,6 +205,7 @@ class API {
     try {
       final token = Publics.controller.getToken.value ?? '';
       print('Token: $token');
+      print('Request Data: $data');
 
       var response = await Dio().post(
         _postCreateBooking,
@@ -220,7 +226,7 @@ class API {
 
         // Check for specific message in response
         if (obj.message == 'Invalid token: Expired') {
-          Get.offAllNamed(Routes.SINGIN);
+          Get.offAllNamed(Routes.HOME);
           Get.snackbar(
             obj.message.toString(),
             obj.message.toString(),
@@ -257,7 +263,160 @@ class API {
       throw Exception('Error during registration: $e');
     }
   }
+  //Beda
+  static Future<BookingEmergency> EmergencyServiceID({
+    required String idcabang,
+    required String keluhan,
+    required String berita,
+    required String idkendaraan,
+  }) async {
+    final data = {
+      "id_cabang": idcabang,
+      "keluhan": keluhan,
+      "berita": berita,
+      "id_kendaraan": idkendaraan,
+    };
 
+    try {
+      final token = Publics.controller.getToken.value ?? '';
+      print('Token: $token');
+
+      var response = await Dio().post(
+        _GetEmergencyService,
+        data: data,
+        options: Options(
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer $token",
+          },
+        ),
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('Response data: ${response.data}');
+
+      if (response.statusCode == 200) {
+        final obj = BookingEmergency.fromJson(response.data);
+
+        // Check for specific message in response
+        if (obj.message == 'Invalid token: Expired') {
+          Get.offAllNamed(Routes.HOME);
+          Get.snackbar(
+            obj.message.toString(),
+            obj.message.toString(),
+            backgroundColor: Colors.yellow,
+            colorText: Colors.black,
+          );
+        } else {
+          Get.snackbar(
+            'Berhasil',
+            'Emergency Service akan segera di lawani',
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+          );
+        }
+
+        return obj;
+      } else {
+        Get.snackbar(
+          'Error',
+          'Terjadi kesalahan saat Emergency Service: ${response.statusMessage}',
+          backgroundColor: Colors.redAccent,
+          colorText: Colors.white,
+        );
+        throw Exception('Failed to register booking: ${response.statusMessage}');
+      }
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Gagal emergency Service',
+        'Terjadi kesalahan saat Emergency Service: $e',
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+      throw Exception('Error during registration: $e');
+    }
+  }
+//Beda
+  static Future<CreateKendaraan> CreateKendaraanID({
+    required String nopolisi,
+    required String idmerk,
+    required String idtipe,
+    required String warna,
+    required String tahun,
+    required String categoryname,
+    required String transmission,
+  }) async {
+    final data = {
+      "no_polisi": nopolisi,
+      "id_merk": idmerk,
+      "id_tipe": idtipe,
+      "warna": warna,
+      "tahun": tahun,
+      "category_name": categoryname,
+      "transmission": transmission,
+    };
+
+    try {
+      final token = Publics.controller.getToken.value ?? '';
+      print('Token: $token');
+
+      var response = await Dio().post(
+        _PostCreateKendaraan,
+        data: data,
+        options: Options(
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer $token",
+          },
+        ),
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('Response data: ${response.data}');
+
+      if (response.statusCode == 200) {
+        final obj = CreateKendaraan.fromJson(response.data);
+
+        // Check for specific message in response
+        if (obj.message == 'Invalid token: Expired') {
+          Get.offAllNamed(Routes.HOME);
+          Get.snackbar(
+            obj.message.toString(),
+            obj.message.toString(),
+            backgroundColor: Colors.yellow,
+            colorText: Colors.black,
+          );
+        } else {
+          Get.snackbar(
+            'Berhasil',
+            'Emergency Service akan segera di lawani',
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+          );
+        }
+
+        return obj;
+      } else {
+        Get.snackbar(
+          'Error',
+          'Terjadi kesalahan saat Emergency Service: ${response.statusMessage}',
+          backgroundColor: Colors.redAccent,
+          colorText: Colors.white,
+        );
+        throw Exception('Failed to register booking: ${response.statusMessage}');
+      }
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Gagal emergency Service',
+        'Terjadi kesalahan saat Emergency Service: $e',
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+      throw Exception('Error during registration: $e');
+    }
+  }
 //Beda
   static Future<MerekKendaraan> merekid() async {
     try {
@@ -521,6 +680,7 @@ class API {
       throw e;
     }
   } //Beda
+
   //Beda
   static Future<List<Post>> fetchPostsFromSource({
     required String url,

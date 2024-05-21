@@ -1,7 +1,9 @@
 import 'package:customer_bengkelly/app/modules/profile/componen/widgets/listkendaraan.dart';
+import 'package:customer_bengkelly/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:get/get.dart';
 
 import '../../../componen/color.dart';
 import '../../../data/data_endpoint/customkendaraan.dart';
@@ -34,6 +36,7 @@ class _PilihKendaraanState extends State<PilihKendaraan> {
                 child:
             ElevatedButton(
               onPressed: () async {
+                Get.toNamed(Routes.TAMBAHKENDARAAN);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: MyColors.appPrimaryColor,

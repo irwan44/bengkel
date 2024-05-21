@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:customer_bengkelly/app/modules/home/menu/emergency_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -46,6 +47,13 @@ class BookingController extends GetxController {
         selectedService.value != null &&
         selectedLocation.value != null &&
         selectedDate.value != null &&
+        selectedTime.value != null &&
+        Keluhan.value.isNotEmpty;
+  }
+
+  bool isFormValidEmergency() {
+    return selectedTransmisi.value != null &&
+        selectedLocation.value != null &&
         Keluhan.value.isNotEmpty;
   }
 
@@ -121,7 +129,6 @@ class BookingController extends GetxController {
           selectedTime.value!.minute,
         );
 
-        // Logging the values to ensure they are correct
         print('idcabang: $idcabang');
         print('idjenissvc: ${selectedService.value!.id}');
         print('keluhan: ${Keluhan.value}');
@@ -130,18 +137,19 @@ class BookingController extends GetxController {
         print('idkendaraan: ${selectedTransmisi.value!.id}');
 
         // Sending the request
-        final registerResponse = await API.BookingID(
+        final Response = await API.BookingID(
           idcabang: idcabang,
           idjenissvc: selectedService.value!.id.toString(),
           keluhan: Keluhan.value,
-          tglbooking: DateFormat('yyyy-MM-dd').format(selectedDateTime),
-          jambooking: DateFormat('HH:mm').format(selectedDateTime),
+          tglbooking: DateFormat('dd/MM/yyyy').format(selectedDateTime).toString(),
+          jambooking: DateFormat('HH:mm').format(selectedDateTime).toString(),
           idkendaraan: selectedTransmisi.value!.id.toString(),
         );
 
-        if (registerResponse != null && registerResponse.status == true) {
-          Get.offAllNamed(Routes.SINGIN);
+        if (Response != null && Response.status == true) {
+          Get.offAllNamed(Routes.HOME);
         } else {
+          print(Response);
           Get.snackbar('Error', 'Terjadi kesalahan saat Booking',
               backgroundColor: Colors.redAccent, colorText: Colors.white);
 
@@ -162,6 +170,57 @@ class BookingController extends GetxController {
       }
     } else {
       Get.snackbar('Gagal Booking', 'Semua bidang harus diisi',
+          backgroundColor: Colors.redAccent, colorText: Colors.white);
+    }
+  }
+
+  Future<void> EmergencyService() async {
+    if (isFormValidEmergency()) {
+      try {
+        if (Keluhan.value == null || selectedTransmisi.value!.id == null) {
+          Get.snackbar('Gagal Emergency Service', 'Informasi lokasi tidak lengkap',
+              backgroundColor: Colors.redAccent, colorText: Colors.white);
+          return;
+        }
+        final idcabang = selectedLocationID.value!.geometry!.location!.id.toString();
+
+
+        // Logging the values to ensure they are correct
+        print('idcabang: $idcabang');
+        print('keluhan: ${Keluhan.value}');
+        print('berita: ${'Untuk emergency Service'}');
+        print('idkendaraan: ${selectedTransmisi.value!.id}');
+
+        // Sending the request
+        final registerResponse = await API.EmergencyServiceID(
+          idcabang: idcabang,
+          keluhan: Keluhan.value,
+          berita: 'Untuk emergency Service',
+          idkendaraan: selectedTransmisi.value!.id.toString(),
+        );
+
+        if (registerResponse != null && registerResponse.status == true) {
+          Get.offAllNamed(Routes.HOME);
+        } else {
+          Get.snackbar('Error', 'Terjadi kesalahan saat Emergency Service',
+              backgroundColor: Colors.redAccent, colorText: Colors.white);
+        }
+      } on DioError catch (e) {
+        if (e.response != null) {
+          print('Error Response data: ${e.response!.data}');
+          print('Error sending request: ${e.message}');
+        } else {
+          print('Error sending request: ${e.message}');
+        }
+        Get.snackbar('Gagal emergency Service', 'Terjadi kesalahan saat Emergency Service',
+            backgroundColor: Colors.redAccent, colorText: Colors.white);
+      } catch (e) {
+        print('Error during emergency Service: $e');
+        Get.snackbar('Gagal emergency Service', 'Terjadi kesalahan saat Emergency Service',
+            backgroundColor: Colors.redAccent, colorText: Colors.white);
+      }
+    } else {
+      Get.snackbar('Gagal Emergency Service', 'Semua bidang harus diisi',
           backgroundColor: Colors.redAccent, colorText: Colors.white);
     }
   }

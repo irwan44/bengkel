@@ -10,6 +10,7 @@ import '../modules/booking/bindings/booking_binding.dart';
 import '../modules/booking/componen/detailbooking.dart';
 import '../modules/booking/componen/select_maps.dart';
 import '../modules/booking/views/booking_view.dart';
+import '../modules/booking/views/emergency_view.dart';
 import '../modules/chat/bindings/chat_binding.dart';
 import '../modules/chat/views/chat_view.dart';
 import '../modules/history/bindings/history_binding.dart';
@@ -33,6 +34,7 @@ import '../modules/profile/componen/edit_profile.dart';
 import '../modules/profile/componen/pengaturan.dart';
 import '../modules/profile/componen/pilih_kendaraan.dart';
 import '../modules/profile/componen/pusat_bantuan.dart';
+import '../modules/profile/componen/widgets/tambah_kendaraan.dart';
 import '../modules/profile/views/profile_view.dart';
 
 part 'app_routes.dart';
@@ -101,7 +103,7 @@ class AppPages {
     GetPage(
       transition: Transition.downToUp,
       name: _Paths.NOTIFIKASI,
-      page: () => const MyApp(),
+      page: () => const Notofikasi(),
       binding: NotifikasiBinding(),
     ),
     GetPage(
@@ -117,9 +119,8 @@ class AppPages {
       binding: BookingBinding(),
     ),
     GetPage(
-      transition: Transition.rightToLeftWithFade,
       name: _Paths.EMERGENCY,
-      page: () => const EmergencyService(),
+      page: () => EmergencyBooking(),
       binding: BookingBinding(),
     ),
     GetPage(
@@ -192,6 +193,12 @@ class AppPages {
       transition: Transition.rightToLeftWithFade,
       name: _Paths.DETAILHISTORY,
       page: () => DetailHistory(),
+      binding: BookingBinding(),
+    ),
+    GetPage(
+      transition: Transition.downToUp,
+      name: _Paths.TAMBAHKENDARAAN,
+      page: () => TambahKendaraan(),
       binding: BookingBinding(),
     ),
   ];
