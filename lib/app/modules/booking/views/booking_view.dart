@@ -44,7 +44,7 @@ class BookingViewState extends State<BookingView> {
                   child: ElevatedButton(
                     onPressed: controller.isFormValid()
                         ? () {
-                      controller.BookingID();
+                      Get.toNamed(Routes.DETAILBOOKING);
                     }
                         : null,
                     style: ElevatedButton.styleFrom(
@@ -55,14 +55,14 @@ class BookingViewState extends State<BookingView> {
                           borderRadius: BorderRadius.circular(20)),
                       elevation: 4.0,
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(width: 10,),
                         Text(
                           'Booking Sekarang',
-                          style: TextStyle(
+                          style: GoogleFonts.nunito(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
