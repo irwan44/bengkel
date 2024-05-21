@@ -226,7 +226,7 @@ class API {
 
         // Check for specific message in response
         if (obj.message == 'Invalid token: Expired') {
-          Get.offAllNamed(Routes.HOME);
+          Get.offAllNamed(Routes.SUKSESBOOKING);
           Get.snackbar(
             obj.message.toString(),
             obj.message.toString(),
@@ -234,12 +234,12 @@ class API {
             colorText: Colors.black,
           );
         } else {
-          Get.snackbar(
-            'Hore',
-            'Registrasi Akun Anda Berhasil!',
-            backgroundColor: Colors.green,
-            colorText: Colors.white,
-          );
+          // Get.snackbar(
+          //   'Hore',
+          //   'Registrasi Akun Anda Berhasil!',
+          //   backgroundColor: Colors.green,
+          //   colorText: Colors.white,
+          // );
         }
 
         return obj;

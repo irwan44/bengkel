@@ -114,9 +114,11 @@ class BookingController extends GetxController {
   Future<void> BookingID() async {
     if (isFormValid()) {
       try {
+        isLoading.value = true; // Start loading
         if (selectedLocationID.value == null || selectedLocationID.value!.geometry == null || selectedLocationID.value!.geometry!.location == null) {
           Get.snackbar('Gagal Booking', 'Informasi lokasi tidak lengkap',
               backgroundColor: Colors.redAccent, colorText: Colors.white);
+          isLoading.value = false; // Stop loading
           return;
         }
         final idcabang = selectedLocationID.value!.geometry!.location!.id.toString();
@@ -146,15 +148,17 @@ class BookingController extends GetxController {
           idkendaraan: selectedTransmisi.value!.id.toString(),
         );
 
+        isLoading.value = false; // Stop loading
+
         if (Response != null && Response.status == true) {
-          Get.offAllNamed(Routes.HOME);
+          Get.offAllNamed(Routes.SUKSESBOOKING);
         } else {
           print(Response);
           Get.snackbar('Error', 'Terjadi kesalahan saat Booking',
               backgroundColor: Colors.redAccent, colorText: Colors.white);
-
         }
       } on DioError catch (e) {
+        isLoading.value = false; // Stop loading
         if (e.response != null) {
           print('Error Response data: ${e.response!.data}');
           print('Error sending request: ${e.message}');
@@ -164,6 +168,7 @@ class BookingController extends GetxController {
         Get.snackbar('Gagal Booking', 'Terjadi kesalahan saat Booking',
             backgroundColor: Colors.redAccent, colorText: Colors.white);
       } catch (e) {
+        isLoading.value = false; // Stop loading
         print('Error during registration: $e');
         Get.snackbar('Gagal Booking', 'Terjadi kesalahan saat Booking',
             backgroundColor: Colors.redAccent, colorText: Colors.white);
@@ -173,6 +178,7 @@ class BookingController extends GetxController {
           backgroundColor: Colors.redAccent, colorText: Colors.white);
     }
   }
+
 
   Future<void> EmergencyService() async {
     if (isFormValidEmergency()) {

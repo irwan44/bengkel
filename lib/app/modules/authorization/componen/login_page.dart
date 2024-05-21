@@ -70,9 +70,13 @@ class _LoginPageState extends State<LoginPage> {
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    Image.asset(
+                      'assets/logo/logo_bengkelly.png',
+                      width: 200,
+                      fit: BoxFit.contain,
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Column(

@@ -31,6 +31,7 @@ abstract class Routes {
   static const DETAILBOOKING = _Paths.DETAILBOOKING;
   static const DETAILHISTORY = _Paths.DETAILHISTORY;
   static const TAMBAHKENDARAAN = _Paths.TAMBAHKENDARAAN;
+  static const SUKSESBOOKING = _Paths.SUKSESBOOKING;
 }
 
 abstract class _Paths {
@@ -63,4 +64,5 @@ abstract class _Paths {
   static const DETAILBOOKING = '/detailbooking';
   static const DETAILHISTORY = '/detailhistory';
   static const TAMBAHKENDARAAN = '/tambahkendaraan';
+  static const SUKSESBOOKING = '/suksesbooking';
 }

@@ -7,6 +7,7 @@ import '../modules/authorization/componen/signup_next.dart';
 import '../modules/authorization/componen/signup_page.dart';
 import '../modules/authorization/views/authorization_view.dart';
 import '../modules/booking/bindings/booking_binding.dart';
+import '../modules/booking/componen/berhasil_booking.dart';
 import '../modules/booking/componen/detailbooking.dart';
 import '../modules/booking/componen/select_maps.dart';
 import '../modules/booking/views/booking_view.dart';
@@ -199,6 +200,12 @@ class AppPages {
       transition: Transition.downToUp,
       name: _Paths.TAMBAHKENDARAAN,
       page: () => TambahKendaraan(),
+      binding: BookingBinding(),
+    ),
+    GetPage(
+      transition: Transition.downToUp,
+      name: _Paths.SUKSESBOOKING,
+      page: () => SuksesBooking(),
       binding: BookingBinding(),
     ),
   ];

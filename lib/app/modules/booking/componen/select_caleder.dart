@@ -38,7 +38,7 @@ class CalendarTimePickerPage extends StatelessWidget {
                     controller.onPageChanged(focusedDay);
                   },
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: 10),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   child: ElevatedButton(
