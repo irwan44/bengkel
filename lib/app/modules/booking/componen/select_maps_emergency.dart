@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
+import '../../../componen/color.dart';
 import '../controllers/booking_controller.dart';
 
 class SelectBookingEmergency extends StatelessWidget {
@@ -48,7 +49,17 @@ class SelectBookingEmergency extends StatelessWidget {
       ),
       body: Obx(() {
         if (_bookingController.currentPosition.value == null) {
-          return Center(child: CircularProgressIndicator());
+          return Center(child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(
+                color: MyColors.appPrimaryColor,
+              ),
+              SizedBox(height: 10,),
+              Text('Sedang memuat lokasi...')
+            ],)
+          );
         } else {
           return Stack(
             children: [

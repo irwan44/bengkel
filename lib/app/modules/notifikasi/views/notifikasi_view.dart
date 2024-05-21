@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
+import '../../../componen/shimmerbooking.dart';
 import '../../../data/data_endpoint/history.dart';
 import '../../../data/endpoint.dart';
 import '../../../routes/app_pages.dart';
@@ -18,7 +19,10 @@ class _NotofikasiState extends State<Notofikasi> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        forceMaterialTransparency: true,
+        backgroundColor: Colors.white,
         title: Text('Notifikasi'),
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
@@ -33,7 +37,12 @@ class _NotofikasiState extends State<Notofikasi> {
             future: API.HistoryBookingID(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
+                return  ListView.builder(
+                  itemCount: 5,
+                  itemBuilder: (context, index) {
+                    return const ShimmerListHistory();
+                  },
+                );
               } else if (snapshot.hasError) {
                 return Center(child: Text('Error: ${snapshot.error}'));
               } else if (snapshot.hasData && snapshot.data != null) {

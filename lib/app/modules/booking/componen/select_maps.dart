@@ -1,3 +1,4 @@
+import 'package:customer_bengkelly/app/componen/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -47,7 +48,17 @@ class SelectBooking extends StatelessWidget {
       ),
       body: Obx(() {
         if (_bookingController.currentPosition.value == null) {
-          return Center(child: CircularProgressIndicator());
+          return Center(child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(
+                color: MyColors.appPrimaryColor,
+              ),
+              SizedBox(height: 10,),
+              Text('Sedang memuat lokasi...')
+            ],)
+          );
         } else {
           return Stack(
             children: [

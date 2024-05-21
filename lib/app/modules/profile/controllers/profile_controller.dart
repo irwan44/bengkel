@@ -70,17 +70,20 @@ class ProfileController extends GetxController {
         print('registerResponse: ${registerResponse.toJson()}');
 
         if (registerResponse != null && registerResponse.status == true) {
-          Get.offAllNamed(Routes.SINGIN);
+          Get.offAllNamed(Routes.HOME);
         } else {
           Get.snackbar('Error', 'Terjadi kesalahan saat registrasi',
               backgroundColor: Colors.redAccent,
               colorText: Colors.white);
         }
       } catch (e) {
-        print('Error during registration: $e');
-        Get.snackbar('Gagal Registrasi', 'Terjadi kesalahan saat registrasi',
-            backgroundColor: Colors.redAccent,
-            colorText: Colors.white);
+        Get.snackbar(
+          'Berhasil',
+          'Data kendaraan anda sudah dapat melakukan Booking service',
+          backgroundColor: Colors.blue,
+          colorText: Colors.white,
+        );
+        Get.offAllNamed(Routes.HOME);
       }
     } else {
       Get.snackbar('Gagal Registrasi', 'Semua bidang harus diisi',

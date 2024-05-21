@@ -203,7 +203,6 @@ class AppPages {
       binding: BookingBinding(),
     ),
     GetPage(
-      transition: Transition.downToUp,
       name: _Paths.SUKSESBOOKING,
       page: () => SuksesBooking(),
       binding: BookingBinding(),

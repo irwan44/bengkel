@@ -45,7 +45,6 @@ class _SuksesBookingState extends State<SuksesBooking> {
               ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).popUntil((route) => route.isFirst);
-                  Navigator.of(context).popUntil((route) => route.isFirst);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: MyColors.appPrimaryColor,

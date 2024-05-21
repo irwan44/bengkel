@@ -196,7 +196,17 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
         ),
       ),
       body: _currentPosition == null
-          ? Center(child: CircularProgressIndicator())
+          ? Center(child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+        CircularProgressIndicator(
+          color: MyColors.appPrimaryColor,
+        ),
+        SizedBox(height: 10,),
+        Text('Sedang memuat lokasi...')
+      ],)
+      )
           : Stack(
         children: [
           GoogleMap(

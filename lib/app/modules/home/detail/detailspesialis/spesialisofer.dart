@@ -46,26 +46,29 @@ class _DetailSpecialOfferState extends State<DetailSpecialOffer> {
         backgroundColor: Colors.white,
         bottomNavigationBar: BottomAppBar(
           color: Colors.white,
-          padding: const EdgeInsets.only(
-            left: 20,
-            right: 20,
-            bottom: 10,
-          ),
-          child: ButtonSubmitWidget(
-            onPressed: () {
-              // Navigator.pushReplacement(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => const BookingPage(),
-              //   ),
-              // );
-            },
-            title: "Booking",
-            bgColor: MyColors.appPrimaryColor,
-            textColor: Colors.white,
-            width: MediaQuery.of(context).size.width / 1.3,
-            height: 60,
-            borderSide: MyColors.appPrimaryColor,
+          child: ElevatedButton(
+              onPressed: () async {
+                Get.toNamed(Routes.BOOKING);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: MyColors.appPrimaryColor,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                elevation: 4.0,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(width: 10,),
+                  Text(
+                    'Booking Sekarang',
+                    style: GoogleFonts.nunito(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],)
           ),
         ),
         body: CustomScrollView(

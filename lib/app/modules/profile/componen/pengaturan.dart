@@ -37,6 +37,7 @@ class _PengaturanState extends State<Pengaturan> {
               child:
             ElevatedButton(
               onPressed: () {
+                Navigator.of(context).popUntil((route) => route.isFirst);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: MyColors.appPrimaryColor,

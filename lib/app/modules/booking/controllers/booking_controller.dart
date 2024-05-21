@@ -18,6 +18,7 @@ import '../../../data/data_endpoint/lokasi.dart';
 import '../../../data/data_endpoint/jenisservice.dart';
 import '../../../data/endpoint.dart';
 import '../../../routes/app_pages.dart';
+import '../componen/berhasil_booking.dart';
 
 class BookingController extends GetxController {
   var Keluhan = ''.obs;
@@ -151,7 +152,13 @@ class BookingController extends GetxController {
         isLoading.value = false; // Stop loading
 
         if (Response != null && Response.status == true) {
-          Get.offAllNamed(Routes.SUKSESBOOKING);
+          Get.snackbar(
+            'Berhasil',
+            'Booking Service akan segera di layani',
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+          );
+          Get.offAllNamed(Routes.HOME);
         } else {
           print(Response);
           Get.snackbar('Error', 'Terjadi kesalahan saat Booking',
@@ -163,7 +170,6 @@ class BookingController extends GetxController {
           print('Error Response data: ${e.response!.data}');
           print('Error sending request: ${e.message}');
         } else {
-          print('Error sending request: ${e.message}');
         }
         Get.snackbar('Gagal Booking', 'Terjadi kesalahan saat Booking',
             backgroundColor: Colors.redAccent, colorText: Colors.white);

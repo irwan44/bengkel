@@ -88,7 +88,7 @@ class BookingViewState extends State<BookingView> {
         leading: IconButton(
           icon: const Icon(Icons.close, color: Colors.black),
           onPressed: () {
-            Navigator.of(context).popUntil((route) => route.isFirst);
+           Get.back();
           },
         ),
       ),
@@ -97,30 +97,19 @@ class BookingViewState extends State<BookingView> {
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                FadeInAnimation(
-                  delay: 1.8,
-                  child: Image.asset(
-                    "assets/images/booking.png",
-                    filterQuality: FilterQuality.high,
-                    height: 200,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                FadeInAnimation(
-                  delay: 1.8,
-                  child: Text('Booking Sekarang !!', style: GoogleFonts.nunito(fontWeight: FontWeight.bold, color: MyColors.appPrimaryColor),),
-                ),
-                FadeInAnimation(
-                  delay: 1.8,
-                  child: Text('Untuk Mendapatkan Kemudahan Service Kendaraan Anda', style: GoogleFonts.nunito(fontWeight: FontWeight.bold, color: MyColors.appPrimaryColor),),
-                ),
                 Padding(
                   padding: const EdgeInsets.all(12.0),
                   child: Form(
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        FadeInAnimation(
+                          delay: 1.8,
+                          child: Text('Jenis Kendaraan', style: GoogleFonts.nunito(),),
+                        ),
                         FadeInAnimation(
                           delay: 1.8,
                           child: Container(
@@ -164,6 +153,10 @@ class BookingViewState extends State<BookingView> {
                         const SizedBox(height: 10,),
                         FadeInAnimation(
                           delay: 1.8,
+                          child: Text('Lokasi Bengkelly', style: GoogleFonts.nunito(),),
+                        ),
+                        FadeInAnimation(
+                          delay: 1.8,
                           child: Container(
                             padding: const EdgeInsets.all(3.0),
                             decoration: BoxDecoration(
@@ -198,7 +191,7 @@ class BookingViewState extends State<BookingView> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    const Icon(Icons.keyboard_arrow_down_rounded, color: Colors.grey),
+                                    const Icon(Icons.map_sharp, color: Colors.grey),
                                   ],
                                 ),
                               )),
@@ -206,6 +199,10 @@ class BookingViewState extends State<BookingView> {
                           ),
                         ),
                         const SizedBox(height: 10,),
+                        FadeInAnimation(
+                          delay: 1.8,
+                          child: Text('Pilih Jadwal', style: GoogleFonts.nunito(),),
+                        ),
                         FadeInAnimation(
                           delay: 1.8,
                           child: Container(
@@ -250,14 +247,14 @@ class BookingViewState extends State<BookingView> {
                                   children: [
                                     Text(
                                       controller.selectedDate.value == null
-                                          ? 'Pilih Jadwal'
+                                          ? 'Pilih Jadwal Booking'
                                           : DateFormat('dd/MM/yyyy HH:mm').format(controller.selectedDate.value!),
                                       style: GoogleFonts.nunito(
                                         color: controller.selectedDate.value == null ? Colors.grey : Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    const Icon(Icons.keyboard_arrow_down_rounded, color: Colors.grey),
+                                    const Icon(Icons.calendar_month_rounded, color: Colors.grey),
                                   ],
                                 ),
                               )),
@@ -265,6 +262,10 @@ class BookingViewState extends State<BookingView> {
                           ),
                         ),
                         const SizedBox(height: 10,),
+                        FadeInAnimation(
+                          delay: 1.8,
+                          child: Text('Pilih Jasa', style: GoogleFonts.nunito(),),
+                        ),
                         FadeInAnimation(
                           delay: 1.8,
                           child: Container(
@@ -291,7 +292,7 @@ class BookingViewState extends State<BookingView> {
                                   children: [
                                     Text(
                                       controller.selectedService.value == null || controller.selectedService.value!.namaJenissvc == "Default Service"
-                                          ? 'Pilih Jasa'
+                                          ? 'Pilih Jasa Service'
                                           : '${controller.selectedService.value!.namaJenissvc}',
                                       style: GoogleFonts.nunito(
                                         color: controller.selectedService.value == null || controller.selectedService.value!.namaJenissvc == "Default Service" ? Colors.grey : Colors.black,
@@ -306,6 +307,10 @@ class BookingViewState extends State<BookingView> {
                           ),
                         ),
                         const SizedBox(height: 10,),
+                        FadeInAnimation(
+                          delay: 1.8,
+                          child: Text('Keluhan', style: GoogleFonts.nunito(),),
+                        ),
                         FadeInAnimation(
                           delay: 1.8,
                           child: Container(
@@ -328,7 +333,7 @@ class BookingViewState extends State<BookingView> {
                                     contentPadding: EdgeInsets.all(18),
                                     border: InputBorder.none,
                                     hintStyle: GoogleFonts.nunito(color: Colors.grey),
-                                    hintText: 'Keluhan'
+                                    hintText: 'Keluhan Kendaraan anda'
                                 ),
                               ),
                             ),

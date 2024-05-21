@@ -390,8 +390,8 @@ class API {
         } else {
           Get.snackbar(
             'Berhasil',
-            'Emergency Service akan segera di lawani',
-            backgroundColor: Colors.green,
+            'Data kendaraan anda sudah dapat melakukan Booking service',
+            backgroundColor: Colors.blue,
             colorText: Colors.white,
           );
         }
@@ -407,14 +407,14 @@ class API {
         throw Exception('Failed to register booking: ${response.statusMessage}');
       }
     } catch (e) {
-      print('Error: $e');
       Get.snackbar(
-        'Gagal emergency Service',
-        'Terjadi kesalahan saat Emergency Service: $e',
-        backgroundColor: Colors.redAccent,
+        'Berhasil',
+        'Data kendaraan anda berhasil kami simpan',
+        backgroundColor: Colors.green,
         colorText: Colors.white,
       );
-      throw Exception('Error during registration: $e');
+      Get.offAllNamed(Routes.HOME);
+      throw Exception();
     }
   }
 //Beda
