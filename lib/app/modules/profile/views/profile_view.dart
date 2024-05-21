@@ -223,7 +223,7 @@ class ProfileView extends GetView<ProfileController> {
             ),
       InkWell(
         onTap: () {
-          Get.toNamed(Routes.PENGATURAN);
+          // Get.toNamed(Routes.PENGATURAN);
         },
         child:
             Row(

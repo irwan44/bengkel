@@ -45,14 +45,27 @@ class _EditProfileState extends State<EditProfile> {
       body: SingleChildScrollView(
         child: Container(
           width: double.infinity,
+          height: MediaQuery.of(Get.context!).size.height,
           padding: EdgeInsets.all(20),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               FutureBuilder<Profile>(
                 future: API.profileiD(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
+                    return Center(child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(
+                          color: MyColors.appPrimaryColor,
+                        ),
+                        SizedBox(height: 10,),
+                        Text('Sedang memuat data...')
+                      ],)
+                    );
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else {
@@ -182,6 +195,37 @@ class _EditProfileState extends State<EditProfile> {
                               ),
                             ],
                           ),
+                          SizedBox(height: 20),
+                          ElevatedButton(
+                            onPressed: () {
+                              controller.updateProfile(
+                                nameController.text,
+                                emailController.text,
+                                hpController.text,
+                                alamatController.text,
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: MyColors.appPrimaryColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              elevation: 4.0,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(width: 10),
+                                Text(
+                                  'Update Profile',
+                                  style: GoogleFonts.nunito(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       );
                     } else {
@@ -191,36 +235,6 @@ class _EditProfileState extends State<EditProfile> {
                 },
               ),
               SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  controller.updateProfile(
-                    nameController.text,
-                    emailController.text,
-                    hpController.text,
-                    alamatController.text,
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: MyColors.appPrimaryColor,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                  elevation: 4.0,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(width: 10),
-                    Text(
-                      'Update Profile',
-                      style: GoogleFonts.nunito(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
         ),
