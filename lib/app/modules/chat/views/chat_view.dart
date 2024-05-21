@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -33,12 +34,9 @@ class _HelpCenterPageState extends State<HelpCenterPage> {
         // leadingWidth: 45,
         actionsIconTheme: const IconThemeData(size: 20),
         backgroundColor: Colors.transparent,
-        title: const Text(
+        title: Text(
           'Help Center',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Nunito',
-          ),
+          style: GoogleFonts.nunito(fontWeight: FontWeight.bold,),
         ),
       ),
         body:

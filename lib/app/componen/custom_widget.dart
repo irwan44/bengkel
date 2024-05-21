@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../modules/authorization/componen/common.dart';
 import '../modules/authorization/controllers/authorization_controller.dart';
@@ -38,9 +39,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       controller: widget.controller,
       obscureText: widget.obsecuretext,
       decoration: InputDecoration(
-          contentPadding: const EdgeInsets.all(18),
+          contentPadding: EdgeInsets.all(18),
           border: InputBorder.none,
-          hintStyle: TextStyle(color: Colors.grey),
+          hintStyle: GoogleFonts.nunito(color: Colors.grey),
           hintText: widget.hinttext),
       ),
     );

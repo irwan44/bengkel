@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../componen/color.dart';
@@ -139,7 +140,7 @@ class _newssliderState extends State<newsslider> {
                             ),
                           ],
                         ),
-                        child: Text('NEW', style: TextStyle(fontWeight: FontWeight.bold, color: MyColors.appPrimaryColor),),
+                        child: Text('NEW', style: GoogleFonts.nunito(fontWeight: FontWeight.bold, color: MyColors.appPrimaryColor),),
                       )
                     ],
                   ),
@@ -147,7 +148,7 @@ class _newssliderState extends State<newsslider> {
                 SizedBox(height: 15,),
                 Container(
                   margin: EdgeInsets.only(right: 10, left: 10),
-                  child: Text(post.title ?? '', style: TextStyle(fontWeight: FontWeight.bold),),
+                  child: Text(post.title ?? '', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
                 ),
                 SizedBox(height: 10,),
                 Container(
@@ -156,7 +157,7 @@ class _newssliderState extends State<newsslider> {
                     children: [
                       Icon(Icons.calendar_month_rounded, color: MyColors.appPrimaryColor,),
                       SizedBox(width: 10,),
-                      Text(DateFormat('dd-MM-yyyy').format(post.date), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),),
+                      Text(DateFormat('dd-MM-yyyy').format(post.date), style: GoogleFonts.nunito(fontWeight: FontWeight.bold, color: Colors.grey),),
                     ],
                   ),
                 ),

@@ -4,6 +4,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../componen/color.dart';
 import '../../../routes/app_pages.dart';
@@ -33,7 +34,7 @@ class _NewsViewState extends State<NewsView> {
         forceMaterialTransparency: true,
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
-        title: Text('News', style: TextStyle(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
+        title: Text('News', style: GoogleFonts.nunito(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
         actions: [
           Row(
             children: [
@@ -81,7 +82,7 @@ class _NewsViewState extends State<NewsView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: MyColors.appPrimaryColor)),
+          Text(title, style: GoogleFonts.nunito(fontWeight: FontWeight.bold, fontSize: 17, color: MyColors.appPrimaryColor)),
         ],
       ),
     );

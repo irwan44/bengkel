@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../data/data_endpoint/news.dart';
@@ -122,13 +123,13 @@ class _TrandingTopikState extends State<TrandingTopik> {
                           ),
                           child: Text(
                             post.articleSection?.join(', ') ?? '',
-                            style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+                            style: GoogleFonts.nunito(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
                           ),
                         ),
                         SizedBox(height: 8),
                         Text(
                           post.title ?? '',
-                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                          style: GoogleFonts.nunito(fontSize: 12, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),

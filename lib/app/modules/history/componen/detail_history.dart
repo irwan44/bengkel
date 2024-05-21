@@ -2,6 +2,7 @@ import 'package:customer_bengkelly/app/componen/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class DetailHistory extends StatefulWidget {
   const DetailHistory({super.key});
@@ -45,7 +46,7 @@ class _DetailHistoryState extends State<DetailHistory> {
         ),
         title: Text(
           'Detail History',
-          style: TextStyle(
+          style: GoogleFonts.nunito(
               color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),
         ),
         centerTitle: false,
@@ -72,7 +73,7 @@ class _DetailHistoryState extends State<DetailHistory> {
                   ],
                 ),
                 child: Column(children: [
-                 Text('Status Pesanan ${status}', style: TextStyle(fontWeight: FontWeight.bold,color: MyColors.appPrimaryColor),),
+                 Text('Status Pesanan ${status}', style: GoogleFonts.nunito(fontWeight: FontWeight.bold,color: MyColors.appPrimaryColor),),
                 ],
                 ),
               ),
@@ -145,7 +146,7 @@ class _DetailHistoryState extends State<DetailHistory> {
                 if (subtitle != null) ...[
                   Text(
                     title,
-                    style: TextStyle(
+                    style: GoogleFonts.nunito(
                       fontSize: 14,
                       color: MyColors.appPrimaryColor,
                       fontWeight: FontWeight.bold,
@@ -154,7 +155,7 @@ class _DetailHistoryState extends State<DetailHistory> {
                   SizedBox(height: 10),
                   Text(
                     subtitle,
-                    style: TextStyle(
+                    style: GoogleFonts.nunito(
                       fontSize: 14,
                       color: MyColors.appPrimaryColor,
                       fontWeight: FontWeight.bold,
@@ -163,7 +164,7 @@ class _DetailHistoryState extends State<DetailHistory> {
                 ] else ...[
                   Text(
                     title,
-                    style: TextStyle(
+                    style: GoogleFonts.nunito(
                       fontSize: 14,
                       color: MyColors.appPrimaryColor,
                       fontWeight: FontWeight.bold,
@@ -189,7 +190,7 @@ class _DetailHistoryState extends State<DetailHistory> {
         return ListTile(
           title: Text(
             item[titleKey],
-            style: TextStyle(
+            style: GoogleFonts.nunito(
               fontWeight: FontWeight.bold,
               fontSize: 15,
               color: Colors.green,
@@ -197,11 +198,11 @@ class _DetailHistoryState extends State<DetailHistory> {
           ),
           subtitle: Text(
             'Tanggal: ${item[subtitleKey]}',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: GoogleFonts.nunito(fontWeight: FontWeight.bold),
           ),
           trailing: Text(
             'Harga: ${item[trailingKey]}',
-            style: TextStyle(
+            style: GoogleFonts.nunito(
               fontWeight: FontWeight.bold,
               fontSize: 15,
             ),

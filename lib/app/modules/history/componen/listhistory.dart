@@ -1,5 +1,6 @@
 import 'package:customer_bengkelly/app/componen/color.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../data/data_endpoint/history.dart';
 import '../../../data/endpoint.dart';
@@ -57,14 +58,14 @@ class ListHistory extends StatelessWidget {
                   children: [
                     Text(
                       '${booking.namaJenissvc}',
-                      style: TextStyle(
+                      style: GoogleFonts.nunito(
                           fontWeight: FontWeight.bold,
                           fontSize: 16),
                     ),
                     Row(children: [
-                      const Text(
+                       Text(
                         'No Polisi :',
-                        style: TextStyle(
+                        style: GoogleFonts.nunito(
                             fontWeight: FontWeight.normal,
                             fontSize: 16),
                       ),
@@ -78,7 +79,7 @@ class ListHistory extends StatelessWidget {
                           child:
                       Text(
                         '${booking.noPolisi}',
-                        style: TextStyle(
+                        style: GoogleFonts.nunito(
                             fontWeight: FontWeight.normal, color: Colors.white),
                           ),
                         ),
@@ -94,7 +95,7 @@ class ListHistory extends StatelessWidget {
                   ),
                   child: Text(
                     '${booking.namaStatus}',
-                    style: TextStyle(
+                    style: GoogleFonts.nunito(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -117,7 +118,7 @@ class ListHistory extends StatelessWidget {
                   children: [
                     Text(
                       '${booking.namaCabang}',
-                      style: TextStyle(
+                      style: GoogleFonts.nunito(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold),
                     ),
@@ -130,7 +131,7 @@ class ListHistory extends StatelessWidget {
                       maxLines: 3,
 
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: GoogleFonts.nunito(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold, fontSize: 10),
                       ),

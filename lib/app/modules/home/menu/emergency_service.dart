@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class EmergencyService extends StatefulWidget {
   const EmergencyService({super.key});
@@ -23,10 +24,10 @@ class _EmergencyServiceState extends State<EmergencyService> {
         title: const Text('ChatView'),
         centerTitle: true,
       ),
-      body: const Center(
+      body: Center(
         child: Text(
           'ChatView is working',
-          style: TextStyle(fontSize: 20),
+          style: GoogleFonts.nunito(fontSize: 20),
         ),
       ),
     );

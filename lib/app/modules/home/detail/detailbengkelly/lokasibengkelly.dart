@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../componen/color.dart';
 import '../../../../data/dummy_data.dart';
@@ -76,9 +77,9 @@ class _ArgumentsLokasiState extends State<ArgumentsLokasi> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Text(widget.nama, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),),
+        Text(widget.nama, style: GoogleFonts.nunito(fontWeight: FontWeight.bold, fontSize: 17),),
         SizedBox(height: 10,),
-        Text('Deskripsi', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17 ),),
+        Text('Deskripsi', style: GoogleFonts.nunito(fontWeight: FontWeight.bold, fontSize: 17 ),),
         SizedBox(height: 10,),
         ExpandableText(
           widget.description,
@@ -88,11 +89,11 @@ class _ArgumentsLokasiState extends State<ArgumentsLokasi> {
           linkColor: Colors.blue,
         ),
         SizedBox(height: 10,),
-        Text('Fasilitas', style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17),),
+        Text('Fasilitas', style: GoogleFonts.nunito(fontWeight: FontWeight.bold,fontSize: 17),),
         SizedBox(height: 10,),
         SvgPicture.asset('assets/icons/icond.svg', width: 110,),
         SizedBox(height: 10,),
-        Text('Tenants', style: TextStyle(fontWeight: FontWeight.bold,fontSize: 17),),
+        Text('Tenants', style: GoogleFonts.nunito(fontWeight: FontWeight.bold,fontSize: 17),),
         SizedBox(height: 10,),
     ],),),
       ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html_v3/flutter_html.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -47,10 +48,9 @@ class DetailsNews extends StatelessWidget {
       actionsIconTheme: const IconThemeData(size: 20),
       title: Text(
         'News',
-        style: TextStyle(
+        style: GoogleFonts.nunito(
           fontWeight: FontWeight.bold,
           color: MyColors.appPrimaryColor,
-          fontFamily: 'Nunito',
         ),
       ),
     );
@@ -110,25 +110,22 @@ class DetailsNews extends StatelessWidget {
         children: [
           Text(
             'Author: ${data?.author}',
-            style: TextStyle(
+            style: GoogleFonts.nunito(
               fontSize: 14,
-              fontFamily: 'Nunito',
               color: MyColors.grey,
             ),
           ),
           Text(
             'Category: ${data?.category}',
-            style: TextStyle(
+            style: GoogleFonts.nunito(
               fontSize: 14,
-              fontFamily: 'Nunito',
               color: MyColors.grey,
             ),
           ),
           Text(
             'Date: ${formatDateNoTime(data?.date)}',
-            style: TextStyle(
+            style: GoogleFonts.nunito(
               fontSize: 14,
-              fontFamily: 'Nunito',
               color: MyColors.grey,
             ),
           ),

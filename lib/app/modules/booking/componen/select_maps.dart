@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -30,8 +31,8 @@ class SelectBooking extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Lokasi Saat ini', style: TextStyle(fontSize: 12)),
-                  Text(_bookingController.currentAddress.value, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                  Text('Lokasi Saat ini', style: GoogleFonts.nunito(fontSize: 12)),
+                  Text(_bookingController.currentAddress.value, style: GoogleFonts.nunito(fontSize: 15, fontWeight: FontWeight.bold)),
                 ],
               ),
             ],
@@ -113,7 +114,7 @@ class SelectBooking extends StatelessWidget {
                 );
 
                 return ListTile(
-                  title: Text(data.name ?? 'Unknown', style: TextStyle(fontWeight: FontWeight.bold)),
+                  title: Text(data.name ?? 'Unknown', style: GoogleFonts.nunito(fontWeight: FontWeight.bold)),
                   subtitle: Text(data.vicinity ?? 'Unknown'),
                   trailing: Column(
                     children: [

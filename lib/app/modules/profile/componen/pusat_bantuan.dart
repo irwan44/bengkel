@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Bantuan extends StatefulWidget {
   const Bantuan({super.key});
@@ -22,10 +23,10 @@ class _BantuanState extends State<Bantuan> {
         title: const Text('ChatView'),
         centerTitle: true,
       ),
-      body: const Center(
+      body: Center(
         child: Text(
           'ChatView is working',
-          style: TextStyle(fontSize: 20),
+          style: GoogleFonts.nunito(fontSize: 20),
         ),
       ),
     );

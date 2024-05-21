@@ -8,6 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../data/data_endpoint/news.dart';
@@ -114,10 +115,10 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Lokasi Saat ini', style: TextStyle(fontSize: 12)),
+                    Text('Lokasi Saat ini', style: GoogleFonts.nunito(fontSize: 12)),
                     Text(
                       _currentAddress,
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      style: GoogleFonts.nunito(fontSize: 15, fontWeight: FontWeight.bold),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -263,6 +264,7 @@ class _HomePageState extends State<HomePage> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         _menuItemCharger(() => Get.toNamed(Routes.LOKASIBENGKELLY), 'assets/icons/dropcar.svg', "Lokasi\nCar Charger"),
+        SizedBox(width: 10,),
         _menuItemCharger(() =>'', "",''),
         _menuItemCharger(() =>'', "",''),
         _menuItemCharger(() =>'', "",''),
@@ -279,7 +281,7 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           Image.asset(iconPath, width: 50),
           SizedBox(height: 8),
-          Text(label, textAlign: TextAlign.center, style: TextStyle(color: Colors.grey.shade600, fontWeight: FontWeight.bold)),
+          Text(label, textAlign: TextAlign.center, style: GoogleFonts.nunito(color: Colors.grey.shade600, fontWeight: FontWeight.bold)),
         ],
       ),
     );
@@ -293,7 +295,7 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           Image.asset(iconPath, width: 50),
           SizedBox(height: 8),
-          Text(label, textAlign: TextAlign.center, style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+          Text(label, textAlign: TextAlign.center, style: GoogleFonts.nunito(color: Colors.red, fontWeight: FontWeight.bold)),
         ],
       ),
     );
@@ -307,7 +309,7 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           SvgPicture.asset(iconPath, width: 60),
           SizedBox(height: 8),
-          Text(label, textAlign: TextAlign.center, style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
+          Text(label, textAlign: TextAlign.center, style: GoogleFonts.nunito(color: Colors.green, fontWeight: FontWeight.bold)),
         ],
       ),
     );
@@ -319,8 +321,8 @@ class _HomePageState extends State<HomePage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: MyColors.appPrimaryColor)),
-          Text('Lihat Semua', style: TextStyle(color: Colors.grey)),
+          Text(title, style: GoogleFonts.nunito(fontWeight: FontWeight.bold, fontSize: 17, color: MyColors.appPrimaryColor)),
+          Text('Lihat Semua', style: GoogleFonts.nunito(color: Colors.grey)),
         ],
       ),
     );
@@ -331,7 +333,7 @@ class _HomePageState extends State<HomePage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: MyColors.appPrimaryColor)),
+          Text(title, style: GoogleFonts.nunito(fontWeight: FontWeight.bold, fontSize: 17, color: MyColors.appPrimaryColor)),
         ],
       ),
     );
@@ -397,8 +399,8 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Text(area['name'], style: TextStyle(fontWeight: FontWeight.bold)),
-                                    Text(area['address'], style: TextStyle(fontWeight: FontWeight.normal)),
+                                    Text(area['name'], style: GoogleFonts.nunito(fontWeight: FontWeight.bold)),
+                                    Text(area['address'], style: GoogleFonts.nunito(fontWeight: FontWeight.normal)),
                                     SizedBox(height: 10,),
                                     SvgPicture.asset('assets/icons/icond.svg', width: 60,),
                                   ]
@@ -470,8 +472,8 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Image.asset(product['image'], fit: BoxFit.cover, height: 120),
                             SizedBox(height: 20),
-                            Text(product['name'], style: TextStyle(fontWeight: FontWeight.bold)),
-                            Text(product['Harga'], style: TextStyle(color: Colors.green)),
+                            Text(product['name'], style: GoogleFonts.nunito(fontWeight: FontWeight.bold)),
+                            Text(product['Harga'], style: GoogleFonts.nunito(color: Colors.green)),
                             Row(
                               children: [
                                 Container(
@@ -480,22 +482,22 @@ class _HomePageState extends State<HomePage> {
                                       borderRadius: BorderRadius.circular(5),
                                       color: MyColors.green
                                   ),
-                                  child: Text('${product['diskon']}',style: TextStyle(color: Colors.white),),
+                                  child: Text('${product['diskon']}',style: GoogleFonts.nunito(color: Colors.white),),
                                 ),
                                 SizedBox(width: 10,),
-                                Text('Rp ${product['harga_asli']}',style: TextStyle(decoration: TextDecoration.lineThrough,),),
+                                Text('Rp ${product['harga_asli']}',style: GoogleFonts.nunito(decoration: TextDecoration.lineThrough,),),
                               ],
                             ),
                             SizedBox(height: 10),
                             Row(children: [
                               Icon(Icons.star, color: Colors.yellow,),
                               SizedBox(width: 5,),
-                              Text('4.9 ${product['terjual']} Terjual',style: TextStyle(color: Colors.grey),),
+                              Text('4.9 ${product['terjual']} Terjual',style: GoogleFonts.nunito(color: Colors.grey),),
                             ],),
                             Row(children: [
                               Icon(Icons.shield_moon_rounded, color: Colors.green,),
                               SizedBox(width: 5,),
-                              Text('Dilayani Bengkelly',style: TextStyle(color: Colors.grey),),
+                              Text('Dilayani Bengkelly',style: GoogleFonts.nunito(color: Colors.grey),),
                             ],),
                           ],
                         ),

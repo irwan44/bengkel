@@ -3,6 +3,7 @@ import 'package:customer_bengkelly/app/componen/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../../authorization/componen/fade_animationtest.dart';
 import '../controllers/booking_controller.dart';
@@ -37,14 +38,14 @@ class DetailBookingViewState extends State<DetailBookingView> {
                         borderRadius: BorderRadius.circular(20)),
                     elevation: 4.0,
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(width: 10,),
                       Text(
                         'Konfirmasi Sekarang',
-                        style: TextStyle(
+                        style: GoogleFonts.nunito(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -59,7 +60,7 @@ class DetailBookingViewState extends State<DetailBookingView> {
         ),
       ),
       appBar: AppBar(
-        title: Text('Detail Booking', style: TextStyle(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
+        title: Text('Detail Booking', style: GoogleFonts.nunito(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
         surfaceTintColor: Colors.transparent,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
@@ -77,7 +78,7 @@ class DetailBookingViewState extends State<DetailBookingView> {
               children: [
                 FadeInAnimation(
                   delay: 1.8,
-                  child: Text('Cek Kembali Data Booking Anda', style: TextStyle(fontWeight: FontWeight.bold, color: MyColors.appPrimaryColor, fontSize: 16),),
+                  child: Text('Cek Kembali Data Booking Anda', style: GoogleFonts.nunito(fontWeight: FontWeight.bold, color: MyColors.appPrimaryColor, fontSize: 16),),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(12.0),
@@ -88,7 +89,7 @@ class DetailBookingViewState extends State<DetailBookingView> {
                       children: [
                         FadeInAnimation(
                           delay: 1.8,
-                          child: Text('Detail Kendaraan', style: TextStyle(),),
+                          child: Text('Detail Kendaraan', style: GoogleFonts.nunito(),),
                         ),
                         SizedBox(height: 10,),
                         FadeInAnimation(
@@ -120,7 +121,7 @@ class DetailBookingViewState extends State<DetailBookingView> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
-                                      Text('${controller.selectedTransmisi.value!.merks?.namaMerk}',style: TextStyle(fontWeight: FontWeight.bold),),
+                                      Text('${controller.selectedTransmisi.value!.merks?.namaMerk}',style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
                                       Text('${controller.selectedTransmisi.value!.noPolisi}'),
                                       Row(children: [
                                         Text('${controller.selectedTransmisi.value!.warna}'),
@@ -135,9 +136,9 @@ class DetailBookingViewState extends State<DetailBookingView> {
                           ),
                         ),
                         const SizedBox(height: 10,),
-                        const FadeInAnimation(
+                        FadeInAnimation(
                           delay: 1.8,
-                          child: Text('Detail Lokasi, Tanggal dan Waktu', style: TextStyle(),),
+                          child: Text('Detail Lokasi, Tanggal dan Waktu', style: GoogleFonts.nunito(),),
                         ),
                         SizedBox(height: 10,),
 
@@ -166,13 +167,13 @@ class DetailBookingViewState extends State<DetailBookingView> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('${controller.selectedLocation.value!}', style: TextStyle(fontWeight: FontWeight.bold),),
+                                    Text('${controller.selectedLocation.value!}', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
                                     SizedBox(height: 10,),
                                     Text(
                                       controller.selectedDate.value == null
                                           ? 'Pilih Jadwal'
                                           : DateFormat('dd/MM/yyyy HH:mm').format(controller.selectedDate.value!),
-                                      style: TextStyle(
+                                      style: GoogleFonts.nunito(
                                         color: controller.selectedDate.value == null ? Colors.grey : Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -184,9 +185,9 @@ class DetailBookingViewState extends State<DetailBookingView> {
                           ),
                         ),
                         const SizedBox(height: 10,),
-                        const FadeInAnimation(
+                        FadeInAnimation(
                           delay: 1.8,
-                          child: Text('Jenis Service', style: TextStyle(),),
+                          child: Text('Jenis Service', style: GoogleFonts.nunito(),),
                         ),
                         SizedBox(height: 10,),
                         FadeInAnimation(
@@ -217,7 +218,7 @@ class DetailBookingViewState extends State<DetailBookingView> {
                                       controller.selectedService.value == null || controller.selectedService.value!.namaJenissvc == "Default Service"
                                           ? 'Pilih Jasa'
                                           : '${controller.selectedService.value!.namaJenissvc}',
-                                      style: TextStyle(
+                                      style: GoogleFonts.nunito(
                                         color: controller.selectedService.value == null || controller.selectedService.value!.namaJenissvc == "Default Service" ? Colors.grey : Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -229,9 +230,9 @@ class DetailBookingViewState extends State<DetailBookingView> {
                           ),
                         ),
                         const SizedBox(height: 10,),
-                        const FadeInAnimation(
+                        FadeInAnimation(
                           delay: 1.8,
-                          child: Text('Keluhan', style: TextStyle(),),
+                          child: Text('Keluhan', style: GoogleFonts.nunito(),),
                         ),
                         SizedBox(height: 10,),
                         FadeInAnimation(
@@ -249,15 +250,15 @@ class DetailBookingViewState extends State<DetailBookingView> {
                                 maxLines: null,
                                 expands: true,
                                 readOnly: true,
-                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                style: GoogleFonts.nunito(color: Colors.black, fontWeight: FontWeight.bold),
                                 controller: TextEditingController(text: controller.Keluhan.value),
                                 keyboardType: TextInputType.multiline,
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                     contentPadding: EdgeInsets.all(18),
                                     border: InputBorder.none,
                                    fillColor: Colors.black,
-                                    labelStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-                                    hintStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                                    labelStyle: GoogleFonts.nunito(color: Colors.black, fontWeight: FontWeight.bold),
+                                    hintStyle: GoogleFonts.nunito(color: Colors.black, fontWeight: FontWeight.bold),
                                     hintText: 'Keluhan'
                                 ),
                               ),

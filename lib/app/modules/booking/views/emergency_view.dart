@@ -4,6 +4,7 @@ import 'package:customer_bengkelly/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart'; // Import package intl
 import '../../../componen/custom_widget.dart';
 import '../../../data/data_endpoint/bookingcustomer.dart';
@@ -46,7 +47,7 @@ class _EmergencyBookingState extends State<EmergencyBooking> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Emergency Service', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, ),),
+        title: Text('Emergency Service', style: GoogleFonts.nunito(color: Colors.red, fontWeight: FontWeight.bold, ),),
         surfaceTintColor: Colors.transparent,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
@@ -107,7 +108,7 @@ class _EmergencyBookingState extends State<EmergencyBooking> {
                                       controller.selectedLocation.value == null
                                           ? 'Pilih Lokasi Bengkel'
                                           : '${controller.selectedLocation.value}',
-                                      style: TextStyle(
+                                      style: GoogleFonts.nunito(
                                         color: controller.selectedLocation.value == null ? Colors.grey : Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -119,7 +120,7 @@ class _EmergencyBookingState extends State<EmergencyBooking> {
                                         borderRadius: BorderRadius.circular(10)
                                       ),
                                       child: 
-                                    Text('Ubah', style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),)
+                                    Text('Ubah', style: GoogleFonts.nunito(color: Colors.white,fontWeight: FontWeight.bold),),)
                                   ],
                                 ),
                               )),
@@ -156,7 +157,7 @@ class _EmergencyBookingState extends State<EmergencyBooking> {
                                       controller.selectedTransmisi.value == null
                                           ? 'Jenis Kendaraan'
                                           : '${controller.selectedTransmisi.value!.merks?.namaMerk} - ${controller.selectedTransmisi.value!.tipes?.map((e) => e.namaTipe).join(", ")}',
-                                      style: TextStyle(
+                                      style: GoogleFonts.nunito(
                                         color: controller.selectedTransmisi.value == null ? Colors.grey : Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -188,10 +189,10 @@ class _EmergencyBookingState extends State<EmergencyBooking> {
                                 maxLines: null, // Set this
                                 expands: true, // and this
                                 keyboardType: TextInputType.multiline,
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                     contentPadding: EdgeInsets.all(18),
                                     border: InputBorder.none,
-                                    hintStyle: TextStyle(color: Colors.grey),
+                                    hintStyle: GoogleFonts.nunito(color: Colors.grey),
                                     hintText: 'Keluhan'
                                 ),
                               ),
@@ -207,14 +208,14 @@ class _EmergencyBookingState extends State<EmergencyBooking> {
                                 borderRadius: BorderRadius.circular(20)),
                             elevation: 4.0,
                           ),
-                          child: const Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               SizedBox(width: 10,),
                               Text(
                                 'Emergency Service',
-                                style: TextStyle(
+                                style: GoogleFonts.nunito(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
@@ -266,11 +267,11 @@ class _EmergencyBookingState extends State<EmergencyBooking> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Text(
                     'Pilih Jenis Service',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.nunito(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Expanded(
@@ -282,7 +283,7 @@ class _EmergencyBookingState extends State<EmergencyBooking> {
                       return ListTile(
                         title: Text(
                           item.namaJenissvc ?? 'Unknown',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
+                          style: GoogleFonts.nunito(fontWeight: FontWeight.bold),
                         ),
                         trailing: isSelected
                             ? const Icon(Icons.check, color: Colors.green)
@@ -318,11 +319,11 @@ class _EmergencyBookingState extends State<EmergencyBooking> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Text(
                     'Pilih Kendaraan',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.nunito(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Expanded(
@@ -336,15 +337,15 @@ class _EmergencyBookingState extends State<EmergencyBooking> {
                           children: [
                             Text(
                               '${item.merks?.namaMerk}',
-                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              style: GoogleFonts.nunito(fontWeight: FontWeight.bold),
                             ),
-                            const Text(
+                            Text(
                               ' - ',
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: GoogleFonts.nunito(fontWeight: FontWeight.bold),
                             ),
                             ...?item.tipes?.map((tipe) => Text(
                               '${tipe.namaTipe}',
-                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              style: GoogleFonts.nunito(fontWeight: FontWeight.bold),
                             )).toList(),
                           ],
                         ),

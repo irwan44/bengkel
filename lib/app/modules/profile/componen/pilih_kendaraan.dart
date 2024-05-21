@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../componen/color.dart';
 import '../../../data/data_endpoint/customkendaraan.dart';
@@ -44,7 +45,7 @@ class _PilihKendaraanState extends State<PilihKendaraan> {
                     borderRadius: BorderRadius.circular(20)),
                 elevation: 4.0,
               ),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -52,7 +53,7 @@ class _PilihKendaraanState extends State<PilihKendaraan> {
                 SizedBox(width: 10,),
                 Text(
                   'Tambah Kendaraan',
-                  style: TextStyle(
+                  style: GoogleFonts.nunito(
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
@@ -73,7 +74,7 @@ class _PilihKendaraanState extends State<PilihKendaraan> {
           statusBarBrightness: Brightness.light,
           systemNavigationBarColor: Colors.white,
         ),
-        title:  Text('Pilih Kendaraan', style: TextStyle(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
+        title:  Text('Pilih Kendaraan', style: GoogleFonts.nunito(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
         centerTitle: false,
       ),
       body: SingleChildScrollView(child:

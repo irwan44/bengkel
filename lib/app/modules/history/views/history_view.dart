@@ -40,7 +40,7 @@ class _HistoryViewState extends State<HistoryView> {
         automaticallyImplyLeading: false,
         title: Text(
           'History',
-          style: TextStyle(
+          style: GoogleFonts.nunito(
             color: MyColors.appPrimaryColor,
             fontWeight: FontWeight.bold,
           ),
@@ -122,7 +122,7 @@ class _HistoryViewState extends State<HistoryView> {
                             const SizedBox(width: 10),
                             Icon(Icons.search_rounded, color: MyColors.appPrimaryColor),
                             const SizedBox(width: 10),
-                            const Text('Cari Transaksi', style: TextStyle(color: Colors.grey)),
+                            Text('Cari Transaksi', style: GoogleFonts.nunito(color: Colors.grey)),
                           ],
                         ),
                       ),
@@ -150,7 +150,7 @@ class _HistoryViewState extends State<HistoryView> {
                         const SizedBox(width: 10),
                         Icon(Icons.search_rounded, color: MyColors.appPrimaryColor),
                         const SizedBox(width: 10),
-                        Text('Cari Transaksi', style: TextStyle(color: Colors.grey)),
+                        Text('Cari Transaksi', style: GoogleFonts.nunito(color: Colors.grey)),
                       ],
                     ),
                   );

@@ -4,6 +4,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../componen/ButtonSubmitWidget.dart';
 import '../../../componen/color.dart';
@@ -24,7 +25,7 @@ class ProfileView extends GetView<ProfileController> {
         backgroundColor: Colors.white,
         elevation: 0,
         automaticallyImplyLeading: false,
-        title: Text('Profile', style: TextStyle(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
+        title: Text('Profile', style: GoogleFonts.nunito(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
         actions: [
           Row(
             children: [
@@ -127,13 +128,13 @@ class ProfileView extends GetView<ProfileController> {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text(nama, style: TextStyle(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
+                                          Text(nama, style: GoogleFonts.nunito(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
                                           SvgPicture.asset('assets/icons/edit.svg', width: 26),
                                         ],
                                       ),
                                     ),
-                                    Text(email, style: TextStyle(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
-                                    Text(hp, style: TextStyle(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
+                                    Text(email, style: GoogleFonts.nunito(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
+                                    Text(hp, style: GoogleFonts.nunito(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
                                   ],
                                 ),
                               ),
@@ -186,7 +187,7 @@ class ProfileView extends GetView<ProfileController> {
                   children: [
                     SvgPicture.asset('assets/icons/carset.svg', width: 26,),
                     SizedBox(width: 10,),
-                    Text('Pilih Kendaraaan', style: TextStyle(fontWeight: FontWeight.bold),),
+                    Text('Pilih Kendaraaan', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
                   ],),
 
                 Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey.shade400,),
@@ -210,7 +211,7 @@ class ProfileView extends GetView<ProfileController> {
                   children: [
                     SvgPicture.asset('assets/icons/tandaseru.svg', width: 26,),
                     SizedBox(width: 10,),
-                    Text('Pusat Bantuan', style: TextStyle(fontWeight: FontWeight.bold),),
+                    Text('Pusat Bantuan', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
                   ],),
                 Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey.shade400,),
               ],
@@ -233,7 +234,7 @@ class ProfileView extends GetView<ProfileController> {
                   children: [
                     SvgPicture.asset('assets/icons/setting.svg', width: 26,),
                     SizedBox(width: 10,),
-                    Text('Pengaturan', style: TextStyle(fontWeight: FontWeight.bold),),
+                    Text('Pengaturan', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
                   ],),
                 Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey.shade400,),
               ],
@@ -262,13 +263,13 @@ class ProfileView extends GetView<ProfileController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Column(
+                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "Continue To Logout?",
-                      style: TextStyle(
+                      style: GoogleFonts.nunito(
                           fontSize: 17,
                           fontWeight: FontWeight.bold),
                     ),
@@ -277,7 +278,7 @@ class ProfileView extends GetView<ProfileController> {
                     ),
                     Text(
                       "Are you sure to logout from this device?",
-                      style: TextStyle(fontSize: 17),
+                      style: GoogleFonts.nunito(fontSize: 17),
                     ),
                   ],
                 ),
@@ -341,7 +342,7 @@ class ProfileView extends GetView<ProfileController> {
             ),
           ),
           children: [
-             const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -349,7 +350,7 @@ class ProfileView extends GetView<ProfileController> {
                   children: [
                     Icon(Icons.logout_rounded, color: Colors.red,),
                     SizedBox(width: 10,),
-                    Text('Log Out', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),),
+                    Text('Log Out', style: GoogleFonts.nunito(fontWeight: FontWeight.bold, color: Colors.red),),
                   ],),
                 Icon(Icons.arrow_forward_ios_rounded, color: Colors.redAccent,),
               ],

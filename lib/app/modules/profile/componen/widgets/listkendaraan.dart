@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../../data/data_endpoint/customkendaraan.dart';
 
 class ListKendaraan extends StatelessWidget {
@@ -28,15 +29,15 @@ class ListKendaraan extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(children: [
-            Text('${item.merks?.namaMerk}', style: TextStyle(fontWeight: FontWeight.bold),),
-            Text(' - ', style: TextStyle(fontWeight: FontWeight.bold),),
-            ...?item.tipes?.map((tipe) => Text('${tipe.namaTipe}', style: TextStyle(fontWeight: FontWeight.bold),)).toList(),
+            Text('${item.merks?.namaMerk}', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
+            Text(' - ', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
+            ...?item.tipes?.map((tipe) => Text('${tipe.namaTipe}', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),)).toList(),
           ],),
           Text('No Polisi: ${item.noPolisi}'),
           Row(children: [
-            Text('${item.warna}', style: TextStyle(fontWeight: FontWeight.bold),),
-            Text(' - ', style: TextStyle(fontWeight: FontWeight.bold),),
-            Text('${item.tahun}', style: TextStyle(fontWeight: FontWeight.bold),),
+            Text('${item.warna}', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
+            Text(' - ', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
+            Text('${item.tahun}', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
           ],),
 
         ],

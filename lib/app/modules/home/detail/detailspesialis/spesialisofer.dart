@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../componen/ButtonSubmitWidget.dart';
@@ -192,8 +193,8 @@ class _DetailSpecialOfferState extends State<DetailSpecialOffer> {
                           children: [
                             Image.asset(product['image'], fit: BoxFit.cover, height: 120),
                             SizedBox(height: 20),
-                            Text(product['name'], style: TextStyle(fontWeight: FontWeight.bold)),
-                            Text(product['Harga'], style: TextStyle(color: Colors.green)),
+                            Text(product['name'], style: GoogleFonts.nunito(fontWeight: FontWeight.bold)),
+                            Text(product['Harga'], style: GoogleFonts.nunito(color: Colors.green)),
                             Row(
                               children: [
                                 Container(
@@ -202,21 +203,21 @@ class _DetailSpecialOfferState extends State<DetailSpecialOffer> {
                                       borderRadius: BorderRadius.circular(5),
                                       color: MyColors.green
                                   ),
-                                  child: Text('${product['diskon']}',style: TextStyle(color: Colors.white),),
+                                  child: Text('${product['diskon']}',style: GoogleFonts.nunito(color: Colors.white),),
                                 ),
                                 SizedBox(width: 10,),
-                                Text('Rp ${product['harga_asli']}',style: TextStyle(decoration: TextDecoration.lineThrough,),),
+                                Text('Rp ${product['harga_asli']}',style: GoogleFonts.nunito(decoration: TextDecoration.lineThrough,),),
                               ],),
                             SizedBox(height: 10),
                             Row(children: [
                               Icon(Icons.star, color: Colors.yellow,),
                               SizedBox(width: 5,),
-                              Text('4.9 ${product['terjual']} Terjual',style: TextStyle(color: Colors.grey),),
+                              Text('4.9 ${product['terjual']} Terjual',style: GoogleFonts.nunito(color: Colors.grey),),
                             ],),
                             Row(children: [
                               Icon(Icons.shield_moon_rounded, color: Colors.green,),
                               SizedBox(width: 5,),
-                              Text('Dilayani Bengkelly',style: TextStyle(color: Colors.grey),),
+                              Text('Dilayani Bengkelly',style: GoogleFonts.nunito(color: Colors.grey),),
                             ],),
                           ],
                         ),
@@ -262,12 +263,12 @@ class _ArgumentsLokasiState extends State<ArgumentsLokasi> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(widget.nama, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),),
+                Text(widget.nama, style: GoogleFonts.nunito(fontWeight: FontWeight.bold, fontSize: 17),),
                 SizedBox(height: 10,),
-                Text(widget.Harga, style: TextStyle(color: Colors.green)),
+                Text(widget.Harga, style: GoogleFonts.nunito(color: Colors.green)),
                 Row(
                   children: [
-                    Text('Rp ${widget.Harga}',style: TextStyle(decoration: TextDecoration.lineThrough,),),
+                    Text('Rp ${widget.Harga}',style: GoogleFonts.nunito(decoration: TextDecoration.lineThrough,),),
                     SizedBox(width: 10,),
                     Container(
                       padding: EdgeInsets.all(3),
@@ -275,11 +276,11 @@ class _ArgumentsLokasiState extends State<ArgumentsLokasi> {
                           borderRadius: BorderRadius.circular(5),
                           color: MyColors.green
                       ),
-                      child: Text(widget.diskon,style: TextStyle(color: Colors.white),),
+                      child: Text(widget.diskon,style: GoogleFonts.nunito(color: Colors.white),),
                     ),
                   ],),
                 SizedBox(height: 10,),
-                Text('Deskripsi', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17 ),),
+                Text('Deskripsi', style: GoogleFonts.nunito(fontWeight: FontWeight.bold, fontSize: 17 ),),
                 SizedBox(height: 10,),
                 ExpandableText(
                   widget.description,
@@ -302,8 +303,8 @@ class _ArgumentsLokasiState extends State<ArgumentsLokasi> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: MyColors.appPrimaryColor)),
-          Text('Lihat Semua', style: TextStyle(color: Colors.grey)),
+          Text(title, style: GoogleFonts.nunito(fontWeight: FontWeight.bold, fontSize: 17, color: MyColors.appPrimaryColor)),
+          Text('Lihat Semua', style: GoogleFonts.nunito(color: Colors.grey)),
         ],
       ),
     );

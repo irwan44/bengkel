@@ -4,6 +4,7 @@ import 'package:customer_bengkelly/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart'; // Import package intl
 import '../../../componen/custom_widget.dart';
 import '../../../data/data_endpoint/bookingcustomer.dart';
@@ -54,14 +55,14 @@ class BookingViewState extends State<BookingView> {
                           borderRadius: BorderRadius.circular(20)),
                       elevation: 4.0,
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(width: 10,),
                         Text(
                           'Booking Sekarang',
-                          style: TextStyle(
+                          style: GoogleFonts.nunito(
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           ),
@@ -76,7 +77,7 @@ class BookingViewState extends State<BookingView> {
         ),
       ),
       appBar: AppBar(
-        title: Text('Booking', style: TextStyle(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
+        title: Text('Booking', style: GoogleFonts.nunito(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
         surfaceTintColor: Colors.transparent,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
@@ -109,11 +110,11 @@ class BookingViewState extends State<BookingView> {
                 ),
                 FadeInAnimation(
                   delay: 1.8,
-                  child: Text('Booking Sekarang !!', style: TextStyle(fontWeight: FontWeight.bold, color: MyColors.appPrimaryColor),),
+                  child: Text('Booking Sekarang !!', style: GoogleFonts.nunito(fontWeight: FontWeight.bold, color: MyColors.appPrimaryColor),),
                 ),
                 FadeInAnimation(
                   delay: 1.8,
-                  child: Text('Untuk Mendapatkan Kemudahan Service Kendaraan Anda', style: TextStyle(fontWeight: FontWeight.bold, color: MyColors.appPrimaryColor),),
+                  child: Text('Untuk Mendapatkan Kemudahan Service Kendaraan Anda', style: GoogleFonts.nunito(fontWeight: FontWeight.bold, color: MyColors.appPrimaryColor),),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(12.0),
@@ -148,7 +149,7 @@ class BookingViewState extends State<BookingView> {
                                       controller.selectedTransmisi.value == null
                                           ? 'Jenis Kendaraan'
                                           : '${controller.selectedTransmisi.value!.merks?.namaMerk} - ${controller.selectedTransmisi.value!.tipes?.map((e) => e.namaTipe).join(", ")}',
-                                      style: TextStyle(
+                                      style: GoogleFonts.nunito(
                                         color: controller.selectedTransmisi.value == null ? Colors.grey : Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -192,7 +193,7 @@ class BookingViewState extends State<BookingView> {
                                       controller.selectedLocation.value == null
                                           ? 'Pilih Lokasi Bengkel'
                                           : '${controller.selectedLocation.value}',
-                                      style: TextStyle(
+                                      style: GoogleFonts.nunito(
                                         color: controller.selectedLocation.value == null ? Colors.grey : Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -251,7 +252,7 @@ class BookingViewState extends State<BookingView> {
                                       controller.selectedDate.value == null
                                           ? 'Pilih Jadwal'
                                           : DateFormat('dd/MM/yyyy HH:mm').format(controller.selectedDate.value!),
-                                      style: TextStyle(
+                                      style: GoogleFonts.nunito(
                                         color: controller.selectedDate.value == null ? Colors.grey : Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -292,7 +293,7 @@ class BookingViewState extends State<BookingView> {
                                       controller.selectedService.value == null || controller.selectedService.value!.namaJenissvc == "Default Service"
                                           ? 'Pilih Jasa'
                                           : '${controller.selectedService.value!.namaJenissvc}',
-                                      style: TextStyle(
+                                      style: GoogleFonts.nunito(
                                         color: controller.selectedService.value == null || controller.selectedService.value!.namaJenissvc == "Default Service" ? Colors.grey : Colors.black,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -323,10 +324,10 @@ class BookingViewState extends State<BookingView> {
                                 maxLines: null, // Set this
                                 expands: true, // and this
                                 keyboardType: TextInputType.multiline,
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                     contentPadding: EdgeInsets.all(18),
                                     border: InputBorder.none,
-                                    hintStyle: TextStyle(color: Colors.grey),
+                                    hintStyle: GoogleFonts.nunito(color: Colors.grey),
                                     hintText: 'Keluhan'
                                 ),
                               ),
@@ -377,11 +378,11 @@ class BookingViewState extends State<BookingView> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Text(
                     'Pilih Jenis Service',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.nunito(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Expanded(
@@ -393,7 +394,7 @@ class BookingViewState extends State<BookingView> {
                       return ListTile(
                         title: Text(
                           item.namaJenissvc ?? 'Unknown',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
+                          style: GoogleFonts.nunito(fontWeight: FontWeight.bold),
                         ),
                         trailing: isSelected
                             ? const Icon(Icons.check, color: Colors.green)
@@ -429,11 +430,11 @@ class BookingViewState extends State<BookingView> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Text(
                     'Pilih Kendaraan',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.nunito(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Expanded(
@@ -447,15 +448,15 @@ class BookingViewState extends State<BookingView> {
                           children: [
                             Text(
                               '${item.merks?.namaMerk}',
-                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              style: GoogleFonts.nunito(fontWeight: FontWeight.bold),
                             ),
-                            const Text(
+                            Text(
                               ' - ',
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: GoogleFonts.nunito(fontWeight: FontWeight.bold),
                             ),
                             ...?item.tipes?.map((tipe) => Text(
                               '${tipe.namaTipe}',
-                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              style: GoogleFonts.nunito(fontWeight: FontWeight.bold),
                             )).toList(),
                           ],
                         ),

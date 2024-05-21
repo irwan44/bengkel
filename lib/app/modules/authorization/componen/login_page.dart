@@ -2,6 +2,7 @@ import 'package:customer_bengkelly/app/modules/authorization/componen/signup_pag
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../componen/color.dart';
 import '../../../componen/custom_widget.dart';
 import '../../../data/endpoint.dart';
@@ -121,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.all(18),
                                   hintText: "Masukkan kata sandi Anda",
-                                  hintStyle: TextStyle(color: Colors.grey),
+                                  hintStyle: GoogleFonts.nunito(color: Colors.grey),
                                   border: InputBorder.none,
                                   suffixIcon: IconButton(
                                     onPressed: togglePasswordVisibility,

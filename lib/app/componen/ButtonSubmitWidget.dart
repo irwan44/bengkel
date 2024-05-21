@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ButtonSubmitWidget extends StatelessWidget {
   final Function() onPressed;
@@ -58,7 +59,7 @@ class ButtonSubmitWidget extends StatelessWidget {
               child: Text(
                 title,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: GoogleFonts.nunito(
                   fontWeight: FontWeight.bold,
                   color: textColor ?? Colors.grey[800],
                   fontSize: 18,
@@ -145,7 +146,7 @@ class ButtonSubmitWidget1 extends StatelessWidget {
               child: Text(
                 title,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: GoogleFonts.nunito(
                   fontWeight: FontWeight.normal,
                   color: textColor ?? Colors.grey[800],
                 ),
@@ -230,7 +231,7 @@ class ButtonSubmitWidget2 extends StatelessWidget {
               child: Text(
                 title,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: GoogleFonts.nunito(
                   fontWeight: FontWeight.bold,
                   color: textColor ?? Colors.grey[800],
                 ),

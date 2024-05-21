@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../data/data_endpoint/news.dart';
 import '../../../data/endpoint.dart';
@@ -98,7 +99,7 @@ class _NewsState extends State<News> {
               SizedBox(height: 8), // Jarak antara container dan teks
               Text(
                 post.title ?? '',
-                style: TextStyle(
+                style: GoogleFonts.nunito(
                   fontSize: 14.0,
                   color: Colors.black87,
                 ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../componen/custom_widget.dart';
 import '../../../data/data_endpoint/profile.dart';
@@ -37,7 +38,7 @@ class _EditProfileState extends State<EditProfile> {
         ),
         title: Text(
           'Edit Profile',
-          style: TextStyle(fontWeight: FontWeight.bold, color: MyColors.appPrimaryColor),
+          style: GoogleFonts.nunito(fontWeight: FontWeight.bold, color: MyColors.appPrimaryColor),
         ),
         centerTitle: false,
       ),
@@ -98,7 +99,7 @@ class _EditProfileState extends State<EditProfile> {
                             },
                           ),
                           SizedBox(height: 10),
-                          Text('Ganti Foto', style: TextStyle(fontWeight: FontWeight.bold, color: MyColors.appPrimaryColor),),
+                          Text('Ganti Foto', style: GoogleFonts.nunito(fontWeight: FontWeight.bold, color: MyColors.appPrimaryColor),),
                           SizedBox(height: 10),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,10 +114,10 @@ class _EditProfileState extends State<EditProfile> {
                                 ),
                                 child: TextFormField(
                                   controller: nameController,
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                     contentPadding: EdgeInsets.all(18),
                                     border: InputBorder.none,
-                                    hintStyle: TextStyle(color: Colors.grey),
+                                    hintStyle: GoogleFonts.nunito(color: Colors.grey),
                                   ),
                                 ),
                               ),
@@ -130,10 +131,10 @@ class _EditProfileState extends State<EditProfile> {
                                 ),
                                 child: TextFormField(
                                   controller: hpController,
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                     contentPadding: EdgeInsets.all(18),
                                     border: InputBorder.none,
-                                    hintStyle: TextStyle(color: Colors.grey),
+                                    hintStyle: GoogleFonts.nunito(color: Colors.grey),
                                   ),
                                 ),
                               ),
@@ -147,10 +148,10 @@ class _EditProfileState extends State<EditProfile> {
                                 ),
                                 child: TextFormField(
                                   controller: emailController,
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                     contentPadding: EdgeInsets.all(18),
                                     border: InputBorder.none,
-                                    hintStyle: TextStyle(color: Colors.grey),
+                                    hintStyle: GoogleFonts.nunito(color: Colors.grey),
                                   ),
                                 ),
                               ),
@@ -170,10 +171,10 @@ class _EditProfileState extends State<EditProfile> {
                                     maxLines: null,
                                     expands: true,
                                     keyboardType: TextInputType.multiline,
-                                    decoration: const InputDecoration(
+                                    decoration: InputDecoration(
                                       contentPadding: EdgeInsets.all(18),
                                       border: InputBorder.none,
-                                      hintStyle: TextStyle(color: Colors.grey),
+                                      hintStyle: GoogleFonts.nunito(color: Colors.grey),
                                       hintText: 'Keluhan',
                                     ),
                                   ),
@@ -192,12 +193,12 @@ class _EditProfileState extends State<EditProfile> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // controller.updateProfile(
-                  //   nameController.text,
-                  //   emailController.text,
-                  //   hpController.text,
-                  //   alamatController.text,
-                  // );
+                  controller.updateProfile(
+                    nameController.text,
+                    emailController.text,
+                    hpController.text,
+                    alamatController.text,
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: MyColors.appPrimaryColor,
@@ -205,14 +206,14 @@ class _EditProfileState extends State<EditProfile> {
                       borderRadius: BorderRadius.circular(20)),
                   elevation: 4.0,
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(width: 10),
                     Text(
                       'Update Profile',
-                      style: TextStyle(
+                      style: GoogleFonts.nunito(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),

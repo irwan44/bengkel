@@ -2,6 +2,7 @@ import 'package:customer_bengkelly/app/componen/color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../controllers/booking_controller.dart';
@@ -59,10 +60,10 @@ class CalendarTimePickerPage extends StatelessWidget {
             return Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: EdgeInsets.all(16.0),
                   child: Text(
                     DateFormat('dd/MM/yyyy').format(controller.selectedDate.value!),
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.nunito(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Container(

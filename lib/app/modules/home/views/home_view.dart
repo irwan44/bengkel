@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../history/views/history_view.dart';
 import '../../news/views/news_view.dart';
@@ -120,7 +121,7 @@ class _HomeViewState extends State<HomeView> {
             ),
             onPressed: () => _onItemTapped(index),
           ),
-          Text(label, style: TextStyle(color: Colors.white, fontSize: 12))
+          Text(label, style: GoogleFonts.nunito(color: Colors.white, fontSize: 12))
         ]
     );
   }

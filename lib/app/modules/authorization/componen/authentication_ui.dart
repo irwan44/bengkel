@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../componen/custom_widget.dart';
 import '../router/router.dart';
 import 'common.dart';
@@ -89,11 +90,10 @@ class _AuthenticationUIState extends State<AuthenticationUI> {
                             ),
                             backgroundColor:
                                 const MaterialStatePropertyAll(Colors.white)),
-                        child: const Text(
+                        child: Text(
                           "Register",
-                          style: TextStyle(
+                          style: GoogleFonts.nunito(
                               fontSize: 15,
-                              fontFamily: "Urbanist-SemiBold",
                               fontWeight: FontWeight.bold,
                               color: Colors.black),
                         )),

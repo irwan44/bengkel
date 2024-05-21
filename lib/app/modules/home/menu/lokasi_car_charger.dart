@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LokasiCarChanger extends StatefulWidget {
   const LokasiCarChanger({super.key});
@@ -23,10 +24,10 @@ class _LokasiCarChangerState extends State<LokasiCarChanger> {
         title: const Text('ChatView'),
         centerTitle: true,
       ),
-      body: const Center(
+      body: Center(
         child: Text(
           'ChatView is working',
-          style: TextStyle(fontSize: 20),
+          style: GoogleFonts.nunito(fontSize: 20),
         ),
       ),
     );

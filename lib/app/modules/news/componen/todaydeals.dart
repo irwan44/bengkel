@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../data/data_endpoint/news.dart';
@@ -135,7 +136,7 @@ class _TodayDealsState extends State<TodayDeals> {
                             Text(
                               post.title ?? '',
                               textAlign: TextAlign.start,
-                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                              style: GoogleFonts.nunito(fontSize: 12, fontWeight: FontWeight.bold),
                             ),
                           ],),)
                     ],),
