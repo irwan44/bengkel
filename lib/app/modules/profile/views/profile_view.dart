@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../componen/ButtonSubmitWidget.dart';
 import '../../../componen/color.dart';
 import '../../../componen/profile_shimmer.dart';
+import '../../../componen/spleshscreen.dart';
 import '../../../data/data_endpoint/profile.dart';
 import '../../../data/endpoint.dart';
 import '../../../data/localstorage.dart';
@@ -244,7 +245,7 @@ class ProfileView extends GetView<ProfileController> {
             ),
       InkWell(
         onTap: () {
-          // Get.toNamed(Routes.PENGATURAN);
+         Get.to(MyCustomSplashScreen());
         },
         child:
             Row(
