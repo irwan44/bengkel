@@ -2,17 +2,19 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../modules/authorization/componen/authentication_ui.dart';
+import '../modules/authorization/views/authorization_view.dart';
 import '../modules/home/views/home_view.dart';
 
-class MyCustomSplashScreen extends StatefulWidget {
+class MyCustomSplashScreenno extends StatefulWidget {
   @override
-  _MyCustomSplashScreenState createState() => _MyCustomSplashScreenState();
+  _MyCustomSplashScreennoState createState() => _MyCustomSplashScreennoState();
 }
 
-class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
+class _MyCustomSplashScreennoState extends State<MyCustomSplashScreenno>
     with TickerProviderStateMixin {
   double _fontSize = 2;
-  double _containerSize = 1.3;
+  double _containerSize = 1.5;
   double _textOpacity = 0.0;
   double _containerOpacity = 0.0;
 
@@ -51,7 +53,7 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
 
     Timer(Duration(seconds: 4), () {
       setState(() {
-        Navigator.pushReplacement(context, PageTransition(HomeView()));
+        Navigator.pushReplacement(context, PageTransition(AuthorizationView()));
       });
     });
   }

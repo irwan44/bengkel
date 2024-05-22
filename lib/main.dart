@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
       title: "Mekanik Bengkelly",
       initialRoute: Publics.controller.getToken.value.isEmpty
           ? AppPages.INITIAL
-          : Routes.HOME,
+          : Routes.SPLASHSCREEN,
       getPages: AppPages.routes,
       theme: ThemeData(
         appBarTheme: const AppBarTheme(

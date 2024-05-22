@@ -23,6 +23,7 @@ import 'data_endpoint/register.dart';
 import 'data_endpoint/tipekendaraan.dart';
 import 'localstorage.dart';
 
+
 class API {
   //News ----------------------------------------------------------------------------------
   static const _bengkellyUrl = 'https://bengkelly.co.id/wp-json/wp/v2/posts';

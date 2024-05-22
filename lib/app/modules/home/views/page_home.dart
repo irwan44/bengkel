@@ -37,29 +37,34 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _checkPermissions();
+    _checkPermissionsfile();
   }
 
   Future<void> _checkPermissions() async {
     var status = await Permission.location.status;
-    print('Permission status: $status');
     if (status.isGranted) {
-      print('Permission already granted');
       await _getCurrentLocation();
     } else {
       var requestedStatus = await Permission.location.request();
-      print('Requested permission status: $requestedStatus');
       if (requestedStatus.isGranted) {
-        print('Permission granted');
         await _getCurrentLocation();
       } else {
-        print('Permission denied');
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text('Permission denied'),
         ));
       }
     }
   }
-
+  Future<void> _checkPermissionsfile() async {
+    var status = await Permission.storage.status;
+    if (status.isGranted) {
+    } else {
+      var requestedStatus = await Permission.storage.request();
+      if (requestedStatus.isGranted) {
+      } else {
+      }
+    }
+  }
   Future<void> _getCurrentLocation() async {
     try {
       _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);

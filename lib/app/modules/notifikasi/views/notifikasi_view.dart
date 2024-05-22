@@ -33,18 +33,36 @@ class _NotofikasiState extends State<Notofikasi> {
       ),
       body: SingleChildScrollView(
         child: Container(
+          height: MediaQuery.of(context).size.height,
           child: FutureBuilder(
             future: API.HistoryBookingID(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return  ListView.builder(
+                return ListView.builder(
                   itemCount: 5,
                   itemBuilder: (context, index) {
                     return const ShimmerListHistory();
                   },
                 );
               } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
+                if (snapshot.error.toString().contains('404')) {
+                  return Center(child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/logo/forbidden.png',
+                          width: 60,
+                          fit: BoxFit.contain,
+                        ),
+                        SizedBox(height: 10,),
+                        Text('Belum ada Data History Booking')
+                      ]
+                  ),
+                  );
+                } else {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                }
               } else if (snapshot.hasData && snapshot.data != null) {
                 HistoryBooking getDataAcc = snapshot.data ?? HistoryBooking();
                 var filteredData = getDataAcc.datahistory?.where((e) => e.namaStatus == "Booking").toList() ?? [];

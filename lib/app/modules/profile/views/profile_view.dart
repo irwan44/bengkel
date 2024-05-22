@@ -245,7 +245,7 @@ class ProfileView extends GetView<ProfileController> {
             ),
       InkWell(
         onTap: () {
-         Get.to(MyCustomSplashScreen());
+         // Get.to(MyCustomSplashScreen());
         },
         child:
             Row(

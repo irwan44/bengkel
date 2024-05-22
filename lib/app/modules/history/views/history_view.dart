@@ -232,9 +232,23 @@ class _HistoryViewState extends State<HistoryView> {
             },
           );
         } else if (snapshot.hasError) {
-          return Center(child: Text('Belum ada Data History Booking'));
+          return Center(child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+            Image.asset(
+              'assets/logo/forbidden.png',
+              width: 60,
+              fit: BoxFit.contain,
+            ),
+            SizedBox(height: 10,),
+            Text('Belum ada Data History Booking')
+          ]
+          ),
+          );
+
         } else if (!snapshot.hasData || snapshot.data!.datahistory!.isEmpty) {
-          return Center(child: Text('No data available'));
+          return Center(child: Text('Belum ada Data History Booking'));
         }
 
         var bookings = snapshot.data!.datahistory;
@@ -242,6 +256,25 @@ class _HistoryViewState extends State<HistoryView> {
           if (status == 'Semua') return true;
           return booking.namaStatus == status;
         }).toList();
+
+        if (filteredBookings == null || filteredBookings.isEmpty) {
+          return Center(child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/logo/forbidden.png',
+                  width: 60,
+                  fit: BoxFit.contain,
+                ),
+                SizedBox(height: 10,),
+                Text('Belum ada Data History Booking')
+              ]
+          ),
+          );
+
+
+        }
 
         return SmartRefresher(
           controller: _refreshControllers[index],
@@ -257,7 +290,7 @@ class _HistoryViewState extends State<HistoryView> {
                     child: widget,
                   ),
                 ),
-                children: filteredBookings!.map((booking) {
+                children: filteredBookings.map((booking) {
                   return ListHistory(
                     booking: booking,
                     onTap: () {

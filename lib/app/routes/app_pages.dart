@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../componen/spleshscreen.dart';
+import '../componen/spleshscreen_notoken.dart';
 import '../modules/authorization/bindings/authorization_binding.dart';
 import '../modules/authorization/componen/forget_password.dart';
 import '../modules/authorization/componen/login_page.dart';
@@ -43,7 +45,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.AUTHORIZATION;
+  static const INITIAL = Routes.SPLASHSCREENNO;
 
   static final routes = [
     GetPage(
@@ -205,6 +207,16 @@ class AppPages {
     GetPage(
       name: _Paths.SUKSESBOOKING,
       page: () => SuksesBooking(),
+      binding: BookingBinding(),
+    ),
+    GetPage(
+      name: _Paths.SPLASHSCREEN,
+      page: () => MyCustomSplashScreen(),
+      binding: BookingBinding(),
+    ),
+    GetPage(
+      name: _Paths.SPLASHSCREENNO,
+      page: () => MyCustomSplashScreenno(),
       binding: BookingBinding(),
     ),
   ];

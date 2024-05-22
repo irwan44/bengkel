@@ -32,6 +32,8 @@ abstract class Routes {
   static const DETAILHISTORY = _Paths.DETAILHISTORY;
   static const TAMBAHKENDARAAN = _Paths.TAMBAHKENDARAAN;
   static const SUKSESBOOKING = _Paths.SUKSESBOOKING;
+  static const SPLASHSCREEN = _Paths.SPLASHSCREEN;
+  static const SPLASHSCREENNO = _Paths.SPLASHSCREENNO;
 }
 
 abstract class _Paths {
@@ -65,4 +67,6 @@ abstract class _Paths {
   static const DETAILHISTORY = '/detailhistory';
   static const TAMBAHKENDARAAN = '/tambahkendaraan';
   static const SUKSESBOOKING = '/suksesbooking';
+  static const SPLASHSCREEN = '/splashscreen';
+  static const SPLASHSCREENNO = '/splashscreenno';
 }
