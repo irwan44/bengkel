@@ -1,14 +1,27 @@
+import 'package:customer_bengkelly/app/data/data_endpoint/merekkendaraan.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../data/data_endpoint/merekkendaraan.dart';
 import '../../../data/data_endpoint/tipekendaraan.dart';
 import '../../../data/endpoint.dart';
 import '../../../routes/app_pages.dart';
 
 class AuthorizationController extends GetxController {
+  // Controllers for SignupPage
+  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
   final EmailController = TextEditingController();
   final PasswordController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
+  final nopolController = TextEditingController();
+  final hpController = TextEditingController();
+  final warnaController = TextEditingController();
+  final tahunController = TextEditingController();
+
+  var isSignupFormValid = false.obs;
+  var isRegisterFormValid = false.obs;
+
   var futureMerek = Future<MerekKendaraan>.value(MerekKendaraan(data: [])).obs;
   var futureTipeKendaraan = Future<TipeKendaraan>.value(TipeKendaraan(data: [])).obs;
   var selectedMerek = ''.obs;
@@ -18,35 +31,59 @@ class AuthorizationController extends GetxController {
   var selectedTransmisi = ''.obs;
   var selectedKategory = ''.obs;
 
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final usernameController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
-  final nopolController = TextEditingController();
-  final hpController = TextEditingController();
-  final warnaController = TextEditingController();
-  final tahunController = TextEditingController();
-
   @override
   void onInit() {
     super.onInit();
+    usernameController.addListener(_validateSignupForm);
+    emailController.addListener(_validateSignupForm);
+    passwordController.addListener(_validateSignupForm);
+    confirmPasswordController.addListener(_validateSignupForm);
+    nopolController.addListener(_validateRegisterForm);
+    hpController.addListener(_validateRegisterForm);
+    warnaController.addListener(_validateRegisterForm);
+    tahunController.addListener(_validateRegisterForm);
+    selectedMerek.listen((_) => _validateRegisterForm());
+    selectedTipe.listen((_) => _validateRegisterForm());
+    selectedTransmisi.listen((_) => _validateRegisterForm());
+    selectedKategory.listen((_) => _validateRegisterForm());
     loadMerek();
   }
-
   void loadMerek() {
     futureMerek.value = API.merekid();
   }
+  void _validateSignupForm() {
+    isSignupFormValid.value = usernameController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
+        passwordController.text.isNotEmpty &&
+        confirmPasswordController.text.isNotEmpty;
+  }
+
+  void _validateRegisterForm() {
+    isRegisterFormValid.value = nopolController.text.isNotEmpty &&
+        hpController.text.isNotEmpty &&
+        warnaController.text.isNotEmpty &&
+        tahunController.text.isNotEmpty &&
+        selectedMerek.isNotEmpty &&
+        selectedTipe.isNotEmpty &&
+        selectedTransmisi.isNotEmpty &&
+        selectedKategory.isNotEmpty;
+  }
+
+  @override
+  void onClose() {
+    usernameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    nopolController.dispose();
+    hpController.dispose();
+    warnaController.dispose();
+    tahunController.dispose();
+    super.onClose();
+  }
 
   Future<void> register() async {
-    if (emailController.text.isNotEmpty &&
-        passwordController.text.isNotEmpty &&
-        usernameController.text.isNotEmpty &&
-        confirmPasswordController.text.isNotEmpty &&
-        nopolController.text.isNotEmpty &&
-        selectedMerek.value.isNotEmpty &&
-        selectedKategory.value.isNotEmpty &&
-        selectedTransmisi.value.isNotEmpty &&
-        tahunController.text.isNotEmpty) {
+    if (isRegisterFormValid.value) {
       try {
         final registerResponse = await API.RegisterID(
           nama: usernameController.text,
@@ -64,8 +101,6 @@ class AuthorizationController extends GetxController {
           transmisi: selectedTransmisi.value,
         );
 
-        print('registerResponse: ${registerResponse.toJson()}');
-
         if (registerResponse != null && registerResponse.status == true) {
           Get.offAllNamed(Routes.SINGIN);
         } else {
@@ -74,7 +109,6 @@ class AuthorizationController extends GetxController {
               colorText: Colors.white);
         }
       } catch (e) {
-        print('Error during registration: $e');
         Get.snackbar('Gagal Registrasi', 'Terjadi kesalahan saat registrasi',
             backgroundColor: Colors.redAccent,
             colorText: Colors.white);

@@ -48,10 +48,10 @@ class AuthorizationView extends GetView<AuthorizationController> {
                   end: Alignment.bottomCenter,
                   colors: [
                     Colors.white
-                        .withOpacity(0.0), // Warna transparan di bagian atas
+                        .withOpacity(0.0),
                     Colors.white
-                        .withOpacity(0.9), // Warna pudar di bagian bawah
-                    Colors.white, // Warna pudar di bagian bawah
+                        .withOpacity(0.9),
+                    Colors.white,
                   ],
                 ),
               ),
@@ -78,7 +78,8 @@ class AuthorizationView extends GetView<AuthorizationController> {
                       },
                       color: MyColors.appPrimaryColor,
                     ),
-                  ),),
+                  ),
+                ),
                 SizedBox(height: 10,),
                 Container(
                   margin: EdgeInsets.only(left: 40, right: 40),

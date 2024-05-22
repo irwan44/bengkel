@@ -1,7 +1,6 @@
-import 'package:customer_bengkelly/app/componen/color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import '../../../componen/color.dart';
 import '../../../componen/custom_widget.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/authorization_controller.dart';
@@ -25,13 +24,14 @@ class _SignupPageState extends State<SignupPage> {
     setState(() {
       obscureText = !obscureText;
     });
-  }  void togglePasswordVisibility2() {
+  }
+
+  void togglePasswordVisibility2() {
     setState(() {
       obscureText2 = !obscureText2;
     });
   }
 
-  bool flag = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,33 +91,31 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         FadeInAnimation(
                           delay: 2.2,
-                          child:
-                          Container(
+                          child: Container(
                             padding: const EdgeInsets.all(3.0),
                             decoration: BoxDecoration(
                               border: Border.all(color: MyColors.bgformborder),
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child:
-                          TextFormField(
-                            controller: controller.passwordController,
-                            obscureText: obscureText,
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.all(18),
-                              hintText: "Password",
-                              hintStyle: Common().hinttext,
-                              border: InputBorder.none,
-                              suffixIcon: IconButton(
-                                onPressed: togglePasswordVisibility,
-                                icon: Icon(
-                                  obscureText
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                  color: Colors.grey,
+                            child: TextFormField(
+                              controller: controller.passwordController,
+                              obscureText: obscureText,
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.all(18),
+                                hintText: "Password",
+                                hintStyle: Common().hinttext,
+                                border: InputBorder.none,
+                                suffixIcon: IconButton(
+                                  onPressed: togglePasswordVisibility,
+                                  icon: Icon(
+                                    obscureText
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: Colors.grey,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
                           ),
                         ),
                         const SizedBox(
@@ -125,32 +123,30 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         FadeInAnimation(
                           delay: 2.2,
-                          child:
-                          Container(
+                          child: Container(
                             padding: const EdgeInsets.all(3.0),
                             decoration: BoxDecoration(
                               border: Border.all(color: MyColors.bgformborder),
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child:
-                          TextFormField(
-                            controller: controller.confirmPasswordController,
-                            obscureText: obscureText2,
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.all(18),
-                              hintText: "Confirm Password",
-                              hintStyle: Common().hinttext,
-                              border: InputBorder.none,
-                              suffixIcon: IconButton(
-                                onPressed: togglePasswordVisibility2,
-                                icon: Icon(
-                                  obscureText2
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                  color: Colors.grey,
+                            child: TextFormField(
+                              controller: controller.confirmPasswordController,
+                              obscureText: obscureText2,
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.all(18),
+                                hintText: "Confirm Password",
+                                hintStyle: Common().hinttext,
+                                border: InputBorder.none,
+                                suffixIcon: IconButton(
+                                  onPressed: togglePasswordVisibility2,
+                                  icon: Icon(
+                                    obscureText2
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: Colors.grey,
+                                  ),
                                 ),
                               ),
-                            ),
                             ),
                           ),
                         ),
@@ -159,13 +155,17 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         FadeInAnimation(
                           delay: 2.7,
-                          child: CustomElevatedButton(
+                          child: Obx(() => CustomElevatedButton(
                             message: "Next",
-                            function: () {
+                            function: controller.isSignupFormValid.value
+                                ? () async {
                               Get.toNamed(Routes.SINGUPNEXT);
-                            },
-                            color: MyColors.appPrimaryColor,
-                          ),
+                            }
+                                : () async {},
+                            color: controller.isSignupFormValid.value
+                                ? MyColors.appPrimaryColor
+                                : Colors.grey,
+                          )),
                         ),
                       ],
                     ),
@@ -181,13 +181,6 @@ class _SignupPageState extends State<SignupPage> {
                     width: double.infinity,
                     child: Column(
                       children: [
-                        // FadeInAnimation(
-                        //   delay: 2.9,
-                        //   child: Text(
-                        //     "Atau Daftar dengan",
-                        //     style: Common().semiboldblack,
-                        //   ),
-                        // ),
                         SizedBox(
                           height: 20,
                         ),
@@ -200,11 +193,7 @@ class _SignupPageState extends State<SignupPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                // SvgPicture.asset(
-                                //     "assets/images/facebook_ic (1).svg"),
-                                // SvgPicture.asset(
-                                //     "assets/images/google_ic-1.svg"),
-                                // Image.asset("assets/images/Vector.png")
+                                // Icons can be added here
                               ],
                             ),
                           ),

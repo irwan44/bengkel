@@ -5,14 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart'; // Import package intl
-import '../../../componen/custom_widget.dart';
-import '../../../data/data_endpoint/bookingcustomer.dart';
+import 'package:intl/intl.dart';
 import '../../../data/data_endpoint/customkendaraan.dart';
 import '../../../data/data_endpoint/jenisservice.dart';
-import '../../authorization/componen/common.dart';
 import '../../authorization/componen/fade_animationtest.dart';
-import '../../authorization/componen/login_page.dart';
 import '../componen/select_caleder.dart';
 import '../componen/select_maps.dart';
 import '../controllers/booking_controller.dart';

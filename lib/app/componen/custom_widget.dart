@@ -80,7 +80,7 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton> {
         });
       },
       style: ButtonStyle(
-          side: const MaterialStatePropertyAll(BorderSide(color: Colors.black)),
+          // side: const MaterialStatePropertyAll(BorderSide(color: Colors.black)),
           shape: MaterialStatePropertyAll(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
           fixedSize: const MaterialStatePropertyAll(Size.fromWidth(370)),

@@ -1,8 +1,6 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:customer_bengkelly/app/componen/color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../../../componen/custom_widget.dart';
 import '../../../data/data_endpoint/kategorikendaraan.dart';
@@ -13,8 +11,7 @@ import '../controllers/authorization_controller.dart';
 import 'common.dart';
 import 'fade_animationtest.dart';
 import 'login_page.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 class RegisterPage extends StatelessWidget {
   final AuthorizationController controller = Get.put(AuthorizationController());
 
@@ -105,7 +102,7 @@ class RegisterPage extends StatelessWidget {
                                       try {
                                         // Find the ID of the selected merek
                                         controller.selectedMerekId.value =
-                                            merekList.firstWhere((merek) => merek.namaMerk == value).id!;
+                                        merekList.firstWhere((merek) => merek.namaMerk == value).id!;
                                         // Trigger load for dropdown 2
                                         controller.futureTipeKendaraan.value =
                                             API.tipekendaraanID(id: controller.selectedMerekId.value);
@@ -153,7 +150,7 @@ class RegisterPage extends StatelessWidget {
                                     items: namaTipeList,
                                     onChanged: (value) {
                                       controller.selectedTipeID.value =
-                                          tipeList.firstWhere((merek) => merek.namaTipe == value).id!;
+                                      tipeList.firstWhere((merek) => merek.namaTipe == value).id!;
                                       controller.selectedTipe.value = value!;
                                     },
                                   );
@@ -183,15 +180,14 @@ class RegisterPage extends StatelessWidget {
                                   return Center(child: Text('No data available'));
                                 } else {
                                   List<DataKategoriKendaraan> tipeList = snapshot.data!.dataKategoriKendaraan!;
-                                  List<String> KategoryList =
-                                  tipeList.map((tipe) => tipe.kategoriKendaraan!).toList();
+                                  List<String> KategoryList = tipeList.map((tipe) => tipe.kategoriKendaraan!).toList();
                                   print("Nama Tipe List: $KategoryList");
 
                                   return CustomDropdown.search(
                                     hintText: 'Kategory Kendaraan',
                                     items: KategoryList,
                                     onChanged: (value) {
-                                      controller.selectedKategory.value = value;
+                                      controller.selectedKategory.value = value!;
                                       print("Selected Kategori: ${controller.selectedKategory.value}");
                                     },
                                   );
@@ -247,11 +243,17 @@ class RegisterPage extends StatelessWidget {
                         ),
                         FadeInAnimation(
                           delay: 2.7,
-                          child: CustomElevatedButton(
+                          child: Obx(() => CustomElevatedButton(
                             message: "Register",
-                            function: controller.register,
-                            color: MyColors.appPrimaryColor,
-                          ),
+                            function: controller.isRegisterFormValid.value
+                                ? () async {
+                              await controller.register();
+                            }
+                                : () async {},
+                            color: controller.isRegisterFormValid.value
+                                ? MyColors.appPrimaryColor
+                                : Colors.grey,
+                          )),
                         ),
                       ],
                     ),
@@ -267,13 +269,6 @@ class RegisterPage extends StatelessWidget {
                     width: double.infinity,
                     child: Column(
                       children: [
-                        // FadeInAnimation(
-                        //   delay: 2.9,
-                        //   child: Text(
-                        //     "Atau Daftar dengan",
-                        //     style: Common().semiboldblack,
-                        //   ),
-                        // ),
                         SizedBox(
                           height: 20,
                         ),

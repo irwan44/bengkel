@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../componen/ButtonSubmitWidget.dart';
 import '../../../componen/color.dart';
+import '../../../componen/profile_shimmer.dart';
 import '../../../data/data_endpoint/profile.dart';
 import '../../../data/endpoint.dart';
 import '../../../data/localstorage.dart';
@@ -80,7 +81,7 @@ class ProfileView extends GetView<ProfileController> {
                 future: API.profileiD(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
+                    return ProfileLoadingShimmer();
                   } else if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   } else {
@@ -97,7 +98,7 @@ class ProfileView extends GetView<ProfileController> {
                               ClipOval(
                                 child: gambar != null
                                     ? Image.network(
-                                  gambar!,
+                                  gambar,
                                   width: 70,
                                   height: 70,
                                   fit: BoxFit.cover,
@@ -118,7 +119,7 @@ class ProfileView extends GetView<ProfileController> {
                                 ),
                               ),
                               SizedBox(width: 10),
-                              Expanded(  // Membuat kolom menjadi responsif
+                              Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -128,17 +129,37 @@ class ProfileView extends GetView<ProfileController> {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text(nama, style: GoogleFonts.nunito(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
-                                          SvgPicture.asset('assets/icons/edit.svg', width: 26),
+                                          Text(
+                                            nama,
+                                            style: GoogleFonts.nunito(
+                                              color: MyColors.appPrimaryColor,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          SvgPicture.asset(
+                                            'assets/icons/edit.svg',
+                                            width: 26,
+                                          ),
                                         ],
                                       ),
                                     ),
-                                    Text(email, style: GoogleFonts.nunito(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
-                                    Text(hp, style: GoogleFonts.nunito(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
+                                    Text(
+                                      email,
+                                      style: GoogleFonts.nunito(
+                                        color: MyColors.appPrimaryColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      hp,
+                                      style: GoogleFonts.nunito(
+                                        color: MyColors.appPrimaryColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
-
                             ],
                           ),
                         ],

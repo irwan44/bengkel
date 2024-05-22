@@ -82,13 +82,6 @@ class _LoginPageState extends State<LoginPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          FadeInAnimation(
-                            delay: 1.3,
-                            child: Text(
-                              "Selamat Datang!",
-                              style: Common().titelTheme,
-                            ),
-                          ),
                         ],
                       ),
                     ),
@@ -162,7 +155,8 @@ class _LoginPageState extends State<LoginPage> {
                                 message: "Masuk",
                                 function: () async {
                                   HapticFeedback.lightImpact();
-                                  if (controller.EmailController.text.isNotEmpty && controller.PasswordController.text.isNotEmpty) {
+                                  if (controller.EmailController.text.isNotEmpty &&
+                                      controller.PasswordController.text.isNotEmpty) {
                                     try {
                                       String? token = await API.login(
                                         email: controller.EmailController.text,
