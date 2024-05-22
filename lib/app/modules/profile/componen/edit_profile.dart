@@ -94,31 +94,7 @@ class _EditProfileState extends State<EditProfile> {
                                         ? FileImage(controller.selectedImage!)
                                         : NetworkImage(gambar) as ImageProvider,
                                     radius: 50.0,
-                                    child: ClipOval(
-                                      child: gambar != null
-                                          ? Image.network(
-                                        gambar,
-                                        width: 100,
-                                        height: 100,
-                                        fit: BoxFit.cover,
-                                        errorBuilder: (context, error, stackTrace) {
-                                          return Image.asset(
-                                            'assets/images/profile.png',
-                                            width: 100,
-                                            height: 100,
-                                            fit: BoxFit.cover,
-                                          );
-                                        },
-                                      )
-                                          : Image.asset(
-                                        'assets/images/profile.png',
-                                        width: 100,
-                                        height: 100,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
                                   ),
-
                                   Container(
                                     height: 30.0,
                                     width: 30.0,

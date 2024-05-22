@@ -4,7 +4,6 @@ import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../../../data/data_endpoint/merekkendaraan.dart';
 import '../../../data/data_endpoint/tipekendaraan.dart';
 import '../../../data/endpoint.dart';
@@ -23,6 +22,7 @@ class ProfileController extends GetxController {
   var selectedTipeID = 0.obs;
   var selectedTransmisi = ''.obs;
   var selectedKategory = ''.obs;
+  String? imageUrl; // Tambahkan properti untuk URL gambar
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -128,7 +128,6 @@ class ProfileController extends GetxController {
       if (response.statusCode == 200) {
         Get.snackbar('Success', 'Profile updated successfully',
             backgroundColor: Colors.green, colorText: Colors.white);
-
       } else {
         Get.snackbar('Error', 'Failed to update profile',
             backgroundColor: Colors.red, colorText: Colors.white);
