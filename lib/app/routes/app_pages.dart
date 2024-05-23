@@ -165,7 +165,7 @@ class AppPages {
     GetPage(
       transition: Transition.rightToLeftWithFade,
       name: _Paths.PILIHKENDARAAN,
-      page: () => const PilihKendaraan(),
+      page: () => PilihKendaraan(),
       binding: BookingBinding(),
     ),
     GetPage(

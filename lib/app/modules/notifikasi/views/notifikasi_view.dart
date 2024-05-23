@@ -68,7 +68,20 @@ class _NotofikasiState extends State<Notofikasi> {
                 var filteredData = getDataAcc.datahistory?.where((e) => e.namaStatus == "Booking").toList() ?? [];
 
                 if (filteredData.isEmpty) {
-                  return const Center(child: Text('Tidak ada data'));
+                  return Center(child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/logo/forbidden.png',
+                          width: 60,
+                          fit: BoxFit.contain,
+                        ),
+                        SizedBox(height: 10,),
+                        Text('Belum ada History Booking')
+                      ]
+                  ),
+                  );
                 }
 
                 return Column(

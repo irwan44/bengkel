@@ -8,6 +8,7 @@ import 'package:get_storage/get_storage.dart';
 import 'app/componen/color.dart';
 import 'app/data/endpoint.dart';
 import 'app/data/publik.dart';
+import 'app/modules/booking/controllers/booking_controller.dart';
 import 'app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -17,7 +18,6 @@ import 'package:get_storage/get_storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  HttpOverrides.global = MyHttpOverrides();
   startPollingNotifications(); // Mulai polling notifikasi
   await GetStorage.init('token-mekanik');
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(

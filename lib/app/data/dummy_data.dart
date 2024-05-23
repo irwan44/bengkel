@@ -7,6 +7,38 @@ List<Map<String, dynamic>> categoryVehicle = [
   {"id": "6", "category_name": "Medium Truck/Tronton"},
   {"id": "7", "category_name": "Heavy Duty"},
 ];
+// Data Dummy
+const List<Map<String, dynamic>> menu = [
+  {
+    "id": "1",
+    "name": "Sop Iga",
+    'image': "assets/tenant_dummy/warung_makan_selonjoran/sop-iga.jpg",
+    'deskripsi': 'berbagai rempah-rempah dan bahan\ntambahan seperti wortel,\nkentang, bawang merah,\nbawang putih, dan daun bawang',
+    'harga': 17000
+  },
+  {
+    "id": "2",
+    "name": "iga Bakar",
+    'image': "assets/tenant_dummy/warung_makan_selonjoran/iga-bakar.jpg",
+    'deskripsi':
+    'campuran kecap manis, bawang putih,\nbawang merah, cabai, dan\nrempah-rempah lainnya untuk\nmemberikan cita rasa yang\nkaya dan meresap',
+    'harga': 22000
+  },
+  {
+    "id": "3",
+    "name": "Pecel Ayam",
+    'image': "assets/tenant_dummy/warung_makan_selonjoran/pecel-ayam.jpg",
+    'deskripsi': 'dengan berbagai rempah dan\nbumbu sebelum direbus\natau digoreng sehingga\nmemiliki cita rasa\nyang khas dan gurih',
+    'harga': 25000
+  },
+  {
+    "id": "4",
+    "name": "Soto Ayam",
+    'image': "assets/tenant_dummy/warung_makan_selonjoran/soto-ayam.jpg",
+    'deskripsi': 'dibuat dari kaldu ayam yang\ndihasilkan dari merebus daging\nayam bersama dengan bumbu\nrempah seperti bawang putih,\nbawang merah, jahe, ketumbar, dan serai',
+    'harga': 20000
+  },
+];
 
 List<Map<String, dynamic>> transmissionVehicle = [
   {"id": "1", "transmission": "AT"},

@@ -365,6 +365,7 @@ class _HomePageState extends State<HomePage> {
                       Get.toNamed(Routes.DETAILLOKASIBENGKELLY,
                           arguments:
                           {
+                            'id': area['id'],
                             'description': area['description'],
                             'name': area['name'],
                             'sliderImages': area['sliderImages'],

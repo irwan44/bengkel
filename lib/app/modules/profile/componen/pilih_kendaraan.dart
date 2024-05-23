@@ -1,23 +1,15 @@
-import 'package:customer_bengkelly/app/modules/profile/componen/widgets/listkendaraan.dart';
-import 'package:customer_bengkelly/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../../componen/color.dart';
-import '../../../data/data_endpoint/customkendaraan.dart';
-import '../../../data/endpoint.dart';
+import '../../../routes/app_pages.dart';
+import '../../booking/componen/list_kendataan.dart';
+import '../../booking/controllers/booking_controller.dart';
 
-class PilihKendaraan extends StatefulWidget {
-  const PilihKendaraan({super.key});
+class PilihKendaraan extends StatelessWidget {
+  final BookingController controller = Get.find<BookingController>();
 
-  @override
-  State<PilihKendaraan> createState() => _PilihKendaraanState();
-}
-
-class _PilihKendaraanState extends State<PilihKendaraan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,36 +23,35 @@ class _PilihKendaraanState extends State<PilihKendaraan> {
           children: [
             Container(
               width: double.infinity,
-              child:
-              SizedBox(
+              child: SizedBox(
                 height: 50, // <-- Your height
-                child:
-            ElevatedButton(
-              onPressed: () async {
-                Get.toNamed(Routes.TAMBAHKENDARAAN);
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: MyColors.appPrimaryColor,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                elevation: 4.0,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                Icon(Icons.add, color: Colors.white,),
-                SizedBox(width: 10,),
-                Text(
-                  'Tambah Kendaraan',
-                  style: GoogleFonts.nunito(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                child: ElevatedButton(
+                    onPressed: () async {
+                      Get.toNamed(Routes.TAMBAHKENDARAAN);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: MyColors.appPrimaryColor,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      elevation: 4.0,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.add, color: Colors.white,),
+                        SizedBox(width: 10,),
+                        Text(
+                          'Tambah Kendaraan',
+                          style: GoogleFonts.nunito(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    )
                 ),
-              ],)
-            ),
-            ),
+              ),
             ),
           ],
         ),
@@ -74,46 +65,21 @@ class _PilihKendaraanState extends State<PilihKendaraan> {
           statusBarBrightness: Brightness.light,
           systemNavigationBarColor: Colors.white,
         ),
-        title:  Text('Pilih Kendaraan', style: GoogleFonts.nunito(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
+        title: Obx(() => Text(
+          'Pilih Kendaraan: ${controller.selectedTransmisi.value?.merks?.namaMerk ?? ''}',
+          style: GoogleFonts.nunito(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),
+        )),
         centerTitle: false,
       ),
-      body: SingleChildScrollView(child:
-      Column(children: [
-        FutureBuilder(
-          future: API.PilihKendaraan(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData &&
-                snapshot.connectionState != ConnectionState.waiting &&
-                snapshot.data != null) {
-              CustomerKendaraan getDataAcc = snapshot.data as CustomerKendaraan;
-              return Column(
-                children: AnimationConfiguration.toStaggeredList(
-                  duration: const Duration(milliseconds: 475),
-                  childAnimationBuilder: (widget) => SlideAnimation(
-                    child: FadeInAnimation(
-                      child: widget,
-                    ),
-                  ),
-                  children: getDataAcc.datakendaraan != null
-                      ? getDataAcc.datakendaraan!.map((e) {
-                    return ListKendaraan(item: e);
-                  }).toList()
-                      : [Container()],
-                ),
-              );
-            } else {
-              return SizedBox();
-            }
-          },
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: ListKendaraanWidget(),
+            ),
+          ],
         ),
-        SizedBox(
-          height: 10,
-        ),
-        SizedBox(
-          height: 10,
-        ),
-      ],
-      ),
       ),
     );
   }

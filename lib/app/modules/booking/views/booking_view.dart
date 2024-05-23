@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import '../../../data/data_endpoint/customkendaraan.dart';
 import '../../../data/data_endpoint/jenisservice.dart';
 import '../../authorization/componen/fade_animationtest.dart';
+import '../componen/list_kendataan.dart';
 import '../componen/select_caleder.dart';
 import '../componen/select_maps.dart';
 import '../controllers/booking_controller.dart';
@@ -115,7 +116,15 @@ class BookingViewState extends State<BookingView> {
                                 borderRadius: BorderRadius.circular(10)),
                             child: GestureDetector(
                               onTap: () {
-                                _showBottomSheet(context);
+                                  showModalBottomSheet(
+                                    showDragHandle: true,
+                                    backgroundColor: Colors.white,
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return ListKendaraanWidget();
+                                    },
+                                  );
+
                               },
                               child: Obx(() => InputDecorator(
                                 decoration: InputDecoration(
