@@ -39,7 +39,6 @@ class ListKendaraan extends StatelessWidget {
             Text(' - ', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
             Text('${item.tahun}', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
           ],),
-
         ],
       ),
     );

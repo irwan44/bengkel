@@ -22,6 +22,8 @@ import '../modules/history/views/history_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/detail/detailbengkelly/lokasibengkelly.dart';
 import '../modules/home/detail/detailspesialis/spesialisofer.dart';
+import '../modules/home/detail/lihatsemua/lihat_lokasi_bengkelly.dart';
+import '../modules/home/detail/lihatsemua/lihat_spesialis.dart';
 import '../modules/home/menu/booking_service.dart';
 import '../modules/home/menu/emergency_service.dart';
 import '../modules/home/menu/lokasi_bengkelly.dart';
@@ -217,6 +219,18 @@ class AppPages {
     GetPage(
       name: _Paths.SPLASHSCREENNO,
       page: () => MyCustomSplashScreenno(),
+      binding: BookingBinding(),
+    ),
+    GetPage(
+      transition: Transition.downToUp,
+      name: _Paths.SEMUALOKASIBENGKELLY,
+      page: () => SemuaLokasiBengkelly(),
+      binding: BookingBinding(),
+    ),
+    GetPage(
+      transition: Transition.downToUp,
+      name: _Paths.LIHATSEMUASPESIALIS,
+      page: () => LihatSemuaSpesialis(),
       binding: BookingBinding(),
     ),
   ];

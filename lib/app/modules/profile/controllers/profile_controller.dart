@@ -1,9 +1,12 @@
 import 'dart:io';
 import 'package:customer_bengkelly/app/data/data_endpoint/createkendaraan.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:in_app_update/in_app_update.dart';
+import 'package:package_info/package_info.dart';
 import '../../../data/data_endpoint/merekkendaraan.dart';
 import '../../../data/data_endpoint/tipekendaraan.dart';
 import '../../../data/endpoint.dart';
@@ -33,11 +36,55 @@ class ProfileController extends GetxController {
   final warnaController = TextEditingController();
   final tahunController = TextEditingController();
 
+  final _packageName = ''.obs;
+  String get packageName => _packageName.value;
+  final InAppUpdate inAppUpdate = InAppUpdate();
+
+  get updateAvailable => null;
+
+  Future<void> checkForUpdate() async {
+    final packageInfo = (GetPlatform.isAndroid)
+        ? await PackageInfo.fromPlatform()
+        : PackageInfo(
+      appName: '',
+      packageName: '',
+      version: '',
+      buildNumber: '',
+    );
+    final currentVersion = packageInfo.version;
+
+    try {
+      final updateInfo = await InAppUpdate.checkForUpdate();
+      if (updateInfo.flexibleUpdateAllowed) {
+        final latestVersion = updateInfo.availableVersionCode.toString();
+        if (currentVersion != latestVersion) {
+          showUpdateDialog();
+        }
+      }
+    } catch (e) {
+      print('Error checking for updates: $e');
+    }
+  }
+  late final DeviceInfoPlugin deviceInfo;
   @override
-  void onInit() {
+  void onInit()async{
     super.onInit();
     loadMerek();
+    deviceInfo = DeviceInfoPlugin();
+    final androidInfo = (GetPlatform.isAndroid)
+        ? await deviceInfo.androidInfo
+        : AndroidDeviceInfo;
+    final packageInfo = (GetPlatform.isAndroid)
+        ? await PackageInfo.fromPlatform()
+        : PackageInfo(
+      appName: '',
+      packageName: '',
+      version: '',
+      buildNumber: '',
+    );
+    _packageName.value = packageInfo.version;
   }
+
 
   void loadMerek() {
     futureMerek.value = API.merekid();
@@ -137,4 +184,6 @@ class ProfileController extends GetxController {
           backgroundColor: Colors.red, colorText: Colors.white);
     }
   }
+
+  void showUpdateDialog() {}
 }

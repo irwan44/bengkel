@@ -1,5 +1,5 @@
 name: customer_bengkelly
-version: 1.0.0+1
+version: 2.1.0+1
 publish_to: none
 description: A new Flutter project.
 environment:
@@ -100,6 +100,15 @@ flutter:
     - assets/319b/
     - assets/379a/
     - assets/389b/
+    - assets/bu_monggo/
+    - assets/chicken_ricequ/
+    - assets/dapur_nafara/
+    - assets/empal_gentong/
+    - assets/nasi_jamplang/
+    - assets/raja_sate/
+    - assets/rosin_resto/
+    - assets/simpang_raya/
+    - assets/warung_makan_selonjoran/
 #    - assets/sounds/sounds.mp3
 
   uses-material-design: true

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../../componen/shimmerbooking.dart';
 import '../../../data/data_endpoint/history.dart';
 import '../../../data/endpoint.dart';
@@ -16,6 +17,13 @@ class Notofikasi extends StatefulWidget {
 }
 
 class _NotofikasiState extends State<Notofikasi> {
+  late RefreshController _refreshController;
+  @override
+  void initState() {
+    _refreshController =
+        RefreshController(); // we have to use initState because this part of the app have to restart
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +39,14 @@ class _NotofikasiState extends State<Notofikasi> {
           systemNavigationBarColor: Colors.white,
         ),
       ),
-      body: SingleChildScrollView(
+      body: SmartRefresher(
+    controller: _refreshController,
+    enablePullDown: true,
+    header: const WaterDropHeader(),
+    onLoading: _onLoading,
+    onRefresh: _onRefresh,
+    child:
+      SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
           child: FutureBuilder(
@@ -118,6 +133,21 @@ class _NotofikasiState extends State<Notofikasi> {
           ),
         ),
       ),
+      ),
     );
+  }
+  _onLoading() {
+    _refreshController
+        .loadComplete(); // after data returned,set the //footer state to idle
+  }
+
+  _onRefresh() {
+    HapticFeedback.lightImpact();
+    setState(() {
+
+      const Notofikasi();
+      _refreshController
+          .refreshCompleted();
+    });
   }
 }

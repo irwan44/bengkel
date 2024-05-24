@@ -34,6 +34,8 @@ abstract class Routes {
   static const SUKSESBOOKING = _Paths.SUKSESBOOKING;
   static const SPLASHSCREEN = _Paths.SPLASHSCREEN;
   static const SPLASHSCREENNO = _Paths.SPLASHSCREENNO;
+  static const SEMUALOKASIBENGKELLY = _Paths.SEMUALOKASIBENGKELLY;
+  static const LIHATSEMUASPESIALIS = _Paths.LIHATSEMUASPESIALIS;
 }
 
 abstract class _Paths {
@@ -69,4 +71,6 @@ abstract class _Paths {
   static const SUKSESBOOKING = '/suksesbooking';
   static const SPLASHSCREEN = '/splashscreen';
   static const SPLASHSCREENNO = '/splashscreenno';
+  static const SEMUALOKASIBENGKELLY = '/semualokasibengkelly';
+  static const LIHATSEMUASPESIALIS = '/lihatsemuaspesialis';
 }

@@ -181,7 +181,7 @@ class RegisterPage extends StatelessWidget {
                                 } else {
                                   List<DataKategoriKendaraan> tipeList = snapshot.data!.dataKategoriKendaraan!;
                                   List<String> KategoryList = tipeList.map((tipe) => tipe.kategoriKendaraan!).toList();
-                                  print("Nama Tipe List: $KategoryList");
+                                  print("Nama Kategory List: $KategoryList");
 
                                   return CustomDropdown.search(
                                     hintText: 'Kategory Kendaraan',

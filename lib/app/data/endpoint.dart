@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 import '../routes/app_pages.dart';
 import 'data_endpoint/bookingemergency.dart';
 import 'data_endpoint/customkendaraan.dart';
+import 'data_endpoint/generalcekup.dart';
 import 'data_endpoint/history.dart';
 import 'data_endpoint/jenisservice.dart';
 import 'data_endpoint/kategorikendaraan.dart';
@@ -681,7 +682,40 @@ class API {
       throw e;
     }
   } //Beda
+  static Future<GeneralCheckup> GCMekanikID({
+    required String kategoriKendaraanId,
+  }) async {
+    final token = Publics.controller.getToken.value;
+    var data = {
+      "kategori_kendaraan_id": kategoriKendaraanId,
+    };
+    try {
+      var response = await Dio().get(
+        _GetGeneralCheckup,
+        data: data,
+        options: Options(
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer $token",
+          },
+        ),
+      );
 
+      if (response.statusCode == 404) {
+        throw Exception("Tidak ada data general checkup.");
+      }
+
+      final obj = GeneralCheckup.fromJson(response.data);
+
+      if (obj.dataGeneralCheckUp == null) {
+        throw Exception("Data general checkup kosong.");
+      }
+
+      return obj;
+    } catch (e) {
+      throw e;
+    }
+  }
   //Beda
   static Future<List<Post>> fetchPostsFromSource({
     required String url,

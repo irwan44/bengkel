@@ -10,12 +10,14 @@ import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../../data/data_endpoint/news.dart';
 import '../../../data/dummy_data.dart';
 import '../../../data/endpoint.dart';
 import '../../news/componen/news.dart';
 import '../../news/componen/todaydeals.dart';
+import '../controllers/home_controller.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -23,6 +25,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final HomeController controller = Get.put(HomeController());
   int _currentIndex = 0;
   String _currentAddress = 'Mengambil lokasi...';
   Position? _currentPosition;
@@ -32,10 +35,13 @@ class _HomePageState extends State<HomePage> {
     'assets/images/slider1.png',
     'assets/images/promo1.jpeg',
   ];
+  late RefreshController _refreshController;
 
   @override
   void initState() {
     super.initState();
+    _refreshController =
+        RefreshController();
     _checkPermissions();
     _checkPermissionsfile();
   }
@@ -93,6 +99,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    controller.checkForUpdate();
     return WillPopScope(
       onWillPop: () async {
         SystemNavigator.pop();
@@ -154,7 +161,14 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
 
-        body: SingleChildScrollView(
+        body: SmartRefresher(
+    controller: _refreshController,
+    enablePullDown: true,
+    header: const WaterDropHeader(),
+    onLoading: _onLoading,
+    onRefresh: _onRefresh,
+    child:
+        SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: AnimationConfiguration.toStaggeredList(
@@ -177,11 +191,11 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(height: 20),
                 _SliderLokasi(context),
                 SizedBox(height: 20),
-                _sectionTitle('Spesialis Offer'),
+                _sectionTitle1('Spesialis Offer'),
                 SizedBox(height: 20),
                 _SliderOffer(context),
                 SizedBox(height: 20),
-                _sectionTitle('Today Deals'),
+                _sectionTitle3('Today Deals'),
                 SizedBox(height: 20),
                 TodayDeals(),
                 SizedBox(height: 40),
@@ -191,6 +205,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
+        ),
         ),
       ),
     );
@@ -327,11 +342,47 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(title, style: GoogleFonts.nunito(fontWeight: FontWeight.bold, fontSize: 17, color: MyColors.appPrimaryColor)),
+          InkWell(
+            onTap: () {
+              Get.toNamed(Routes.SEMUALOKASIBENGKELLY);
+            },
+            child:
           Text('Lihat Semua', style: GoogleFonts.nunito(color: Colors.grey)),
+          ),
         ],
       ),
     );
   }
+  Widget _sectionTitle3(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(title, style: GoogleFonts.nunito(fontWeight: FontWeight.bold, fontSize: 17, color: MyColors.appPrimaryColor)),
+        ],
+      ),
+    );
+  }
+  Widget _sectionTitle1(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(title, style: GoogleFonts.nunito(fontWeight: FontWeight.bold, fontSize: 17, color: MyColors.appPrimaryColor)),
+          InkWell(
+            onTap: () {
+              Get.toNamed(Routes.LIHATSEMUASPESIALIS);
+            },
+            child:
+            Text('Lihat Semua', style: GoogleFonts.nunito(color: Colors.grey)),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _sectionTitle2(String title) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -518,5 +569,19 @@ class _HomePageState extends State<HomePage> {
         const SizedBox(height: 10),
       ],
     );
+  }
+  _onLoading() {
+    _refreshController
+        .loadComplete(); // after data returned,set the //footer state to idle
+  }
+
+  _onRefresh() {
+    HapticFeedback.lightImpact();
+    setState(() {
+
+      HomePage();
+      _refreshController
+          .refreshCompleted();
+    });
   }
 }

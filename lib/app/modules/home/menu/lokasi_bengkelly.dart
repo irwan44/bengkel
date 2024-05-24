@@ -1,16 +1,15 @@
-import 'package:customer_bengkelly/app/componen/color.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import '../../../data/data_endpoint/lokasi.dart'as LokasiEndpoint;
-
-import '../../../data/endpoint.dart'; // Impor file lain jika diperlukan
+import 'package:customer_bengkelly/app/componen/color.dart';
+import '../../../data/data_endpoint/lokasi.dart' as LokasiEndpoint;
+import '../../../data/endpoint.dart';
 
 class LokasiBengkelly extends StatefulWidget {
   const LokasiBengkelly({super.key});
@@ -23,16 +22,25 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
   late GoogleMapController _controller;
   Position? _currentPosition;
   List<Marker> _markers = [];
-  List<LokasiEndpoint.DataLokasi> _locationData = []; // Gunakan alias untuk tipe data
+  List<LokasiEndpoint.DataLokasi> _locationData = [];
   final PanelController _panelController = PanelController();
   String _currentAddress = 'Mengambil lokasi...';
+  BitmapDescriptor? _customIcon;
 
   @override
   void initState() {
     super.initState();
     _checkPermissions();
-    _checkPermissions1();
+    _loadCustomIcon();
   }
+
+  Future<void> _loadCustomIcon() async {
+    _customIcon = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(size: Size(48, 48)),
+      'assets/icons/drop.png', // Path to your custom marker image
+    );
+  }
+
   Future<void> _getCurrentLocation() async {
     try {
       _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
@@ -43,6 +51,7 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
       print('Error getting current location: $e');
     }
   }
+
   Future<void> _getAddressFromLatLng() async {
     try {
       List<Placemark> placemarks = await placemarkFromCoordinates(
@@ -57,6 +66,7 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
       print('Error getting address: $e');
     }
   }
+
   Future<void> _checkPermissions() async {
     var status = await Permission.location.status;
     print('Permission status: $status');
@@ -71,36 +81,6 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
         print('Permission granted');
         await _getCurrentLocation();
         await _fetchLocations();
-      } else {
-        print('Permission denied');
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Permission denied'),
-        ));
-      }
-    }
-  }
-
-  Future<void> _getCurrentLocation2() async {
-    try {
-      _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      print('Current position: $_currentPosition');
-      setState(() {});
-    } catch (e) {
-      print('Error getting current location: $e');
-    }
-  }
-  Future<void> _checkPermissions1() async {
-    var status = await Permission.location.status;
-    print('Permission status: $status');
-    if (status.isGranted) {
-      print('Permission already granted');
-      await _getCurrentLocation2();
-    } else {
-      var requestedStatus = await Permission.location.request();
-      print('Requested permission status: $requestedStatus');
-      if (requestedStatus.isGranted) {
-        print('Permission granted');
-        await _getCurrentLocation2();
       } else {
         print('Permission denied');
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -126,14 +106,16 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
               latLng.latitude,
               latLng.longitude,
             );
+            final travelTime = _calculateTravelTime(distance); // Calculate travel time
             print('Adding marker at: $latLng');
             _markers.add(
               Marker(
                 markerId: MarkerId(location.id.toString()),
                 position: latLng,
+                icon: _customIcon ?? BitmapDescriptor.defaultMarker,
                 infoWindow: InfoWindow(
                   title: data.name,
-                  snippet: 'Jarak: ${distance.toStringAsFixed(2)} km',
+                  snippet: 'Jarak: ${distance.toStringAsFixed(2)} km\nWaktu tempuh: ${travelTime.toStringAsFixed(0)} min',
                 ),
               ),
             );
@@ -155,6 +137,11 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
     return Geolocator.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude) / 1000;
   }
 
+  double _calculateTravelTime(double distance) {
+    const averageSpeed = 50.0; // Average speed in km/h
+    return (distance / averageSpeed) * 60; // Convert hours to minutes
+  }
+
   void _moveCamera(double lat, double lng) {
     _controller.animateCamera(
       CameraUpdate.newLatLng(
@@ -166,7 +153,7 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  AppBar(
+      appBar: AppBar(
         forceMaterialTransparency: true,
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
@@ -200,12 +187,12 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-        CircularProgressIndicator(
-          color: MyColors.appPrimaryColor,
-        ),
-        SizedBox(height: 10,),
-        Text('Sedang memuat lokasi...')
-      ],)
+          CircularProgressIndicator(
+            color: MyColors.appPrimaryColor,
+          ),
+          SizedBox(height: 10,),
+          Text('Sedang memuat lokasi...')
+        ],)
       )
           : Stack(
         children: [
@@ -215,8 +202,8 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
             mapToolbarEnabled: true,
             compassEnabled: true,
             zoomControlsEnabled: true,
+            myLocationEnabled: true,
             myLocationButtonEnabled: true,
-            indoorViewEnabled: true,
             onMapCreated: (controller) {
               _controller = controller;
             },
@@ -265,15 +252,26 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
                 double.parse(location!.lat!),
                 double.parse(location.lng!),
               );
+              final travelTime = _calculateTravelTime(distance); // Calculate travel time
 
               return ListTile(
                 title: Text(data.name ?? 'Unknown', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
                 subtitle: Text(data.vicinity ?? 'Unknown'),
-                trailing: Column(children: [
-                  Icon(Icons.map_sharp),
-                  SizedBox(height: 10,),
-                  Text('${distance.toStringAsFixed(2)} km'),
-                ],),
+                trailing: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(
+                      child: Image.asset(
+                        'assets/icons/drop.png',
+                        width: 40,
+                        height: 40,
+                      ),
+                    ),
+                    SizedBox(height: 10,),
+                    Text('${distance.toStringAsFixed(2)} km'),
+                    Text('${travelTime.toStringAsFixed(0)} min'), // Display travel time
+                  ],
+                ),
                 onTap: () {
                   _moveCamera(
                     double.parse(location.lat!),
@@ -288,4 +286,5 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
       ],
     );
   }
+
 }

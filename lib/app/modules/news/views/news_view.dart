@@ -1,23 +1,26 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../../componen/color.dart';
 import '../../../routes/app_pages.dart';
 import '../componen/newsslider.dart';
-import '../componen/todaydeals.dart';
 import '../componen/trandingtopik.dart';
 import '../controllers/news_controller.dart';
+
 class NewsView extends StatefulWidget {
   @override
   _NewsViewState createState() => _NewsViewState();
 }
 
 class _NewsViewState extends State<NewsView> {
+  final NewsController controller = Get.put(NewsController());
   int _currentIndex = 0;
   final List<String> imgList = [
     'https://via.placeholder.com/600x400.png?text=Image+1',
@@ -25,8 +28,17 @@ class _NewsViewState extends State<NewsView> {
     'https://via.placeholder.com/600x400.png?text=Image+3',
     'https://via.placeholder.com/600x400.png?text=Image+4',
   ];
+  late RefreshController _refreshController;
+  @override
+  void initState() {
+    _refreshController =
+        RefreshController(); // we have to use initState because this part of the app have to restart
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    controller.checkForUpdate();
     return Scaffold(
       extendBodyBehindAppBar: false,
       backgroundColor: Colors.white,
@@ -55,7 +67,15 @@ class _NewsViewState extends State<NewsView> {
             ],),
         ],
       ),
-      body: SingleChildScrollView(child:
+      body: SmartRefresher(
+    controller: _refreshController,
+    enablePullDown: true,
+    header: const WaterDropHeader(),
+    onLoading: _onLoading,
+    onRefresh: _onRefresh,
+    child:
+      SingleChildScrollView(
+    child:
       Column(
         children: AnimationConfiguration.toStaggeredList(
           duration: const Duration(milliseconds: 475),
@@ -74,6 +94,7 @@ class _NewsViewState extends State<NewsView> {
         ),
       ),
       ),
+      ),
     );
   }
   Widget _sectionTitle(String title) {
@@ -86,5 +107,19 @@ class _NewsViewState extends State<NewsView> {
         ],
       ),
     );
+  }
+  _onLoading() {
+    _refreshController
+        .loadComplete(); // after data returned,set the //footer state to idle
+  }
+
+  _onRefresh() {
+    HapticFeedback.lightImpact();
+    setState(() {
+
+      NewsView();
+      _refreshController
+          .refreshCompleted();
+    });
   }
 }
