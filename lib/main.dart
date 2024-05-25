@@ -46,7 +46,7 @@ void startPollingNotifications() {
   const pollingInterval = Duration(minutes: 1);
 
   Timer.periodic(pollingInterval, (timer) async {
-    // await API.showBookingNotifications();
+    await API.showBookingNotifications();
   });
 }
 
@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Mekanik Bengkelly",
+      title: "Bengkelly",
       initialRoute: Publics.controller.getToken.value.isEmpty
           ? AppPages.INITIAL
           : Routes.SPLASHSCREEN,

@@ -6,6 +6,7 @@ import 'package:customer_bengkelly/app/modules/home/menu/emergency_service.dart'
 import 'package:customer_bengkelly/app/modules/home/menu/lokasi_bengkelly.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../routes/app_pages.dart';
@@ -31,9 +32,9 @@ class API {
   static const _fleetMaintenanceUrl = 'https://fleetmaintenance.co.id/wp-json/wp/v2/posts';
   static const _katagorikendaraan = 'https://api-vale.techthinkhub.com/api/kategori-kendaraan';
   //API ------------------------------------------------------------------------------------
-  static const _url = 'https://mobile.techthinkhub.id';
-  // static const _urlbe = 'https://be.techthinkhub.id';
-  static const _baseUrl = '$_url/api';
+  // static const _url = 'https://mobile.techthinkhub.id';
+  static const _urlbe = 'https://be.techthinkhub.id';
+  static const _baseUrl = '$_urlbe/api';
   static const _PostLogin = '$_baseUrl/customer/login';
   static const _Getprofile = '$_baseUrl/customer-get-profile';
   static const _PostRegister = '$_baseUrl/register-kendaraan';
@@ -712,6 +713,65 @@ class API {
       }
 
       return obj;
+    } catch (e) {
+      throw e;
+    }
+  }
+  //Beda
+
+  static Future<void> showBookingNotifications() async {
+    try {
+      final token = Publics.controller.getToken.value ?? '';
+      var data = {"token": token};
+      var response = await Dio().get(
+        _GetHistory,
+        options: Options(
+          headers: {
+            "Content-Type": "application/json",
+          },
+        ),
+        queryParameters: data,
+      );
+
+      if (response.statusCode == 404) {
+        return;
+      }
+
+      final obj = HistoryBooking.fromJson(response.data);
+
+      if (obj.status == 'Invalid token: Expired') {
+        Get.offAllNamed(Routes.SINGIN);
+        Get.snackbar(
+          obj.status.toString(),
+          obj.status.toString(),
+        );
+      }
+
+      final bookings = obj.datahistory ?? [];
+      final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+      for (final booking in bookings) {
+        if (booking.namaStatus == 'Booking') {
+          const AndroidNotificationDetails androidPlatformChannelSpecifics =
+          AndroidNotificationDetails(
+            'your channel id',
+            'your channel name',
+            importance: Importance.max,
+            priority: Priority.high,
+            ticker: 'ticker',
+            sound: RawResourceAndroidNotificationSound('sounds'),
+          );
+          const NotificationDetails platformChannelSpecifics =
+          NotificationDetails(android: androidPlatformChannelSpecifics);
+          await flutterLocalNotificationsPlugin.show(
+            0,
+            'Booking Masuk',
+            booking.namaCabang ?? '',
+            platformChannelSpecifics,
+            payload: 'item x', // optional, used for onClick event
+          );
+        }
+      }
     } catch (e) {
       throw e;
     }

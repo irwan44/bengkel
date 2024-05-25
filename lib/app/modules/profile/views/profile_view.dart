@@ -1,3 +1,4 @@
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -225,6 +226,7 @@ class _ProfileViewState extends State<ProfileView> {
             ),
           ),
           children: [
+
             InkWell(
               onTap: () {
                 Get.toNamed(Routes.PILIHKENDARAAN);
@@ -274,7 +276,118 @@ class _ProfileViewState extends State<ProfileView> {
             ),
             InkWell(
               onTap: () {
-                Get.to(GeneralCheckupScreen());
+                showModalBottomSheet(
+                  showDragHandle: true,
+                  isScrollControlled: true,
+                  context: context,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(25.0),
+                    ),
+                  ),
+                  builder: (context) {
+                    return Container(
+                      padding: EdgeInsets.all(16.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Text('Pengaturan Aplikasi', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
+                      SizedBox(height: 10,),
+                      Container(
+                      padding: EdgeInsets.all(20),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        color: MyColors.bg,
+                      ),
+                      child:
+                          InkWell(
+                          onTap: () {
+                            AppSettings.openAppSettings(
+                                type: AppSettingsType.notification);
+                    },
+                      child:
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.settings, color: Colors.grey.shade400, size: 20,),
+                              SizedBox(width: 10,),
+                              Text('Notifikasi', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
+                            ],),
+                          Icon(Icons.notifications_active_rounded, color: Colors.grey.shade400, size: 20,),
+                        ],
+                      ),
+                    ),
+                    ),
+                          SizedBox(height: 10,),
+                          Container(
+                          padding: EdgeInsets.all(20),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          color: MyColors.bg,
+                          ),
+                          child:
+                          InkWell(
+                            onTap: () {
+                              AppSettings.openAppSettings(
+                                  type: AppSettingsType.location);
+                            },
+                            child:
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.settings, color: Colors.grey.shade400, size: 20,),
+                                    SizedBox(width: 10,),
+                                    Text('GPS', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
+                                  ],),
+                                Icon(Icons.gps_fixed_rounded, color: Colors.grey.shade400, size: 20,),
+                              ],
+                            ),
+                          ),
+                          ),
+                          SizedBox(height: 10,),
+                    Container(
+                    padding: EdgeInsets.all(20),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    color: MyColors.bg,
+                    ),
+                    child:
+                          InkWell(
+                            onTap: () {
+                              AppSettings.openAppSettings(
+                                  type: AppSettingsType.sound);
+                            },
+                            child:
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.settings, color: Colors.grey.shade400, size: 20,),
+                                    SizedBox(width: 10,),
+                                    Text('Suara', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
+                                  ],),
+                                Icon(Icons.surround_sound_rounded, color: Colors.grey.shade400, size: 20,),
+                              ],
+                            ),
+                          ),
+                          ),
+                          SizedBox(height: 20.0),
+                        ],
+                      ),
+                    );
+                  },
+                );
               },
               child:
               Row(
@@ -286,7 +399,8 @@ class _ProfileViewState extends State<ProfileView> {
                       SvgPicture.asset('assets/icons/setting.svg', width: 26,),
                       SizedBox(width: 10,),
                       Text('Pengaturan', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
-                    ],),
+                    ],
+                  ),
                   Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey.shade400,),
                 ],
               ),

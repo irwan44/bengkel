@@ -3,6 +3,7 @@ import 'package:customer_bengkelly/app/componen/color.dart';
 import 'package:customer_bengkelly/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geocoding/geocoding.dart';
@@ -36,7 +37,8 @@ class _HomePageState extends State<HomePage> {
     'assets/images/promo1.jpeg',
   ];
   late RefreshController _refreshController;
-
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
   @override
   void initState() {
     super.initState();
@@ -44,8 +46,27 @@ class _HomePageState extends State<HomePage> {
         RefreshController();
     _checkPermissions();
     _checkPermissionsfile();
+    _requestNotificationPermission();
+    _initializeNotifications();
+  }
+  Future<void> _requestNotificationPermission() async {
+    PermissionStatus status = await Permission.notification.status;
+    if (!status.isGranted) {
+      await Permission.notification.request();
+    }
   }
 
+  Future<void> _initializeNotifications() async {
+    const AndroidInitializationSettings initializationSettingsAndroid =
+    AndroidInitializationSettings('@mipmap/ic_launcher');
+
+
+
+    const InitializationSettings initializationSettings = InitializationSettings(
+        android: initializationSettingsAndroid);
+
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  }
   Future<void> _checkPermissions() async {
     var status = await Permission.location.status;
     if (status.isGranted) {
@@ -197,6 +218,9 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(height: 20),
                 _sectionTitle3('Today Deals'),
                 SizedBox(height: 20),
+                _todaydeals(context),
+                _sectionTitle4('News'),
+                SizedBox(height: 20),
                 TodayDeals(),
                 SizedBox(height: 40),
                 // _sectionTitle('News'),
@@ -322,7 +346,46 @@ class _HomePageState extends State<HomePage> {
   }
   Widget _menuItemCharger(VoidCallback onTap,String iconPath, String label) {
     return InkWell(
-      onTap: onTap,
+      onTap: () {
+        showModalBottomSheet(
+          showDragHandle: true,
+          context: context,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(25.0),
+            ),
+          ),
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    'Fitur sedang dalam perkembangan',
+                    style: GoogleFonts.nunito(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 10.0),
+                  Text(
+                    'Kami sedang bekerja keras untuk menyediakan fitur ini segera. Terima kasih atas kesabaran Anda!',style: GoogleFonts.nunito(),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 20.0),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('Oke'),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
       child:
       Column(
         mainAxisSize: MainAxisSize.min,
@@ -360,6 +423,13 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(title, style: GoogleFonts.nunito(fontWeight: FontWeight.bold, fontSize: 17, color: MyColors.appPrimaryColor)),
+          InkWell(
+            onTap: () {
+              Get.toNamed(Routes.LIHATSEMUASPESIALIS);
+            },
+            child:
+            Text('Lihat Semua', style: GoogleFonts.nunito(color: Colors.grey)),
+          ),
         ],
       ),
     );
@@ -382,7 +452,17 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
+  Widget _sectionTitle4(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(title, style: GoogleFonts.nunito(fontWeight: FontWeight.bold, fontSize: 17, color: MyColors.appPrimaryColor)),
+        ],
+      ),
+    );
+  }
   Widget _sectionTitle2(String title) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -475,7 +555,112 @@ class _HomePageState extends State<HomePage> {
       ],
     );
   }
-
+  Widget _todaydeals(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GridView.builder(
+                padding: const EdgeInsets.all(10.0),
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: constraints.maxWidth < 600 ? 2 : 4,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 0.9,
+                  childAspectRatio: 0.57,
+                ),
+                itemCount: dataProduct.length,
+                itemBuilder: (context, index) {
+                  final product = dataProduct[index];
+                  return InkWell(
+                    onTap: () {
+                      Get.toNamed(Routes.DETAILSPECIAL,
+                          arguments:
+                          {
+                            'description': product['description'],
+                            'name': product['name'],
+                            'image': product['image'],
+                            'Harga': product['Harga'],
+                            'harga_asli': product['harga_asli'],
+                            'diskon': product['diskon'],
+                          }
+                      );
+                    },
+                    child: Card(
+                      color: Colors.white,
+                      elevation: 1,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(10))
+                        ),
+                      child : Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: AnimationConfiguration.toStaggeredList(
+                          duration: const Duration(milliseconds: 475),
+                          childAnimationBuilder: (widget) => SlideAnimation(
+                            child: SlideAnimation(
+                              child: widget,
+                            ),
+                          ),
+                          children: [
+                            Image.asset(product['image'], fit: BoxFit.cover, height: 120, width: double.infinity),
+                            SizedBox(height: 20),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(product['name'], style: GoogleFonts.nunito(fontWeight: FontWeight.bold)),
+                                  Text(product['Harga'], style: GoogleFonts.nunito(color: Colors.green)),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.all(3),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(5),
+                                            color: Colors.green
+                                        ),
+                                        child: Text('${product['diskon']}', style: GoogleFonts.nunito(color: Colors.white)),
+                                      ),
+                                      SizedBox(width: 10),
+                                      Text('Rp ${product['harga_asli']}', style: GoogleFonts.nunito(decoration: TextDecoration.lineThrough)),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10),
+                                  Row(
+                                    children: [
+                                      Icon(Icons.star, color: Colors.yellow),
+                                      SizedBox(width: 5),
+                                      Text('4.9 ${product['terjual']} Terjual', style: GoogleFonts.nunito(color: Colors.grey)),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(Icons.shield_moon_rounded, color: Colors.green),
+                                      SizedBox(width: 5),
+                                      Text('Dilayani Bengkelly', style: GoogleFonts.nunito(color: Colors.grey)),
+                                    ],
+                                  ),
+                                ],),),
+                          ],
+                        ),
+                      ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
   Widget _SliderOffer(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -488,83 +673,104 @@ class _HomePageState extends State<HomePage> {
             autoPlayCurve: Curves.fastOutSlowIn,
             pauseAutoPlayOnTouch: true,
             aspectRatio: 1.2,
-            viewportFraction: 0.5533,  // Kira-kira sepertiga
-            enlargeCenterPage: false,  // Opsi ini memperbesar item di tengah
+            viewportFraction: 0.55,
+            enlargeCenterPage: false,
           ),
           items: dataProduct.map((product) {
             return Builder(
-                builder: (BuildContext context) {
-                  return InkWell(
-                      onTap: () {
-                        Get.toNamed(Routes.DETAILSPECIAL,
-                            arguments:
-                            {
-                              'description': product['description'],
-                              'name': product['name'],
-                              'image': product['image'],
-                              'Harga': product['Harga'],
-                              'harga_asli': product['harga_asli'],
-                              'diskon': product['diskon'],
-                            }
-                        );
-                      },
-                      child:
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 5, vertical: 20),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.1),
-                              spreadRadius: 5,
-                              blurRadius: 10,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
+              builder: (BuildContext context) {
+                return InkWell(
+                  onTap: () {
+                    Get.toNamed(Routes.DETAILSPECIAL, arguments: {
+                      'description': product['description'],
+                      'name': product['name'],
+                      'image': product['image'],
+                      'Harga': product['Harga'],
+                      'harga_asli': product['harga_asli'],
+                      'diskon': product['diskon'],
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    margin: EdgeInsets.symmetric(horizontal: 5, vertical: 20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.1),
+                          spreadRadius: 5,
+                          blurRadius: 10,
+                          offset: Offset(0, 3),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Image.asset(
+                          product['image'],
+                          fit: BoxFit.cover,
+                          height: 120,
+                          width: double.infinity,
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          product['name'],
+                          style: GoogleFonts.nunito(fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          product['Harga'],
+                          style: GoogleFonts.nunito(color: Colors.green),
+                        ),
+                        Row(
                           children: [
-                            Image.asset(product['image'], fit: BoxFit.cover, height: 120),
-                            SizedBox(height: 20),
-                            Text(product['name'], style: GoogleFonts.nunito(fontWeight: FontWeight.bold)),
-                            Text(product['Harga'], style: GoogleFonts.nunito(color: Colors.green)),
-                            Row(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(3),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: MyColors.green
-                                  ),
-                                  child: Text('${product['diskon']}',style: GoogleFonts.nunito(color: Colors.white),),
-                                ),
-                                SizedBox(width: 10,),
-                                Text('Rp ${product['harga_asli']}',style: GoogleFonts.nunito(decoration: TextDecoration.lineThrough,),),
-                              ],
+                            Container(
+                              padding: EdgeInsets.all(3),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Colors.green,
+                              ),
+                              child: Text(
+                                '${product['diskon']}',
+                                style: GoogleFonts.nunito(color: Colors.white),
+                              ),
                             ),
-                            SizedBox(height: 10),
-                            Row(children: [
-                              Icon(Icons.star, color: Colors.yellow,),
-                              SizedBox(width: 5,),
-                              Text('4.9 ${product['terjual']} Terjual',style: GoogleFonts.nunito(color: Colors.grey),),
-                            ],),
-                            Row(children: [
-                              Icon(Icons.shield_moon_rounded, color: Colors.green,),
-                              SizedBox(width: 5,),
-                              Text('Dilayani Bengkelly',style: GoogleFonts.nunito(color: Colors.grey),),
-                            ],),
+                            SizedBox(width: 10),
+                            Text(
+                              'Rp ${product['harga_asli']}',
+                              style: GoogleFonts.nunito(decoration: TextDecoration.lineThrough),
+                            ),
                           ],
                         ),
-                      )
-                  );
-                }
+                        SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Icon(Icons.star, color: Colors.yellow),
+                            SizedBox(width: 5),
+                            Text(
+                              '4.9 ${product['terjual']} Terjual',
+                              style: GoogleFonts.nunito(color: Colors.grey),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Icon(Icons.shield_moon_rounded, color: Colors.green),
+                            SizedBox(width: 5),
+                            Text(
+                              'Dilayani Bengkelly',
+                              style: GoogleFonts.nunito(color: Colors.grey),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
             );
-          }
-
-          ).toList(),
+          }).toList(),
         ),
         const SizedBox(height: 10),
       ],

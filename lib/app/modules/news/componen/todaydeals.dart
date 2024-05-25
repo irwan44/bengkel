@@ -70,11 +70,11 @@ class _TodayDealsState extends State<TodayDeals> {
       child: GridView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: 4, // Gunakan jumlah item yang sesuai
+        itemCount: 4,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 0.9,
-          crossAxisSpacing: 20,
+          crossAxisSpacing: 8,
         ),
         itemBuilder: (BuildContext context, int index) {
           if (posts.isEmpty) {
@@ -100,7 +100,6 @@ class _TodayDealsState extends State<TodayDeals> {
                 Container(
                   height: 190,
                   decoration: BoxDecoration(
-                    color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(

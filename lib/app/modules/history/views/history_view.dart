@@ -26,7 +26,7 @@ class _HistoryViewState extends State<HistoryView> {
   @override
   void initState() {
     super.initState();
-    _refreshControllers = List.generate(8, (index) => RefreshController());
+    _refreshControllers = List.generate(11, (index) => RefreshController());
   }
 
   @override
@@ -73,7 +73,7 @@ class _HistoryViewState extends State<HistoryView> {
         ],
       ),
       body: DefaultTabController(
-        length: 8,
+        length: 11,
         child: Column(
           children: [
             FutureBuilder(
@@ -177,6 +177,9 @@ class _HistoryViewState extends State<HistoryView> {
                   _buildTab('Approve'),
                   _buildTab('Diproses'),
                   _buildTab('Estimasi'),
+                  _buildTab('PKB'),
+                  _buildTab('PKB TUTUP'),
+                  _buildTab('Selesai Dikerjakan'),
                   _buildTab('Invoice'),
                   _buildTab('Lunas'),
                   _buildTab('Ditolak'),
@@ -191,9 +194,12 @@ class _HistoryViewState extends State<HistoryView> {
                   _buildTabContent('Approve', 2),
                   _buildTabContent('Diproses', 3),
                   _buildTabContent('Estimasi', 4),
-                  _buildTabContent('Invoice', 5),
-                  _buildTabContent('Lunas', 6),
-                  _buildTabContent('Ditolak', 7),
+                  _buildTabContent('PKB', 5),
+                  _buildTabContent('PKB TUTUP', 6),
+                  _buildTabContent('Selesai Dikerjakan', 7),
+                  _buildTabContent('Invoice', 8),
+                  _buildTabContent('Lunas', 9),
+                  _buildTabContent('Ditolak', 10),
                 ],
               ),
             ),
