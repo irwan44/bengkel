@@ -140,6 +140,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 20),
                     FadeInAnimation(
                       delay: 2.4,
                       child: CustomElevatedButton(

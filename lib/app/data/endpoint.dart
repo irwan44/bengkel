@@ -4,8 +4,6 @@ import 'package:customer_bengkelly/app/data/data_endpoint/createkendaraan.dart';
 import 'package:customer_bengkelly/app/data/data_endpoint/lupapassword.dart';
 import 'package:customer_bengkelly/app/data/data_endpoint/otp.dart';
 import 'package:customer_bengkelly/app/data/publik.dart';
-import 'package:customer_bengkelly/app/modules/home/menu/emergency_service.dart';
-import 'package:customer_bengkelly/app/modules/home/menu/lokasi_bengkelly.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -312,11 +310,17 @@ class API {
         }
         return obj;
       } else {
+
         throw Exception('Failed to register booking: ${response.statusMessage}');
       }
     } catch (e) {
       print('Error: $e');
-      throw Exception('Error during registration: $e');
+      Get.snackbar(
+        'Gagal',
+        'Email anda mungkin tidak terdaftar atau ada kesalahan pengetikan',
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
     }
   }
   //Beda
