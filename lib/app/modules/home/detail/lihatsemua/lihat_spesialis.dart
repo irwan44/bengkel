@@ -7,6 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:slide_countdown/slide_countdown.dart';
 
 import '../../../../componen/color.dart';
 import '../../../../data/dummy_data.dart';
@@ -65,6 +66,9 @@ class _LihatSemuaSpesialisState extends State<LihatSemuaSpesialis> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text('Spesialis Offer', style: GoogleFonts.nunito(fontWeight: FontWeight.bold, fontSize: 17, color: MyColors.appPrimaryColor)),
+                      SlideCountdownSeparated(
+                        duration: const Duration(days: 1),
+                      ),
                     ],
                   ),
                 ),

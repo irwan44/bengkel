@@ -12,6 +12,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:slide_countdown/slide_countdown.dart';
 
 import '../../../data/data_endpoint/news.dart';
 import '../../../data/dummy_data.dart';
@@ -423,6 +424,9 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(title, style: GoogleFonts.nunito(fontWeight: FontWeight.bold, fontSize: 17, color: MyColors.appPrimaryColor)),
+          SlideCountdownSeparated(
+            duration: const Duration(days: 1),
+          ),
           InkWell(
             onTap: () {
               Get.toNamed(Routes.LIHATSEMUASPESIALIS);
