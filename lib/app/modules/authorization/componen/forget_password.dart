@@ -90,12 +90,6 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                               }
                             } catch (e) {
                               print('Error during login: $e');
-                              Get.snackbar(
-                                'Gagal',
-                                'Terjadi kesalahan, coba lagi nanti',
-                                backgroundColor: Colors.redAccent,
-                                colorText: Colors.white,
-                              );
                             }
                           } else {
                             Get.snackbar(

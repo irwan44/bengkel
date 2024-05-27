@@ -211,7 +211,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 60,),
+                    const Spacer(),
                     FadeInAnimation(
                       delay: 3.6,
                       child: Padding(

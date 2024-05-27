@@ -36,7 +36,7 @@ class API {
   //API ------------------------------------------------------------------------------------
   static const _url = 'https://mobile.techthinkhub.id';
   static const _urlbe = 'https://be.techthinkhub.id';
-  static const _baseUrl = '$_url/api';
+  static const _baseUrl = '$_urlbe/api';
   static const _PostLogin = '$_baseUrl/customer/login';
   static const _Getprofile = '$_baseUrl/customer-get-profile';
   static const _PostRegister = '$_baseUrl/register-kendaraan';
@@ -308,7 +308,7 @@ class API {
             backgroundColor: Colors.green,
             colorText: Colors.white,
           );
-
+          Get.offAllNamed(Routes.OTP);
         }
         return obj;
       } else {
@@ -366,6 +366,7 @@ class API {
             backgroundColor: Colors.green,
             colorText: Colors.white,
           );
+          Get.offAllNamed(Routes.NEWPASSWORD);
         }
         return obj;
       } else {
@@ -412,7 +413,7 @@ class API {
 
         // Check for specific message in response
         if (obj.message == 'Invalid token: Expired') {
-          Get.offAllNamed(Routes.SUKSESBOOKING);
+          Get.offAllNamed(Routes.SINGIN);
           Get.snackbar(
             obj.message.toString(),
             obj.message.toString(),
@@ -426,6 +427,7 @@ class API {
             backgroundColor: Colors.green,
             colorText: Colors.white,
           );
+          Get.offAllNamed(Routes.SINGIN);
         }
         return obj;
       } else {

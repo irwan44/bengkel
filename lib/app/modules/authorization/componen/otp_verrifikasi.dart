@@ -149,14 +149,9 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
 
                                 if (token != null) {
                                 } else {
-                                  Get.snackbar('Gagal OTP', 'Kode OTP Anda salah atau sudah kadaluarsa',
-                                      backgroundColor: Colors.redAccent,
-                                      colorText: Colors.white
-                                  );
                                 }
                               } catch (e) {
                                 print('Error during login: $e');
-                                Get.offAllNamed(Routes.NEWPASSWORD);
                               }
                             } else {
                               Get.snackbar('Gagal OTP', 'Kode OTP Anda salah atau sudah kadaluarsa',
