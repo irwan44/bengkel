@@ -52,7 +52,7 @@ class TenantListPage extends StatelessWidget {
                   tenant['image'],
                   width: 50,
                   height: 50,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                 ),
                 title: Text(
                   tenant['name'],
