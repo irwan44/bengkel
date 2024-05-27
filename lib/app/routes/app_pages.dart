@@ -6,6 +6,7 @@ import '../modules/authorization/bindings/authorization_binding.dart';
 import '../modules/authorization/componen/forget_password.dart';
 import '../modules/authorization/componen/login_page.dart';
 import '../modules/authorization/componen/new_password.dart';
+import '../modules/authorization/componen/otp_verrifikasi.dart';
 import '../modules/authorization/componen/signup_next.dart';
 import '../modules/authorization/componen/signup_page.dart';
 import '../modules/authorization/views/authorization_view.dart';
@@ -238,6 +239,12 @@ class AppPages {
       transition: Transition.downToUp,
       name: _Paths.NEWPASSWORD,
       page: () => NewPasswordPage(),
+      binding: BookingBinding(),
+    ),
+    GetPage(
+      transition: Transition.downToUp,
+      name: _Paths.OTP,
+      page: () => OtpVerificationPage(),
       binding: BookingBinding(),
     ),
   ];

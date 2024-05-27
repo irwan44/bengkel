@@ -37,6 +37,7 @@ abstract class Routes {
   static const SEMUALOKASIBENGKELLY = _Paths.SEMUALOKASIBENGKELLY;
   static const LIHATSEMUASPESIALIS = _Paths.LIHATSEMUASPESIALIS;
   static const NEWPASSWORD = _Paths.NEWPASSWORD;
+  static const OTP = _Paths.OTP;
 }
 
 abstract class _Paths {
@@ -75,4 +76,5 @@ abstract class _Paths {
   static const SEMUALOKASIBENGKELLY = '/semualokasibengkelly';
   static const LIHATSEMUASPESIALIS = '/lihatsemuaspesialis';
   static const NEWPASSWORD = '/newpassword';
+  static const OTP = '/otp';
 }

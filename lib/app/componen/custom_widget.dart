@@ -106,7 +106,7 @@ class CustomElevatedButton2 extends StatefulWidget {
     super.key,
     required this.message,
     required this.function,
-    this.color = Colors.black,
+    this.color = Colors.white,
   });
 
   @override
@@ -129,7 +129,7 @@ class _CustomElevatedButton2State extends State<CustomElevatedButton2> {
         });
       },
       style: ButtonStyle(
-          side: const MaterialStatePropertyAll(BorderSide(color: Colors.black)),
+          side: const MaterialStatePropertyAll(BorderSide(color: Colors.white)),
           shape: MaterialStatePropertyAll(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
           fixedSize: const MaterialStatePropertyAll(Size.fromWidth(370)),

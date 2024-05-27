@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pinput/pinput.dart';
+
 import '../../../componen/custom_widget.dart';
 import '../../../data/endpoint.dart';
 import '../../../routes/app_pages.dart';
@@ -13,17 +15,39 @@ import '../router/router.dart';
 import 'common.dart';
 import 'fade_animationtest.dart';
 
-class NewPasswordPage extends StatefulWidget {
-  const NewPasswordPage({super.key});
+class OtpVerificationPage extends StatefulWidget {
+  const OtpVerificationPage({super.key});
 
   @override
-  State<NewPasswordPage> createState() => _NewPasswordPageState();
+  State<OtpVerificationPage> createState() => _OtpVerificationPageState();
 }
 
-class _NewPasswordPageState extends State<NewPasswordPage> {
+class _OtpVerificationPageState extends State<OtpVerificationPage> {
   final AuthorizationController controller = Get.put(AuthorizationController());
   @override
   Widget build(BuildContext context) {
+    final defaultPinTheme = PinTheme(
+      width: 56,
+      height: 56,
+      textStyle: const TextStyle(
+          fontSize: 20, color: Colors.black, fontWeight: FontWeight.w600),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black),
+        borderRadius: BorderRadius.circular(20),
+      ),
+    );
+
+    final focusedPinTheme = defaultPinTheme.copyDecorationWith(
+      border: Border.all(color: Colors.grey),
+      borderRadius: BorderRadius.circular(8),
+    );
+
+    final submittedPinTheme = defaultPinTheme.copyWith(
+      decoration: defaultPinTheme.decoration?.copyWith(
+        color: const Color.fromRGBO(234, 239, 243, 1),
+      ),
+    );
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -36,7 +60,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
           systemNavigationBarColor: Colors.white,
         ),
       ),
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
@@ -50,14 +74,14 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                     FadeInAnimation(
                       delay: 1.3,
                       child: Text(
-                        "Buat kata sandi baru",
+                        "OTP Verification",
                         style: Common().titelTheme,
                       ),
                     ),
                     FadeInAnimation(
                       delay: 1.6,
                       child: Text(
-                        "Kata sandi baru Anda harus unik dari yang digunakan sebelumnya.",
+                        "Masukkan kode verifikasi yang baru saja kami kirimkan ke alamat email Anda.",
                         style: Common().mediumThemeblack,
                       ),
                     )
@@ -71,56 +95,27 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                     children: [
                       FadeInAnimation(
                         delay: 1.9,
-                        child: CustomTextFormField(
-                          hinttext: 'Email yang terdaftar',
-                          obsecuretext: false,
-                          controller: controller.VerikasiEmailController,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      FadeInAnimation(
-                        delay: 1.10,
-                        child: CustomTextFormField(
-                          hinttext: 'Password baru',
-                          obsecuretext: false,
-                          controller: controller.VerikasiPassowrdBaruController,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      FadeInAnimation(
-                        delay: 2.1,
-                        child: CustomTextFormField(
-                          hinttext: 'Confirm password baru',
-                          obsecuretext: false,
-                          controller: controller.VerikasiPassowrdBarulagiController,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      FadeInAnimation(
-                        delay: 2.4,
-                        child: CustomElevatedButton(
-                          message: "Reset Password ",
-                          function: () async {
-                            if (controller.VerikasiEmailController.text.isNotEmpty &&
-                                controller.VerikasiEmailController.text.isNotEmpty &&
-                                controller.VerikasiPassowrdBarulagiController.text.isNotEmpty
-                            ) {
+                        child: Pinput(
+                          defaultPinTheme: defaultPinTheme,
+                          focusedPinTheme: focusedPinTheme,
+                          submittedPinTheme: submittedPinTheme,
+                          validator: (s) {
+                            return s == '2222' ? null : 'Pin is incorrect';
+                          },
+                          pinputAutovalidateMode:
+                          PinputAutovalidateMode.onSubmit,
+                          controller: controller.OTPController,
+                          showCursor: true,
+                          onCompleted: (pin) async {
+                            if (controller.OTPController.text.isNotEmpty ) {
                               try {
-                                String? token = (await API.ResetPasswordID(
-                                  email: controller.VerikasiEmailController.text,
-                                  password:  controller.VerikasiEmailController.text,
-                                  passwordconfirmation:  controller.VerikasiPassowrdBarulagiController.text,
+                                String? token = (await API.OTPID(
+                                  otp: controller.OTPController.text,
                                 )) as String?;
 
                                 if (token != null) {
                                 } else {
-                                  Get.snackbar('Gagal Reset Password', 'Password baru anda mungkin sama dengan passoword yang sudah ada',
+                                  Get.snackbar('Gagal OTP', 'Kode OTP Anda salah atau sudah kadaluarsa',
                                       backgroundColor: Colors.redAccent,
                                       colorText: Colors.white
                                   );
@@ -130,7 +125,41 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                                 Get.offAllNamed(Routes.NEWPASSWORD);
                               }
                             } else {
-                              Get.snackbar('Gagal Reset Password', 'Email anda mungkin tidak terdaftar / typo',
+                              Get.snackbar('Gagal OTP', 'Kode OTP Anda salah atau sudah kadaluarsa',
+                                  backgroundColor: Colors.redAccent,
+                                  colorText: Colors.white
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      FadeInAnimation(
+                        delay: 2.1,
+                        child: CustomElevatedButton(
+                          message: "Verify OTP",
+                          function: () async {
+                            if (controller.OTPController.text.isNotEmpty ) {
+                              try {
+                                String? token = (await API.OTPID(
+                                  otp: controller.OTPController.text,
+                                )) as String?;
+
+                                if (token != null) {
+                                } else {
+                                  Get.snackbar('Gagal OTP', 'Kode OTP Anda salah atau sudah kadaluarsa',
+                                      backgroundColor: Colors.redAccent,
+                                      colorText: Colors.white
+                                  );
+                                }
+                              } catch (e) {
+                                print('Error during login: $e');
+                                Get.offAllNamed(Routes.NEWPASSWORD);
+                              }
+                            } else {
+                              Get.snackbar('Gagal OTP', 'Kode OTP Anda salah atau sudah kadaluarsa',
                                   backgroundColor: Colors.redAccent,
                                   colorText: Colors.white
                               );
@@ -145,7 +174,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
               ),
               const Spacer(),
               FadeInAnimation(
-                delay: 2.5,
+                delay: 2.4,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 50),
                   child: Row(
@@ -157,7 +186,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                       ),
                       TextButton(
                           onPressed: () {
-                            Get.toNamed(Routes.SINGUP);
+                          Get.toNamed(Routes.SINGUP);
                           },
                           child: Text(
                             "Register Sekarang",

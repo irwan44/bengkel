@@ -15,6 +15,10 @@ class AuthorizationController extends GetxController {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   final LupaPasswordController = TextEditingController();
+  final OTPController = TextEditingController();
+  final VerikasiEmailController = TextEditingController();
+  final VerikasiPassowrdBaruController = TextEditingController();
+  final VerikasiPassowrdBarulagiController = TextEditingController();
 
   final nopolController = TextEditingController();
   final hpController = TextEditingController();

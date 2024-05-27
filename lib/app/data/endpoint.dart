@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';import 'package:customer_bengkelly/app/data/data_endpoint/bookingcustomer.dart';
 import 'package:customer_bengkelly/app/data/data_endpoint/createkendaraan.dart';
 import 'package:customer_bengkelly/app/data/data_endpoint/lupapassword.dart';
+import 'package:customer_bengkelly/app/data/data_endpoint/otp.dart';
 import 'package:customer_bengkelly/app/data/publik.dart';
 import 'package:customer_bengkelly/app/modules/home/menu/emergency_service.dart';
 import 'package:customer_bengkelly/app/modules/home/menu/lokasi_bengkelly.dart';
@@ -50,6 +51,8 @@ class API {
   static const _GetCustomKendaraan = '$_baseUrl/customer-kendaraan';
   static const _GetJenisService = '$_baseUrl/get-jenis-service';
   static const _PostLupaPassword = '$_baseUrl/customer/kirim-otp';
+  static const _PostOTP = '$_baseUrl/customer/verify-otp';
+  static const _PostResetPassword = '$_baseUrl/customer/reset-password';
 
 
   static Future<String?> login({required String email, required String password}) async {
@@ -242,12 +245,11 @@ class API {
         return obj;
       } else {
         Get.snackbar(
-          'Error',
-          'Terjadi kesalahan saat registrasi: ${response.statusMessage}',
+          'Gagal',
+          'Mungkin alamat email anda tidak terdaftar',
           backgroundColor: Colors.redAccent,
           colorText: Colors.white,
         );
-        throw Exception('Failed to register booking: ${response.statusMessage}');
       }
     } catch (e) {
       print('Error: $e');
@@ -306,25 +308,131 @@ class API {
             backgroundColor: Colors.green,
             colorText: Colors.white,
           );
+
         }
         return obj;
       } else {
-        Get.snackbar(
-          'Error',
-          'Terjadi kesalahan saat registrasi: ${response.statusMessage}',
-          backgroundColor: Colors.redAccent,
-          colorText: Colors.white,
-        );
         throw Exception('Failed to register booking: ${response.statusMessage}');
       }
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Gagal Registrasi',
-        'Terjadi kesalahan saat registrasi: $e',
-        backgroundColor: Colors.redAccent,
-        colorText: Colors.white,
+      throw Exception('Error during registration: $e');
+    }
+  }
+  //Beda
+  //Beda
+  static Future<OTP> OTPID({
+    required String otp,
+  }) async {
+    final data = {
+      "otp": otp,
+    };
+
+    try {
+      final token = Publics.controller.getToken.value ?? '';
+      print('Token: $token');
+      print('Request Data: $data');
+
+      var response = await Dio().post(
+        _PostOTP,
+        data: data,
+        options: Options(
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer $token",
+          },
+        ),
       );
+
+      print('Response status: ${response.statusCode}');
+      print('Response data: ${response.data}');
+
+      if (response.statusCode == 200) {
+        final obj = OTP.fromJson(response.data);
+
+        // Check for specific message in response
+        if (obj.message == 'Invalid token: Expired') {
+          Get.offAllNamed(Routes.SUKSESBOOKING);
+          Get.snackbar(
+            obj.message.toString(),
+            obj.message.toString(),
+            backgroundColor: Colors.yellow,
+            colorText: Colors.black,
+          );
+        } else {
+          Get.snackbar(
+            'OTP Tervirifikasi',
+            'Silahkan masukan pasword baru anda',
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+          );
+        }
+        return obj;
+      } else {
+        throw Exception('Failed to register booking: ${response.statusMessage}');
+      }
+    } catch (e) {
+      print('Error: $e');
+      throw Exception('Error during registration: $e');
+    }
+  }
+  //Beda
+  static Future<OTP> ResetPasswordID({
+    required String email,
+    required String password,
+    required String passwordconfirmation,
+  }) async {
+    final data = {
+      "email": email,
+      "password": password,
+      "password_confirmation": passwordconfirmation,
+    };
+
+    try {
+      final token = Publics.controller.getToken.value ?? '';
+      print('Token: $token');
+      print('Request Data: $data');
+
+      var response = await Dio().post(
+        _PostResetPassword,
+        data: data,
+        options: Options(
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer $token",
+          },
+        ),
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('Response data: ${response.data}');
+
+      if (response.statusCode == 200) {
+        final obj = OTP.fromJson(response.data);
+
+        // Check for specific message in response
+        if (obj.message == 'Invalid token: Expired') {
+          Get.offAllNamed(Routes.SUKSESBOOKING);
+          Get.snackbar(
+            obj.message.toString(),
+            obj.message.toString(),
+            backgroundColor: Colors.yellow,
+            colorText: Colors.black,
+          );
+        } else {
+          Get.snackbar(
+            'Reset Password Berhasil',
+            'Password baru anda sudah bisa digunakan',
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+          );
+        }
+        return obj;
+      } else {
+        throw Exception('Failed to register booking: ${response.statusMessage}');
+      }
+    } catch (e) {
+      print('Error: $e');
       throw Exception('Error during registration: $e');
     }
   }
