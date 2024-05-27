@@ -307,7 +307,7 @@ class _HomePageState extends State<HomePage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        _menuItemCharger(() => Get.toNamed(Routes.LOKASIBENGKELLY), 'assets/icons/dropcar.svg', "Lokasi\nCar Charger"),
+        _menuItemCharger(() => Get.toNamed(Routes.LOKASIBENGKELLY), 'assets/icons/dropcar.svg', "Lokasi\nRecharge Stasiun"),
         SizedBox(width: 10,),
         _menuItemCharger(() =>'', "",''),
         _menuItemCharger(() =>'', "",''),

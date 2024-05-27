@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';import 'package:customer_bengkelly/app/data/data_endpoint/bookingcustomer.dart';
 import 'package:customer_bengkelly/app/data/data_endpoint/createkendaraan.dart';
+import 'package:customer_bengkelly/app/data/data_endpoint/lupapassword.dart';
 import 'package:customer_bengkelly/app/data/publik.dart';
 import 'package:customer_bengkelly/app/modules/home/menu/emergency_service.dart';
 import 'package:customer_bengkelly/app/modules/home/menu/lokasi_bengkelly.dart';
@@ -32,9 +33,9 @@ class API {
   static const _fleetMaintenanceUrl = 'https://fleetmaintenance.co.id/wp-json/wp/v2/posts';
   static const _katagorikendaraan = 'https://api-vale.techthinkhub.com/api/kategori-kendaraan';
   //API ------------------------------------------------------------------------------------
-  // static const _url = 'https://mobile.techthinkhub.id';
+  static const _url = 'https://mobile.techthinkhub.id';
   static const _urlbe = 'https://be.techthinkhub.id';
-  static const _baseUrl = '$_urlbe/api';
+  static const _baseUrl = '$_url/api';
   static const _PostLogin = '$_baseUrl/customer/login';
   static const _Getprofile = '$_baseUrl/customer-get-profile';
   static const _PostRegister = '$_baseUrl/register-kendaraan';
@@ -48,6 +49,7 @@ class API {
   static const _GetTipe = '$_baseUrl/tipe';
   static const _GetCustomKendaraan = '$_baseUrl/customer-kendaraan';
   static const _GetJenisService = '$_baseUrl/get-jenis-service';
+  static const _PostLupaPassword = '$_baseUrl/customer/kirim-otp';
 
 
   static Future<String?> login({required String email, required String password}) async {
@@ -187,7 +189,6 @@ class API {
     }
   }
   //Beda
-// Kodingan 4: BookingID Method
   static Future<BookingCustomer?> BookingID({
     required String idcabang,
     required String idjenissvc,
@@ -237,14 +238,75 @@ class API {
             colorText: Colors.black,
           );
         } else {
-          // Get.snackbar(
-          //   'Hore',
-          //   'Registrasi Akun Anda Berhasil!',
-          //   backgroundColor: Colors.green,
-          //   colorText: Colors.white,
-          // );
         }
+        return obj;
+      } else {
+        Get.snackbar(
+          'Error',
+          'Terjadi kesalahan saat registrasi: ${response.statusMessage}',
+          backgroundColor: Colors.redAccent,
+          colorText: Colors.white,
+        );
+        throw Exception('Failed to register booking: ${response.statusMessage}');
+      }
+    } catch (e) {
+      print('Error: $e');
+      Get.snackbar(
+        'Gagal Registrasi',
+        'Terjadi kesalahan saat registrasi: $e',
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+      throw Exception('Error during registration: $e');
+    }
+  }
+  //Beda
+  static Future<LupaPassword?> LupaPasswordID({
+    required String email,
+  }) async {
+    final data = {
+      "email": email,
+    };
 
+    try {
+      final token = Publics.controller.getToken.value ?? '';
+      print('Token: $token');
+      print('Request Data: $data');
+
+      var response = await Dio().post(
+        _PostLupaPassword,
+        data: data,
+        options: Options(
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer $token",
+          },
+        ),
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('Response data: ${response.data}');
+
+      if (response.statusCode == 200) {
+        final obj = LupaPassword.fromJson(response.data);
+
+        // Check for specific message in response
+        if (obj.message == 'Invalid token: Expired') {
+          Get.offAllNamed(Routes.SUKSESBOOKING);
+          Get.snackbar(
+            obj.message.toString(),
+            obj.message.toString(),
+            backgroundColor: Colors.yellow,
+            colorText: Colors.black,
+          );
+        } else {
+          Get.snackbar(
+            'OTP',
+            'Kode OTP Sudah di Kirim ke alamat Email Anda',
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+          );
+        }
         return obj;
       } else {
         Get.snackbar(

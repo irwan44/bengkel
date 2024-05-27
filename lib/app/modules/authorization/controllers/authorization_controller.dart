@@ -1,3 +1,4 @@
+import 'package:customer_bengkelly/app/data/data_endpoint/lupapassword.dart';
 import 'package:customer_bengkelly/app/data/data_endpoint/merekkendaraan.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,7 @@ class AuthorizationController extends GetxController {
   final PasswordController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final LupaPasswordController = TextEditingController();
 
   final nopolController = TextEditingController();
   final hpController = TextEditingController();

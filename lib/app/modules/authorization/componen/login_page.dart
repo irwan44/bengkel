@@ -60,10 +60,10 @@ class _LoginPageState extends State<LoginPage> {
                   end: Alignment.topCenter,
                   colors: [
                     Colors.white
-                        .withOpacity(0.0), // Warna transparan di bagian atas
+                        .withOpacity(0.0),
                     Colors.white
-                        .withOpacity(0.9), // Warna pudar di bagian bawah
-                    Colors.white, // Warna pudar di bagian bawah
+                        .withOpacity(0.9),
+                    Colors.white,
                   ],
                 ),
               ),

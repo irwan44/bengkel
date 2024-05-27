@@ -85,7 +85,7 @@ dependencies:
   stepper_list_view: ^0.0.2
   loading_animation_widget: ^1.2.1
   slide_countdown: ^1.6.1
-
+  pinput: ^4.0.0
 
 
 dev_dependencies:

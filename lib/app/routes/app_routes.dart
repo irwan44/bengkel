@@ -36,6 +36,7 @@ abstract class Routes {
   static const SPLASHSCREENNO = _Paths.SPLASHSCREENNO;
   static const SEMUALOKASIBENGKELLY = _Paths.SEMUALOKASIBENGKELLY;
   static const LIHATSEMUASPESIALIS = _Paths.LIHATSEMUASPESIALIS;
+  static const NEWPASSWORD = _Paths.NEWPASSWORD;
 }
 
 abstract class _Paths {
@@ -73,4 +74,5 @@ abstract class _Paths {
   static const SPLASHSCREENNO = '/splashscreenno';
   static const SEMUALOKASIBENGKELLY = '/semualokasibengkelly';
   static const LIHATSEMUASPESIALIS = '/lihatsemuaspesialis';
+  static const NEWPASSWORD = '/newpassword';
 }
