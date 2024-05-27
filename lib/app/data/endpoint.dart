@@ -17,6 +17,7 @@ import 'data_endpoint/history.dart';
 import 'data_endpoint/jenisservice.dart';
 import 'data_endpoint/kategorikendaraan.dart';
 import 'data_endpoint/lokasi.dart';
+import 'data_endpoint/lokasilistrik.dart';
 import 'data_endpoint/merekkendaraan.dart';
 import 'data_endpoint/news.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -41,6 +42,7 @@ class API {
   static const _PostCreateKendaraan = '$_baseUrl/customer-create-kendaraan';
   static const _postCreateBooking = '$_baseUrl/booking/book-rest-area';
   static const _GetLokasi = '$_baseUrl/get-lokasi';
+  static const _GetLokasiRechargeStasiun = '$_baseUrl/spklu-jawa';
   static const _GetHistory = '$_baseUrl/history';
   static const _GetGeneralCheckup = '$_baseUrl/general-checkup';
   static const _GetEmergencyService = '$_baseUrl/emergency-service';
@@ -813,6 +815,38 @@ class API {
       print('Response: ${response.data}');
 
       final obj = Lokasi.fromJson(response.data);
+
+      if (obj.message == 'Invalid token: Expired') {
+        Get.offAllNamed(Routes.SINGIN);
+        Get.snackbar(
+          obj.message.toString(),
+          obj.message.toString(),
+        );
+      }
+      return obj;
+    } catch (e) {
+      print('Error: $e');
+      throw e;
+    }
+  } //Beda
+  static Future<LokasiListrik> LokasiListrikID() async {
+    try {
+      final token = Publics.controller.getToken.value ?? '';
+      print('Token: $token');
+
+      var response = await Dio().get(
+        _GetLokasiRechargeStasiun,
+        options: Options(
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer $token",
+          },
+        ),
+      );
+
+      print('Response: ${response.data}');
+
+      final obj = LokasiListrik.fromJson(response.data);
 
       if (obj.message == 'Invalid token: Expired') {
         Get.offAllNamed(Routes.SINGIN);

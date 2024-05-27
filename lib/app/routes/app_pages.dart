@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../componen/spleshscreen.dart';
 import '../componen/spleshscreen_notoken.dart';
+import '../data/data_endpoint/lokasilistrik.dart';
 import '../modules/authorization/bindings/authorization_binding.dart';
 import '../modules/authorization/componen/forget_password.dart';
 import '../modules/authorization/componen/login_page.dart';
@@ -30,6 +31,7 @@ import '../modules/home/menu/booking_service.dart';
 import '../modules/home/menu/emergency_service.dart';
 import '../modules/home/menu/lokasi_bengkelly.dart';
 import '../modules/home/menu/lokasi_car_charger.dart';
+import '../modules/home/menu/lokasi_listrik.dart';
 import '../modules/home/menu/repair&maintenance.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/news/bindings/news_binding.dart';
@@ -238,13 +240,19 @@ class AppPages {
     GetPage(
       transition: Transition.downToUp,
       name: _Paths.NEWPASSWORD,
-      page: () => NewPasswordPage(),
+      page: () => const NewPasswordPage(),
       binding: BookingBinding(),
     ),
     GetPage(
       transition: Transition.downToUp,
       name: _Paths.OTP,
-      page: () => OtpVerificationPage(),
+      page: () => const OtpVerificationPage(),
+      binding: BookingBinding(),
+    ),
+    GetPage(
+      transition: Transition.downToUp,
+      name: _Paths.LOKASILISTRIK,
+      page: () => LokasiListrik1(),
       binding: BookingBinding(),
     ),
   ];

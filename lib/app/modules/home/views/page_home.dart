@@ -308,7 +308,7 @@ class _HomePageState extends State<HomePage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        _menuItemCharger(() => Get.toNamed(Routes.LOKASIBENGKELLY), 'assets/icons/dropcar.svg', "Recharge \n Stasiun"),
+        _menuItemCharger(() => Get.toNamed(Routes.LOKASILISTRIK), 'assets/icons/dropcar.svg', "Recharge \n Stasiun"),
         SizedBox(width: 10,),
         _menuItemCharger(() =>'', "",''),
         _menuItemCharger(() =>'', "",''),
@@ -347,46 +347,47 @@ class _HomePageState extends State<HomePage> {
   }
   Widget _menuItemCharger(VoidCallback onTap,String iconPath, String label) {
     return InkWell(
-      onTap: () {
-        showModalBottomSheet(
-          showDragHandle: true,
-          context: context,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(25.0),
-            ),
-          ),
-          builder: (context) {
-            return Container(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(
-                    'Fitur sedang dalam perkembangan',
-                    style: GoogleFonts.nunito(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 10.0),
-                  Text(
-                    'Kami sedang bekerja keras untuk menyediakan fitur ini segera. Terima kasih atas kesabaran Anda!',style: GoogleFonts.nunito(),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 20.0),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text('Oke'),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
+      onTap: onTap,
+      //     () {
+      //   showModalBottomSheet(
+      //     showDragHandle: true,
+      //     context: context,
+      //     shape: RoundedRectangleBorder(
+      //       borderRadius: BorderRadius.vertical(
+      //         top: Radius.circular(25.0),
+      //       ),
+      //     ),
+      //     builder: (context) {
+      //       return Container(
+      //         padding: EdgeInsets.all(16.0),
+      //         child: Column(
+      //           mainAxisSize: MainAxisSize.min,
+      //           children: <Widget>[
+      //             Text(
+      //               'Fitur sedang dalam perkembangan',
+      //               style: GoogleFonts.nunito(
+      //                 fontSize: 18.0,
+      //                 fontWeight: FontWeight.bold,
+      //               ),
+      //             ),
+      //             SizedBox(height: 10.0),
+      //             Text(
+      //               'Kami sedang bekerja keras untuk menyediakan fitur ini segera. Terima kasih atas kesabaran Anda!',style: GoogleFonts.nunito(),
+      //               textAlign: TextAlign.center,
+      //             ),
+      //             SizedBox(height: 20.0),
+      //             ElevatedButton(
+      //               onPressed: () {
+      //                 Navigator.pop(context);
+      //               },
+      //               child: Text('Oke'),
+      //             ),
+      //           ],
+      //         ),
+      //       );
+      //     },
+      //   );
+      // },
       child:
       Column(
         mainAxisSize: MainAxisSize.min,
