@@ -8,6 +8,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:customer_bengkelly/app/componen/color.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../data/data_endpoint/lokasilistrik.dart';
 import '../../../data/endpoint.dart';
 
@@ -23,15 +24,25 @@ class _LokasiListrik1State extends State<LokasiListrik1> {
   Position? _currentPosition;
   List<Marker> _markers = [];
   List<DatachargingStation> _locationData = [];
+  List<DatachargingStation> _filteredLocationData = [];
   final PanelController _panelController = PanelController();
   String _currentAddress = 'Mengambil lokasi...';
   BitmapDescriptor? _customIcon;
+  TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _checkPermissions();
     _loadCustomIcon();
+    _searchController.addListener(_filterLocations);
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_filterLocations);
+    _searchController.dispose();
+    super.dispose();
   }
 
   Future<void> _loadCustomIcon() async {
@@ -95,6 +106,7 @@ class _LokasiListrik1State extends State<LokasiListrik1> {
       final lokasi = await API.LokasiListrikID();
       if (lokasi.datachargingStation != null && _currentPosition != null) {
         _locationData = lokasi.datachargingStation!;
+        _filteredLocationData = List.from(_locationData);
         for (var data in lokasi.datachargingStation!) {
           final location = data.geometry?.location;
           if (location != null && location.lat != null && location.lng != null) {
@@ -179,6 +191,15 @@ class _LokasiListrik1State extends State<LokasiListrik1> {
     );
   }
 
+  void _filterLocations() {
+    final query = _searchController.text.toLowerCase();
+    setState(() {
+      _filteredLocationData = _locationData.where((location) {
+        return location.name?.toLowerCase().contains(query) ?? false;
+      }).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -250,6 +271,34 @@ class _LokasiListrik1State extends State<LokasiListrik1> {
             markers: Set<Marker>.of(_markers),
             padding: EdgeInsets.only(bottom: 240), // Tambahkan padding di sini
           ),
+          Positioned(
+            top: 10.0,
+            left: 15.0,
+            right: 15.0,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.1),
+                    spreadRadius: 5,
+                    blurRadius: 10,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: TextField(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  hintText: 'Search...',
+                  border: InputBorder.none,
+                  icon: Icon(Icons.search),
+                ),
+              ),
+            ),
+          ),
           SlidingUpPanel(
             controller: _panelController,
             panel: _buildSlidingPanel(),
@@ -277,74 +326,162 @@ class _LokasiListrik1State extends State<LokasiListrik1> {
           ),
         ),
         Expanded(
-          child: ListView.builder(
-            itemCount: _locationData.length,
-            itemBuilder: (context, index) {
-              final data = _locationData[index];
-              final location = data.geometry?.location;
-              final lat = location?.lat != null ? double.tryParse(location!.lat!) : null;
-              final lng = location?.lng != null ? double.tryParse(location!.lng!) : null;
-              if (lat != null && lng != null) {
-                final distance = _calculateDistance(
-                  _currentPosition!.latitude,
-                  _currentPosition!.longitude,
-                  lat,
-                  lng,
-                );
-                final travelTime = _calculateTravelTime(distance);
+          child: SingleChildScrollView(
+            child: Column(
+              children: _filteredLocationData.map((data) {
+                final location = data.geometry?.location;
+                final lat = location?.lat != null ? double.tryParse(location!.lat!) : null;
+                final lng = location?.lng != null ? double.tryParse(location!.lng!) : null;
+                if (lat != null && lng != null) {
+                  final distance = _calculateDistance(
+                    _currentPosition!.latitude,
+                    _currentPosition!.longitude,
+                    lat,
+                    lng,
+                  );
+                  final travelTime = _calculateTravelTime(distance);
 
-                return ListTile(
-                  title: Text(data.name ?? 'Unknown', style: GoogleFonts.nunito(fontWeight: FontWeight.bold)),
-                  subtitle: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                      Container(
-                      width: double.infinity,
+                  return InkWell(
+                    onTap: () {
+                      _moveCamera(lat, lng);
+                      _panelController.close();
+                    },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: MyColors.bgform,
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                      child: Row(
                         children: [
-                          Text('Tegangan Recharge Stasiun ', style: GoogleFonts.nunito(fontWeight: FontWeight.normal)),
-                        SizedBox(height: 10,),
-                          Text(data.power ?? 'Unknown', style: GoogleFonts.nunito(fontWeight: FontWeight.bold)),
-                      ],),),]),
-                  trailing: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Flexible(
-                        child: Image.asset(
-                          'assets/icons/dropcar2.png',
-                          width: 80,
-                          height: 80,
-                        ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(data.name ?? 'Unknown', style: GoogleFonts.nunito(fontWeight: FontWeight.bold)),
+                                SizedBox(height: 5),
+                                Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: MyColors.bgform,
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('Tegangan Recharge Stasiun ', style: GoogleFonts.nunito(fontWeight: FontWeight.normal)),
+                                      SizedBox(height: 10),
+                                      Row(
+                                        children: [
+                                          Icon(Icons.ev_station_rounded, color: Colors.green,),
+                                          SizedBox(width: 5,),
+                                          Expanded(
+                                            child: Text(
+                                              data.power ?? 'Unknown',
+                                              style: GoogleFonts.nunito(fontWeight: FontWeight.bold),
+                                              softWrap: true,
+                                              maxLines: 2, // Set to your desired max lines
+                                              overflow: TextOverflow.ellipsis, // Handles overflow
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    'assets/icons/dropcar2.png',
+                                    width: 30,
+                                    height: 30,
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text('${distance.toStringAsFixed(2)} km'),
+                                      Text('${travelTime.toStringAsFixed(0)} min'),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                              InkWell(
+                                onTap: () async {
+                                  final String googleMapsUrl = "https://www.google.com/maps/dir/?api=1&destination=$lat,$lng&travelmode=driving";
+                                  if (await canLaunch(googleMapsUrl)) {
+                                    await launch(googleMapsUrl);
+                                  } else {
+                                    throw 'Could not launch $googleMapsUrl';
+                                  }
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.1),
+                                        spreadRadius: 5,
+                                        blurRadius: 10,
+                                        offset: Offset(0, 3),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Text(' Directions', style: GoogleFonts.nunito(fontWeight: FontWeight.bold)),
+                                      IconButton(
+                                        icon: Icon(Icons.directions),
+                                        onPressed: () async {
+                                          final String googleMapsUrl = "https://www.google.com/maps/dir/?api=1&destination=$lat,$lng&travelmode=driving";
+                                          if (await canLaunch(googleMapsUrl)) {
+                                            await launch(googleMapsUrl);
+                                          } else {
+                                            throw 'Could not launch $googleMapsUrl';
+                                          }
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 10),
-                      Text('${distance.toStringAsFixed(2)} km'),
-                      Text('${travelTime.toStringAsFixed(0)} min'),
-                    ],
-                  ),
-                  onTap: () {
-                    _moveCamera(lat, lng);
-                    _panelController.close();
-                  },
-                );
-              } else {
-                print('Invalid lat/lng values in ListView: lat=${location?.lat}, lng=${location?.lng}');
-                return ListTile(
-                  title: Text(data.name ?? 'Unknown', style: GoogleFonts.nunito(fontWeight: FontWeight.bold)),
-                  subtitle: Text('Invalid coordinates'),
-                );
-              }
-            },
+                    ),
+                  );
+                } else {
+                  print('Invalid lat/lng values in ListView: lat=${location?.lat}, lng=${location?.lng}');
+                  return Container(
+                    margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: MyColors.bgform,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(data.name ?? 'Unknown', style: GoogleFonts.nunito(fontWeight: FontWeight.bold)),
+                        Text('Invalid coordinates'),
+                      ],
+                    ),
+                  );
+                }
+              }).toList(),
+            ),
           ),
         ),
       ],
     );
   }
+
 }

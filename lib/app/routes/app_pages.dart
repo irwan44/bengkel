@@ -27,12 +27,8 @@ import '../modules/home/detail/detailbengkelly/lokasibengkelly.dart';
 import '../modules/home/detail/detailspesialis/spesialisofer.dart';
 import '../modules/home/detail/lihatsemua/lihat_lokasi_bengkelly.dart';
 import '../modules/home/detail/lihatsemua/lihat_spesialis.dart';
-import '../modules/home/menu/booking_service.dart';
-import '../modules/home/menu/emergency_service.dart';
 import '../modules/home/menu/lokasi_bengkelly.dart';
-import '../modules/home/menu/lokasi_car_charger.dart';
 import '../modules/home/menu/lokasi_listrik.dart';
-import '../modules/home/menu/repair&maintenance.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/news/bindings/news_binding.dart';
 import '../modules/news/views/news_view.dart';
@@ -134,26 +130,8 @@ class AppPages {
     ),
     GetPage(
       transition: Transition.rightToLeftWithFade,
-      name: _Paths.BOOKINGSERVICE,
-      page: () => const BookingService(),
-      binding: BookingBinding(),
-    ),
-    GetPage(
-      transition: Transition.rightToLeftWithFade,
-      name: _Paths.REPAIRMAINTENANCE,
-      page: () => const RepairMaintenance(),
-      binding: BookingBinding(),
-    ),
-    GetPage(
-      transition: Transition.rightToLeftWithFade,
       name: _Paths.LOKASIBENGKELLY,
       page: () => const LokasiBengkelly(),
-      binding: BookingBinding(),
-    ),
-    GetPage(
-      transition: Transition.rightToLeftWithFade,
-      name: _Paths.LOKASICHARGER,
-      page: () => const LokasiCarChanger(),
       binding: BookingBinding(),
     ),
     GetPage(
