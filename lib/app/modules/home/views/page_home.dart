@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:customer_bengkelly/app/componen/color.dart';
 import 'package:customer_bengkelly/app/routes/app_pages.dart';
@@ -308,11 +310,11 @@ class _HomePageState extends State<HomePage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        _menuItemCharger(() => Get.toNamed(Routes.LOKASILISTRIK), 'assets/icons/dropcar.svg', "Recharge \n Stasiun"),
+        _menuItemCharger(() => Get.toNamed(Routes.LOKASILISTRIK), 'assets/icons/dropcar2.png', "Recharge \n Stasiun"),
         SizedBox(width: 10,),
-        _menuItemCharger(() =>'', "",''),
-        _menuItemCharger(() =>'', "",''),
-        _menuItemCharger(() =>'', "",''),
+        _menuItemCharger(() =>null, null,''),
+        _menuItemCharger(() =>null, null,''),
+        _menuItemCharger(() =>null, null,''),
       ],
     );
   }
@@ -345,56 +347,21 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-  Widget _menuItemCharger(VoidCallback onTap,String iconPath, String label) {
+  Widget _menuItemCharger(VoidCallback onTap, String? iconPath, String? label) {
     return InkWell(
       onTap: onTap,
-      //     () {
-      //   showModalBottomSheet(
-      //     showDragHandle: true,
-      //     context: context,
-      //     shape: RoundedRectangleBorder(
-      //       borderRadius: BorderRadius.vertical(
-      //         top: Radius.circular(25.0),
-      //       ),
-      //     ),
-      //     builder: (context) {
-      //       return Container(
-      //         padding: EdgeInsets.all(16.0),
-      //         child: Column(
-      //           mainAxisSize: MainAxisSize.min,
-      //           children: <Widget>[
-      //             Text(
-      //               'Fitur sedang dalam perkembangan',
-      //               style: GoogleFonts.nunito(
-      //                 fontSize: 18.0,
-      //                 fontWeight: FontWeight.bold,
-      //               ),
-      //             ),
-      //             SizedBox(height: 10.0),
-      //             Text(
-      //               'Kami sedang bekerja keras untuk menyediakan fitur ini segera. Terima kasih atas kesabaran Anda!',style: GoogleFonts.nunito(),
-      //               textAlign: TextAlign.center,
-      //             ),
-      //             SizedBox(height: 20.0),
-      //             ElevatedButton(
-      //               onPressed: () {
-      //                 Navigator.pop(context);
-      //               },
-      //               child: Text('Oke'),
-      //             ),
-      //           ],
-      //         ),
-      //       );
-      //     },
-      //   );
-      // },
-      child:
-      Column(
+      child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          SvgPicture.asset(iconPath, width: 60),
+          if (iconPath != null)
+            Image.asset(iconPath, width: 50)
+          else
+            SizedBox(width: 50, height: 50), // Placeholder if no icon
           SizedBox(height: 8),
-          Text(label, textAlign: TextAlign.center, style: GoogleFonts.nunito(color: Colors.green, fontWeight: FontWeight.bold)),
+          if (label != null)
+            Text(label, textAlign: TextAlign.center, style: GoogleFonts.nunito(color: Colors.blue, fontWeight: FontWeight.bold))
+          else
+            Text('', textAlign: TextAlign.center, style: GoogleFonts.nunito(color: Colors.green, fontWeight: FontWeight.bold)),
         ],
       ),
     );
@@ -411,8 +378,14 @@ class _HomePageState extends State<HomePage> {
             onTap: () {
               Get.toNamed(Routes.SEMUALOKASIBENGKELLY);
             },
-            child:
-          Text('Lihat Semua', style: GoogleFonts.nunito(color: Colors.grey)),
+            child: Container(
+              padding: const EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: MyColors.bgform,
+              ),
+              child:
+          Text('Lihat Semua', style: GoogleFonts.nunito(color: Colors.grey, fontWeight: FontWeight.bold)),),
           ),
         ],
       ),
@@ -432,8 +405,14 @@ class _HomePageState extends State<HomePage> {
             onTap: () {
               Get.toNamed(Routes.LIHATSEMUASPESIALIS);
             },
-            child:
-            Text('Lihat Semua', style: GoogleFonts.nunito(color: Colors.grey)),
+            child: Container(
+              padding: const EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: MyColors.bgform,
+              ),
+              child:
+            Text('Lihat Semua', style: GoogleFonts.nunito(color: Colors.grey, fontWeight: FontWeight.bold)),),
           ),
         ],
       ),
@@ -450,8 +429,14 @@ class _HomePageState extends State<HomePage> {
             onTap: () {
               Get.toNamed(Routes.LIHATSEMUASPESIALIS);
             },
-            child:
-            Text('Lihat Semua', style: GoogleFonts.nunito(color: Colors.grey)),
+            child: Container(
+              padding: const EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: MyColors.bgform,
+              ),
+              child:
+            Text('Lihat Semua', style: GoogleFonts.nunito(color: Colors.grey, fontWeight: FontWeight.bold)),),
           ),
         ],
       ),

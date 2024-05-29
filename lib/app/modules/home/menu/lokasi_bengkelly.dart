@@ -8,6 +8,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:customer_bengkelly/app/componen/color.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../data/data_endpoint/lokasi.dart' as LokasiEndpoint;
 import '../../../data/endpoint.dart';
 
@@ -241,50 +242,114 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
           ),
         ),
         Expanded(
-          child: ListView.builder(
-            itemCount: _locationData.length,
-            itemBuilder: (context, index) {
-              final data = _locationData[index];
-              final location = data.geometry?.location;
-              final distance = _calculateDistance(
-                _currentPosition!.latitude,
-                _currentPosition!.longitude,
-                double.parse(location!.lat!),
-                double.parse(location.lng!),
-              );
-              final travelTime = _calculateTravelTime(distance); // Calculate travel time
+          child: SingleChildScrollView(
+            child: Column(
+              children: _locationData.map((data) {
+                final location = data.geometry?.location;
+                final distance = _calculateDistance(
+                  _currentPosition!.latitude,
+                  _currentPosition!.longitude,
+                  double.parse(location!.lat!),
+                  double.parse(location.lng!),
+                );
+                final travelTime = _calculateTravelTime(distance); // Calculate travel time
 
-              return ListTile(
-                title: Text(data.name ?? 'Unknown', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
-                subtitle: Text(data.vicinity ?? 'Unknown'),
-                trailing: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Flexible(
-                      child: Image.asset(
-                        'assets/icons/drop.png',
-                        width: 40,
-                        height: 40,
-                      ),
+                return GestureDetector(
+                  onTap: () {
+                    _moveCamera(
+                      double.parse(location.lat!),
+                      double.parse(location.lng!),
+                    );
+                    _panelController.close(); // Tutup panel setelah item dipilih
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
+                    padding: const EdgeInsets.all(12.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: MyColors.bgform,
                     ),
-                    SizedBox(height: 10,),
-                    Text('${distance.toStringAsFixed(2)} km'),
-                    Text('${travelTime.toStringAsFixed(0)} min'), // Display travel time
-                  ],
-                ),
-                onTap: () {
-                  _moveCamera(
-                    double.parse(location.lat!),
-                    double.parse(location.lng!),
-                  );
-                  _panelController.close(); // Tutup panel setelah item dipilih
-                },
-              );
-            },
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                data.name ?? 'Unknown',
+                                style: GoogleFonts.nunito(fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(height: 5),
+                              Text(data.vicinity ?? 'Unknown'),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: 5,),
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset(
+                              'assets/icons/drop.png',
+                              width: 40,
+                              height: 40,
+                            ),
+                            SizedBox(height: 10),
+                            Text('${distance.toStringAsFixed(2)} km'),
+                            Text('${travelTime.toStringAsFixed(0)} min'),
+                            SizedBox(height: 10,),
+                            InkWell(
+                              onTap: () async {
+                                final String googleMapsUrl = "https://www.google.com/maps/dir/?api=1&destination=${location.lat},${location.lng}&travelmode=driving";
+                                if (await canLaunch(googleMapsUrl)) {
+                                  await launch(googleMapsUrl);
+                                } else {
+                                  throw 'Could not launch $googleMapsUrl';
+                                }
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.1),
+                                      spreadRadius: 5,
+                                      blurRadius: 10,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  children: [
+                                    Text(' Directions', style: GoogleFonts.nunito(fontWeight: FontWeight.bold)),
+                                    IconButton(
+                                      icon: Icon(Icons.directions),
+                                      onPressed: () async {
+                                        final String googleMapsUrl = "https://www.google.com/maps/dir/?api=1&destination=${location.lat},${location.lng}&travelmode=driving";
+                                        if (await canLaunch(googleMapsUrl)) {
+                                          await launch(googleMapsUrl);
+                                        } else {
+                                          throw 'Could not launch $googleMapsUrl';
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
           ),
         ),
       ],
     );
   }
+
 
 }

@@ -277,6 +277,7 @@ class _LokasiListrik1State extends State<LokasiListrik1> {
             right: 15.0,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 10.0),
+              margin: EdgeInsets.only(right: 40),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
@@ -289,10 +290,12 @@ class _LokasiListrik1State extends State<LokasiListrik1> {
                   ),
                 ],
               ),
-              child: TextField(
+              child:
+              TextField(
+
                 controller: _searchController,
                 decoration: InputDecoration(
-                  hintText: 'Search...',
+                  hintText: 'Pencarian...',
                   border: InputBorder.none,
                   icon: Icon(Icons.search),
                 ),
