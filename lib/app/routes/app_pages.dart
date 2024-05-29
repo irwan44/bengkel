@@ -10,6 +10,7 @@ import '../modules/authorization/componen/new_password.dart';
 import '../modules/authorization/componen/otp_verrifikasi.dart';
 import '../modules/authorization/componen/signup_next.dart';
 import '../modules/authorization/componen/signup_page.dart';
+import '../modules/authorization/componen/ubah_password.dart';
 import '../modules/authorization/views/authorization_view.dart';
 import '../modules/booking/bindings/booking_binding.dart';
 import '../modules/booking/componen/berhasil_booking.dart';
@@ -38,7 +39,7 @@ import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/componen/edit_profile.dart';
 import '../modules/profile/componen/pengaturan.dart';
 import '../modules/profile/componen/pilih_kendaraan.dart';
-import '../modules/profile/componen/pusat_bantuan.dart';
+import '../modules/profile/componen/privacy.dart';
 import '../modules/profile/componen/widgets/tambah_kendaraan.dart';
 import '../modules/profile/views/profile_view.dart';
 
@@ -155,7 +156,7 @@ class AppPages {
     GetPage(
       transition: Transition.rightToLeftWithFade,
       name: _Paths.BANTUAN,
-      page: () => const Bantuan(),
+      page: () => const Privacy(),
       binding: BookingBinding(),
     ),
     GetPage(
@@ -231,6 +232,12 @@ class AppPages {
       transition: Transition.downToUp,
       name: _Paths.LOKASILISTRIK,
       page: () => LokasiListrik1(),
+      binding: BookingBinding(),
+    ),
+    GetPage(
+      transition: Transition.downToUp,
+      name: _Paths.UBAHPASSWORD,
+      page: () => UbahPasswordPage(),
       binding: BookingBinding(),
     ),
   ];

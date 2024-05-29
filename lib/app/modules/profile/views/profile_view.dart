@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:launch_review/launch_review.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../../componen/ButtonSubmitWidget.dart';
@@ -80,8 +81,9 @@ class _ProfileViewState extends State<ProfileView> {
           _setting(),
           SizedBox(height: 20,),
           _logout(context),
-          SizedBox(height: 60,),
+          SizedBox(height: 30,),
           Text('Aplikasi Versi ${controller.packageName}', style: GoogleFonts.nunito(color: MyColors.appPrimaryColor),),
+          SizedBox(height: 70,),
         ],
         ),
         ),
@@ -226,7 +228,30 @@ class _ProfileViewState extends State<ProfileView> {
             ),
           ),
           children: [
+            InkWell(
+              onTap: () {
+                Get.toNamed(Routes.UBAHPASSWORD);
+              },
+              child:
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                     Icon(Icons.password_rounded, color: MyColors.appPrimaryColor,),
+                      SizedBox(width: 10,),
+                      Text('Ubah Password', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
+                    ],),
 
+                  Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey.shade400,),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: Divider(color: Colors.grey.shade300,),
+            ),
             InkWell(
               onTap: () {
                 Get.toNamed(Routes.PILIHKENDARAAN);
@@ -243,6 +268,30 @@ class _ProfileViewState extends State<ProfileView> {
                       Text('Pilih Kendaraaan', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
                     ],),
 
+                  Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey.shade400,),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: Divider(color: Colors.grey.shade300,),
+            ),
+            InkWell(
+              onTap: () => LaunchReview.launch(
+                androidAppId: "com.bengkelly.customer.co.id",
+                // iOSAppId: "585027354",
+              ),
+              child:
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                     Icon(Icons.system_update_rounded, color: MyColors.appPrimaryColor,),
+                      SizedBox(width: 10,),
+                      Text('Cek Update Manual', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
+                    ],),
                   Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey.shade400,),
                 ],
               ),
@@ -276,6 +325,29 @@ class _ProfileViewState extends State<ProfileView> {
             ),
             InkWell(
               onTap: () {
+                Get.toNamed(Routes.BANTUAN);
+              },
+              child:
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.published_with_changes_rounded, color: MyColors.appPrimaryColor,),
+                      SizedBox(width: 10,),
+                      Text('Privacy Policy', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
+                    ],),
+                  Icon(Icons.arrow_forward_ios_rounded, color: Colors.grey.shade400,),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: Divider(color: Colors.grey.shade300,),
+            ),
+            InkWell(
+              onTap: () {
                 showModalBottomSheet(
                   showDragHandle: true,
                   isScrollControlled: true,
@@ -287,12 +359,17 @@ class _ProfileViewState extends State<ProfileView> {
                   ),
                   builder: (context) {
                     return Container(
-                      padding: EdgeInsets.all(16.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Text('Pengaturan Aplikasi', style: GoogleFonts.nunito(fontWeight: FontWeight.bold),),
                       SizedBox(height: 10,),
+                          InkWell(
+                            onTap: () {
+                              AppSettings.openAppSettings(
+                                  type: AppSettingsType.notification);
+                            },
+                            child:
                       Container(
                       padding: EdgeInsets.all(20),
                       width: double.infinity,
@@ -301,12 +378,7 @@ class _ProfileViewState extends State<ProfileView> {
                         color: MyColors.bg,
                       ),
                       child:
-                          InkWell(
-                          onTap: () {
-                            AppSettings.openAppSettings(
-                                type: AppSettingsType.notification);
-                    },
-                      child:
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -323,6 +395,12 @@ class _ProfileViewState extends State<ProfileView> {
                     ),
                     ),
                           SizedBox(height: 10,),
+                          InkWell(
+                            onTap: () {
+                              AppSettings.openAppSettings(
+                                  type: AppSettingsType.location);
+                            },
+                            child:
                           Container(
                           padding: EdgeInsets.all(20),
                           width: double.infinity,
@@ -331,12 +409,6 @@ class _ProfileViewState extends State<ProfileView> {
                           color: MyColors.bg,
                           ),
                           child:
-                          InkWell(
-                            onTap: () {
-                              AppSettings.openAppSettings(
-                                  type: AppSettingsType.location);
-                            },
-                            child:
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -353,6 +425,12 @@ class _ProfileViewState extends State<ProfileView> {
                           ),
                           ),
                           SizedBox(height: 10,),
+                          InkWell(
+                            onTap: () {
+                              AppSettings.openAppSettings(
+                                  type: AppSettingsType.sound);
+                            },
+                            child:
                     Container(
                     padding: EdgeInsets.all(20),
                     width: double.infinity,
@@ -360,14 +438,7 @@ class _ProfileViewState extends State<ProfileView> {
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                     color: MyColors.bg,
                     ),
-                    child:
-                          InkWell(
-                            onTap: () {
-                              AppSettings.openAppSettings(
-                                  type: AppSettingsType.sound);
-                            },
-                            child:
-                            Row(
+                    child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [

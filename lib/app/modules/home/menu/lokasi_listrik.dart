@@ -25,10 +25,12 @@ class _LokasiListrik1State extends State<LokasiListrik1> {
   List<Marker> _markers = [];
   List<DatachargingStation> _locationData = [];
   List<DatachargingStation> _filteredLocationData = [];
+  DatachargingStation? _nearestLocation;
   final PanelController _panelController = PanelController();
   String _currentAddress = 'Mengambil lokasi...';
   BitmapDescriptor? _customIcon;
   TextEditingController _searchController = TextEditingController();
+  String? _selectedCity;
 
   @override
   void initState() {
@@ -123,6 +125,7 @@ class _LokasiListrik1State extends State<LokasiListrik1> {
             _addFallbackMarker(data);
           }
         }
+        _findNearestLocation();
         setState(() {});
       } else {
         print('Failed to fetch locations or current position is null');
@@ -200,8 +203,35 @@ class _LokasiListrik1State extends State<LokasiListrik1> {
     });
   }
 
+  void _findNearestLocation() {
+    double minDistance = double.infinity;
+    DatachargingStation? nearestLocation;
+
+    for (var location in _locationData) {
+      final lat = double.tryParse(location.geometry?.location?.lat ?? '');
+      final lng = double.tryParse(location.geometry?.location?.lng ?? '');
+      if (lat != null && lng != null) {
+        final distance = _calculateDistance(
+          _currentPosition!.latitude,
+          _currentPosition!.longitude,
+          lat,
+          lng,
+        );
+        if (distance < minDistance) {
+          minDistance = distance;
+          nearestLocation = location;
+        }
+      }
+    }
+
+    setState(() {
+      _nearestLocation = nearestLocation;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final cities = _locationData.map((e) => e.name?.split(' ')[0] ?? '').toSet().toList();
     return Scaffold(
       appBar: AppBar(
         forceMaterialTransparency: true,
@@ -290,15 +320,40 @@ class _LokasiListrik1State extends State<LokasiListrik1> {
                   ),
                 ],
               ),
-              child:
-              TextField(
-
-                controller: _searchController,
-                decoration: InputDecoration(
-                  hintText: 'Pencarian...',
-                  border: InputBorder.none,
-                  icon: Icon(Icons.search),
-                ),
+              child: Column(
+                children: [
+                  TextField(
+                    controller: _searchController,
+                    decoration: InputDecoration(
+                      hintText: 'Pencarian...',
+                      border: InputBorder.none,
+                      icon: Icon(Icons.search),
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    child:
+                  DropdownButton<String>(
+                    isExpanded: true,
+                    hint: Text('Pilih Kota berdasarkan rest area', style: GoogleFonts.nunito(),),
+                    value: _selectedCity,
+                    items: cities.map((city) {
+                      return DropdownMenuItem<String>(
+                        value: city,
+                        child: Text(city),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedCity = value;
+                        _filteredLocationData = _locationData.where((location) {
+                          return location.name?.startsWith(value ?? '') ?? false;
+                        }).toList();
+                      });
+                    },
+                  ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -311,6 +366,26 @@ class _LokasiListrik1State extends State<LokasiListrik1> {
             parallaxEnabled: true,
             parallaxOffset: 0.5,
           ),
+          if (_nearestLocation != null)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                padding: EdgeInsets.all(10),
+                color: Colors.white,
+                child: Text(
+                  'Terdekat: ${_nearestLocation!.name} (${_calculateDistance(
+                    _currentPosition!.latitude,
+                    _currentPosition!.longitude,
+                    double.parse(_nearestLocation!.geometry!.location!.lat!),
+                    double.parse(_nearestLocation!.geometry!.location!.lng!),
+                  ).toStringAsFixed(2)} km)',
+                  style: GoogleFonts.nunito(fontSize: 16, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
         ],
       ),
     );
@@ -486,5 +561,4 @@ class _LokasiListrik1State extends State<LokasiListrik1> {
       ],
     );
   }
-
 }

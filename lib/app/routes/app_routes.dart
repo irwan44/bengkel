@@ -39,6 +39,7 @@ abstract class Routes {
   static const NEWPASSWORD = _Paths.NEWPASSWORD;
   static const OTP = _Paths.OTP;
   static const LOKASILISTRIK = _Paths.LOKASILISTRIK;
+  static const UBAHPASSWORD = _Paths.UBAHPASSWORD;
 }
 
 abstract class _Paths {
@@ -79,4 +80,5 @@ abstract class _Paths {
   static const NEWPASSWORD = '/newpassword';
   static const OTP = '/otp';
   static const LOKASILISTRIK = '/lokasilistrik';
+  static const UBAHPASSWORD = '/ubahpassword';
 }

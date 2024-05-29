@@ -71,7 +71,7 @@ class _NotofikasiState extends State<Notofikasi> {
                           fit: BoxFit.contain,
                         ),
                         SizedBox(height: 10,),
-                        Text('Belum ada Data History Booking')
+                        Text('Belum ada Data Booking Hari ini')
                       ]
                   ),
                   );
@@ -93,7 +93,7 @@ class _NotofikasiState extends State<Notofikasi> {
                           fit: BoxFit.contain,
                         ),
                         SizedBox(height: 10,),
-                        Text('Belum ada History Booking')
+                        Text('Belum ada Data Booking Hari ini')
                       ]
                   ),
                   );
