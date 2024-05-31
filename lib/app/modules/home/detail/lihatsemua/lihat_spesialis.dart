@@ -50,7 +50,7 @@ class _LihatSemuaSpesialisState extends State<LihatSemuaSpesialis> {
           statusBarBrightness: Brightness.light,
           systemNavigationBarColor: Colors.white,
         ),
-        title: Text('Semua Spesialis Offer'),
+        title: Text('Spesialis Offer',style: GoogleFonts.nunito(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold),),
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {

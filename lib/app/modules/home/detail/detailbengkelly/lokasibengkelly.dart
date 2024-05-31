@@ -39,7 +39,7 @@ class _DetailLokasiBengkellyState extends State<DetailLokasiBengkelly> {
           statusBarBrightness: Brightness.light,
           systemNavigationBarColor: Colors.white,
         ),
-        title: const Text('Rest Area'),
+        title: Text('Rest Area',style: GoogleFonts.nunito(color: MyColors.appPrimaryColor, fontWeight: FontWeight.bold,),),
         centerTitle: false,
       ),
       body: SingleChildScrollView(

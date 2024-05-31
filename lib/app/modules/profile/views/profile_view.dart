@@ -43,6 +43,7 @@ class _ProfileViewState extends State<ProfileView> {
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: false,
       appBar: AppBar(
+        forceMaterialTransparency: true,
         backgroundColor: Colors.white,
         elevation: 0,
         automaticallyImplyLeading: false,

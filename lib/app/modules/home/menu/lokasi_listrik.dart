@@ -335,7 +335,7 @@ class _LokasiListrik1State extends State<LokasiListrik1> {
                     child:
                   DropdownButton<String>(
                     isExpanded: true,
-                    hint: Text('Pilih Kota berdasarkan rest area', style: GoogleFonts.nunito(),),
+                    hint: Text('Pilih berdasarkan Kota', style: GoogleFonts.nunito(),),
                     value: _selectedCity,
                     items: cities.map((city) {
                       return DropdownMenuItem<String>(
