@@ -33,7 +33,7 @@ class API {
   static const _fleetMaintenanceUrl = 'https://fleetmaintenance.co.id/wp-json/wp/v2/posts';
   static const _katagorikendaraan = 'https://api-vale.techthinkhub.com/api/kategori-kendaraan';
   //API ------------------------------------------------------------------------------------
-  // static const _url = 'https://mobile.techthinkhub.id';
+  static const _url = 'https://mobile.techthinkhub.id';
   static const _urlbe = 'https://be.techthinkhub.id';
   static const _baseUrl = '$_urlbe/api';
   static const _PostLogin = '$_baseUrl/customer/login';
@@ -991,7 +991,6 @@ class API {
     }
   }
   //Beda
-
   static Future<void> showBookingNotifications() async {
     try {
       final token = Publics.controller.getToken.value ?? '';
@@ -1049,6 +1048,8 @@ class API {
       throw e;
     }
   }
+  //Beda
+
   //Beda
   static Future<List<Post>> fetchPostsFromSource({
     required String url,

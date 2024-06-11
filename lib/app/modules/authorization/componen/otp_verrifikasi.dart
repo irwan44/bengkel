@@ -100,7 +100,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                           focusedPinTheme: focusedPinTheme,
                           submittedPinTheme: submittedPinTheme,
                           validator: (s) {
-                            return s == '2222' ? null : 'Pin is incorrect';
+                            return s == '2222' ? null : '';
                           },
                           pinputAutovalidateMode:
                           PinputAutovalidateMode.onSubmit,

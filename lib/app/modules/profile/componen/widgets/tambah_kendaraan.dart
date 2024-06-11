@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../../componen/custom_widget.dart';
 import '../../../../data/data_endpoint/kategorikendaraan.dart';
 import '../../../../data/data_endpoint/merekkendaraan.dart';
@@ -63,10 +64,22 @@ class TambahKendaraan extends StatelessWidget {
                       ),
                         FadeInAnimation(
                           delay: 1.5,
-                          child: CustomTextFormField(
-                            hinttext: 'Masukan Nomor Polisi kendaraan anda',
-                            obsecuretext: false,
-                            controller: controller.nopolController,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: MyColors.bgformborder),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child:
+                            TextFormField(
+                              textCapitalization: TextCapitalization.characters,
+                              controller: controller.nopolController,
+                              obscureText:false,
+                              decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(18),
+                                  border: InputBorder.none,
+                                  hintStyle: GoogleFonts.nunito(color: Colors.grey),
+                                  hintText: 'Masukan Nomor Polisi kendaraan anda'),
+                            ),
                           ),
                         ),
                         const SizedBox(
@@ -232,16 +245,30 @@ class TambahKendaraan extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
+
                         FadeInAnimation(
                             delay: 1.5,
                             child:  Text('Tahun')
                         ),
                         FadeInAnimation(
                           delay: 1.8,
-                          child: CustomTextFormField(
-                            hinttext: 'Masukan Tahun Kendaraan anda',
-                            obsecuretext: false,
-                            controller: controller.tahunController,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: MyColors.bgformborder),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child:
+                            TextFormField(
+                              textCapitalization: TextCapitalization.characters,
+                              controller: controller.tahunController,
+                              keyboardType: TextInputType.number,
+                              obscureText:false,
+                              decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(18),
+                                  border: InputBorder.none,
+                                  hintStyle: GoogleFonts.nunito(color: Colors.grey),
+                                  hintText: 'Masukan Tahun Kendaraan anda'),
+                            ),
                           ),
                         ),
                         const SizedBox(
@@ -253,10 +280,22 @@ class TambahKendaraan extends StatelessWidget {
                         ),
                         FadeInAnimation(
                           delay: 1.8,
-                          child: CustomTextFormField(
-                            hinttext: 'Masukan Warna Kendaraan anda',
-                            obsecuretext: false,
-                            controller: controller.warnaController,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: MyColors.bgformborder),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child:
+                            TextFormField(
+                              textCapitalization: TextCapitalization.characters,
+                              controller: controller.warnaController,
+                              obscureText:false,
+                              decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.all(18),
+                                  border: InputBorder.none,
+                                  hintStyle: GoogleFonts.nunito(color: Colors.grey),
+                                  hintText: 'Masukan Warna Kendaraan anda'),
+                            ),
                           ),
                         ),
                         const SizedBox(

@@ -72,7 +72,8 @@ class _PilihKendaraanState extends State<PilihKendaraan> {
           statusBarBrightness: Brightness.light,
           systemNavigationBarColor: Colors.white,
         ),
-        title: Text(
+        title:
+        Text(
           'Pilih Kendaraan',
           style: GoogleFonts.nunito(
             color: MyColors.appPrimaryColor,
