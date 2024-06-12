@@ -24,7 +24,7 @@ class ListHistory extends StatelessWidget {
     };
 
     // Default image if namaCabang does not match any key
-    String imageAsset = cabangImageAssets[booking.namaCabang] ?? 'assets/images/default.png';
+    String imageAsset = cabangImageAssets[booking.namaCabang] ?? 'assets/logo/bengkelly.png';
 
     return InkWell(
       onTap: onTap,

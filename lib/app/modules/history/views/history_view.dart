@@ -28,7 +28,19 @@ class _HistoryViewState extends State<HistoryView> {
     super.initState();
     _refreshControllers = List.generate(11, (index) => RefreshController());
   }
-
+  Future<void> handleBookingTap(DataHis booking) async {
+    Get.toNamed(
+      Routes.DETAILHISTORY,
+      arguments: {
+        'alamat': booking.alamat ?? '',
+        'nama_cabang': booking.namaCabang ?? '',
+        'nama_jenissvc': booking.namaJenissvc ?? '',
+        'nama_status': booking.namaStatus ?? '',
+        'jasa': booking.jasa?.map((item) => item.toJson()).toList() ?? [],
+        'part': booking.part?.map((item) => item.toJson()).toList() ?? [],
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,7 +116,9 @@ class _HistoryViewState extends State<HistoryView> {
                           ],
                           builder: (items) => ListHistory(
                             booking: items,
-                            onTap: () {},
+                            onTap: () {
+                              handleBookingTap(items);
+                            },
                           ),
                         ),
                       ),
@@ -249,8 +263,8 @@ class _HistoryViewState extends State<HistoryView> {
             ),
             SizedBox(height: 10,),
             Text('Belum ada Data History Booking')
-          ]
-          ),
+              ]
+            ),
           );
 
         } else if (!snapshot.hasData || snapshot.data!.datahistory!.isEmpty) {

@@ -25,6 +25,7 @@ class AppColors {
   static const Color contentColorPink = Color(0xFFFF3AF2);
   static const Color contentColorRed = Color(0xFFE80054);
   static const Color contentColorCyan = Color(0xFF50E4FF);
+
 }
 
 class MyColors{
@@ -58,6 +59,11 @@ class MyColors{
   static Color card = HexColor('D7E1FE');
   static Color bg = HexColor('F7F8F9');
   static Color green = HexColor('5DCB6A');
+  static Color blackText  = Color(0xFF302B38);
+  static Color yellow     = Color(0xFFF2BA30);
+  static Color softGrey   = Color(0xFFE9E9E9);
+  static Color white      = Color(0xFFFFFFFF);
+
 }
 
 class HexColor extends Color {

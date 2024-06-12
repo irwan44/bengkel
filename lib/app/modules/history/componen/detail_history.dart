@@ -4,6 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../widgets/timeline.dart';
+import '../../../widgets/widget_timeline_wrapper.dart';
+import 'listhistory.dart';
+
 class DetailHistory extends StatefulWidget {
   const DetailHistory({super.key});
 
@@ -30,14 +34,21 @@ class _DetailHistoryState extends State<DetailHistory> {
       'Bengkelly Rest Area KM 575B': 'assets/logo/575b.jpg',
       'Bengkelly Rest Area KM 319B': 'assets/logo/319b.jpg',
     };
+    Color statusColor = StatusColor.getColor(status ?? '');
+    String imageAsset = cabangImageAssets[arguments['nama_cabang']] ??
+        'assets/logo/bengkelly.png';
 
-    String imageAsset = cabangImageAssets[arguments['nama_cabang']] ?? 'assets/images/default.png';
-
-    double screenWidth = MediaQuery.of(context).size.width;
+    double screenWidth = MediaQuery
+        .of(context)
+        .size
+        .width;
     double padding = screenWidth * 0.02;
 
     return Scaffold(
+      extendBodyBehindAppBar: false,
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        forceMaterialTransparency: true,
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.dark,
@@ -57,26 +68,6 @@ class _DetailHistoryState extends State<DetailHistory> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.1),
-                      spreadRadius: 5,
-                      blurRadius: 10,
-                      offset: Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Column(children: [
-                 Text('Status Pesanan ${status}', style: GoogleFonts.nunito(fontWeight: FontWeight.bold,color: MyColors.appPrimaryColor),),
-                ],
-                ),
-              ),
               SizedBox(height: 10,),
               Container(
                 padding: EdgeInsets.all(10),
@@ -86,129 +77,71 @@ class _DetailHistoryState extends State<DetailHistory> {
                 ),
                 child: Column(children: [
                   ClipOval(
-                    child:  Image.asset(
+                    child: Image.asset(
                       imageAsset,
                       fit: BoxFit.cover,
                       width: 100,
                       height: 100,
                     ),
                   ),
-              _buildDetailStep(
-                icon: Icons.location_on,
-                title: restarea,
-                subtitle: alamat,
-              ),
-              _buildDetailStep(
-                icon: Icons.build,
-                title: 'Detail Jasa',
-                child: _buildDetailList(jasa, 'nama_jasa', 'tgl', 'harga'),
-              ),
-              _buildDetailStep(
-                icon: Icons.settings,
-                title: 'Detail Part',
-                child: _buildDetailList(part, 'nama_sparepart', 'kode_sparepart', 'harga'),
-              ),
-                  ],
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 40,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                        Text('Serive Proses', style: GoogleFonts.nunito(fontSize: 20, fontWeight: FontWeight.bold),),
+                         Container(
+                           padding: EdgeInsets.all(5),
+                           decoration: BoxDecoration(
+                             borderRadius: BorderRadius.circular(10),
+                             color: statusColor,
+                           ),
+                           child: 
+                          Text('${status}', style: GoogleFonts.nunito(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.white),),
+                         ),
+                        ],
+                      ),
+
+                      SizedBox(height: 10,),
+                      WidgetTimeline(
+                        icon: Icons.location_on_rounded,
+                        bgcolor: MyColors.appPrimaryColor,
+                        title1: restarea,
+                        title2: alamat,
+                        time: "",
+                        showCard: false,
+                      ),
+                      WidgetTimeline(
+                        icon: Icons.note_alt,
+                        bgcolor: MyColors.grey,
+                        title1: "Detail Jasa",
+                        title2: "Jasa Perbaikan Kendaraan",
+                        time: "",
+                        showCard: true,
+                      ),
+                      WidgetTimeline(
+                        icon: Icons.settings,
+                        bgcolor: MyColors.grey,
+                        title1: "Detail Part",
+                        title2: "Sparepart yang diganti",
+                        time: "",
+                        showCard2: true,
+                      ),
+                    ],
+                  ),
+                ],
                 ),
               )
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildDetailStep({required IconData icon, required String title, String? subtitle, Widget? child}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: Row(
-        children: [
-          Column(
-            children: [
-              Icon(icon),
-              SizedBox(height: 10),
-              Container(
-                width: 4,
-                height: subtitle != null ? 87 : 40,
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              SizedBox(height: 10),
-            ],
-          ),
-          SizedBox(width: 20),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (subtitle != null) ...[
-                  Text(
-                    title,
-                    style: GoogleFonts.nunito(
-                      fontSize: 14,
-                      color: MyColors.appPrimaryColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    subtitle,
-                    style: GoogleFonts.nunito(
-                      fontSize: 14,
-                      color: MyColors.appPrimaryColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ] else ...[
-                  Text(
-                    title,
-                    style: GoogleFonts.nunito(
-                      fontSize: 14,
-                      color: MyColors.appPrimaryColor,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  if (child != null) child,
-                ],
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDetailList(List<dynamic> items, String titleKey, String subtitleKey, String trailingKey) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: items.length,
-      itemBuilder: (context, index) {
-        final item = items[index];
-        return ListTile(
-          title: Text(
-            item[titleKey],
-            style: GoogleFonts.nunito(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-              color: Colors.green,
-            ),
-          ),
-          subtitle: Text(
-            'Tanggal: ${item[subtitleKey]}',
-            style: GoogleFonts.nunito(fontWeight: FontWeight.bold),
-          ),
-          trailing: Text(
-            'Harga: ${item[trailingKey]}',
-            style: GoogleFonts.nunito(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-            ),
-          ),
-        );
-      },
     );
   }
 }
