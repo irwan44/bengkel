@@ -25,7 +25,7 @@ class ProfileController extends GetxController {
   var selectedTipeID = 0.obs;
   var selectedTransmisi = ''.obs;
   var selectedKategory = ''.obs;
-  String? imageUrl; // Tambahkan properti untuk URL gambar
+  String? imageUrl;
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();

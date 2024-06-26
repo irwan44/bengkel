@@ -8,6 +8,7 @@ List<Map<String, dynamic>> categoryVehicle = [
   {"id": "7", "category_name": "Heavy Duty"},
 ];
 // Data Dummy
+
 const List<Map<String, dynamic>> menu = [
   {
     "id": "1",

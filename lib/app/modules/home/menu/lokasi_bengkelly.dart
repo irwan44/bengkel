@@ -252,7 +252,7 @@ class _LokasiBengkellyState extends State<LokasiBengkelly> {
                   double.parse(location!.lat!),
                   double.parse(location.lng!),
                 );
-                final travelTime = _calculateTravelTime(distance); // Calculate travel time
+                final travelTime = _calculateTravelTime(distance);
 
                 return GestureDetector(
                   onTap: () {

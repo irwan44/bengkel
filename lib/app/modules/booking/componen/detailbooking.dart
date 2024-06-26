@@ -39,19 +39,23 @@ class DetailBookingViewState extends State<DetailBookingView> {
               width: double.infinity,
               child: SizedBox(
                 height: 50, // <-- Your height
-                child: ElevatedButton(
-                  onPressed: () => controller.BookingID(),
+                child: Obx(() => ElevatedButton(
+                  onPressed: controller.isLoading.value ? null : () => controller.BookingID(),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
                     elevation: 4.0,
                   ),
-                  child: Row(
+                  child: controller.isLoading.value
+                      ? CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  )
+                      : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(width: 10,),
+                      SizedBox(width: 10),
                       Text(
                         'Konfirmasi Sekarang',
                         style: GoogleFonts.nunito(
@@ -61,7 +65,7 @@ class DetailBookingViewState extends State<DetailBookingView> {
                       ),
                     ],
                   ),
-                ),
+                )),
               ),
             ),
           ],

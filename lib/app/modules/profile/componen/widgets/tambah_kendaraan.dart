@@ -209,7 +209,7 @@ class TambahKendaraan extends StatelessWidget {
                                     hintText: 'Masukan Kategory Kendaraan anda',
                                     items: KategoryList,
                                     onChanged: (value) {
-                                      controller.selectedKategory.value = value;
+                                      controller.selectedKategory.value = value!;
                                       print("Selected Kategori: ${controller.selectedKategory.value}");
                                     },
                                   );
