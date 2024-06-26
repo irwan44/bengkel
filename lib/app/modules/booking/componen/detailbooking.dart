@@ -40,7 +40,11 @@ class DetailBookingViewState extends State<DetailBookingView> {
               child: SizedBox(
                 height: 50, // <-- Your height
                 child: Obx(() => ElevatedButton(
-                  onPressed: controller.isLoading.value ? null : () => controller.BookingID(),
+                  onPressed: controller.isLoading.value
+                      ? null
+                      : () {
+                    controller.BookingID();
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
                     shape: RoundedRectangleBorder(
@@ -48,8 +52,22 @@ class DetailBookingViewState extends State<DetailBookingView> {
                     elevation: 4.0,
                   ),
                   child: controller.isLoading.value
-                      ? CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        'Loading...',
+                        style: GoogleFonts.nunito(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   )
                       : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -65,7 +83,8 @@ class DetailBookingViewState extends State<DetailBookingView> {
                       ),
                     ],
                   ),
-                )),
+                ),
+                ),
               ),
             ),
           ],
