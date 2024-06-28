@@ -254,12 +254,6 @@ class API {
       }
     } catch (e) {
       print('Error: $e');
-      Get.snackbar(
-        'Gagal Registrasi',
-        'Terjadi kesalahan saat registrasi: $e',
-        backgroundColor: Colors.redAccent,
-        colorText: Colors.white,
-      );
       throw Exception('Error during registration: $e');
     }
   }
@@ -562,22 +556,11 @@ class API {
 
         return obj;
       } else {
-        Get.snackbar(
-          'Error',
-          'Terjadi kesalahan saat Emergency Service: ${response.statusMessage}',
-          backgroundColor: Colors.redAccent,
-          colorText: Colors.white,
-        );
+        Get.snackbar('Error', 'Terjadi kesalahan saat Emergency Service',
+            backgroundColor: Colors.redAccent, colorText: Colors.white);
         throw Exception('Failed to register booking: ${response.statusMessage}');
       }
     } catch (e) {
-      print('Error: $e');
-      Get.snackbar(
-        'Gagal emergency Service',
-        'Terjadi kesalahan saat Emergency Service: $e',
-        backgroundColor: Colors.redAccent,
-        colorText: Colors.white,
-      );
       throw Exception('Error during registration: $e');
     }
   }
@@ -981,7 +964,7 @@ class API {
 
       final obj = GeneralCheckup.fromJson(response.data);
 
-      if (obj.dataGeneralCheckUp == null) {
+      if (obj.data == null) {
         throw Exception("Data general checkup kosong.");
       }
 

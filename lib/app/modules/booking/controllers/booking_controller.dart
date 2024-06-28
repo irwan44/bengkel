@@ -169,12 +169,11 @@ class BookingController extends GetxController {
           print('Error sending request: ${e.message}');
         } else {
         }
-        Get.snackbar('Gagal Booking', 'Terjadi kesalahan saat Booking',
+        Get.snackbar('Gagal Booking', 'Kendaraan anda masih dalam proses Booking, selesaikan dahulu Booking kendaraan anda',
             backgroundColor: Colors.redAccent, colorText: Colors.white);
       } catch (e) {
-        isLoading.value = false; // Stop loading
-        print('Error during registration: $e');
-        Get.snackbar('Gagal Booking', 'Terjadi kesalahan saat Booking',
+        isLoading.value = false;
+        Get.snackbar('Gagal Booking', 'Kendaraan anda masih dalam proses Booking, selesaikan dahulu Booking kendaraan anda',
             backgroundColor: Colors.redAccent, colorText: Colors.white);
       }
     } else {
@@ -217,16 +216,13 @@ class BookingController extends GetxController {
         }
       } on DioError catch (e) {
         if (e.response != null) {
-          print('Error Response data: ${e.response!.data}');
-          print('Error sending request: ${e.message}');
         } else {
-          print('Error sending request: ${e.message}');
+
         }
         Get.snackbar('Gagal emergency Service', 'Terjadi kesalahan saat Emergency Service',
             backgroundColor: Colors.redAccent, colorText: Colors.white);
       } catch (e) {
-        print('Error during emergency Service: $e');
-        Get.snackbar('Gagal emergency Service', 'Terjadi kesalahan saat Emergency Service',
+        Get.snackbar('Gagal Booking', 'Kendaraan anda masih dalam proses Booking, selesaikan dahulu Booking kendaraan anda',
             backgroundColor: Colors.redAccent, colorText: Colors.white);
       }
     } else {

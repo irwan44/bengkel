@@ -22,25 +22,44 @@ class HistoryView extends StatefulWidget {
 
 class _HistoryViewState extends State<HistoryView> {
   late List<RefreshController> _refreshControllers;
+  late Future<HistoryBooking> _historyBookingFuture;
 
   @override
   void initState() {
     super.initState();
     _refreshControllers = List.generate(11, (index) => RefreshController());
+    _historyBookingFuture = API.HistoryBookingID();
   }
+
   Future<void> handleBookingTap(DataHis booking) async {
     Get.toNamed(
       Routes.DETAILHISTORY,
       arguments: {
         'alamat': booking.alamat ?? '',
+        'id': booking.id.toString(),
         'nama_cabang': booking.namaCabang ?? '',
         'nama_jenissvc': booking.namaJenissvc ?? '',
+        'no_polisi': booking.noPolisi ?? '',
         'nama_status': booking.namaStatus ?? '',
         'jasa': booking.jasa?.map((item) => item.toJson()).toList() ?? [],
         'part': booking.part?.map((item) => item.toJson()).toList() ?? [],
       },
     );
   }
+
+  void _onRefresh(int index) async {
+    try {
+      final newHistoryBooking = await API.HistoryBookingID();
+      setState(() {
+        _historyBookingFuture = Future.value(newHistoryBooking);
+      });
+      _refreshControllers[index].refreshCompleted();
+    } catch (e) {
+      _refreshControllers[index].refreshFailed();
+      print('Error during refresh: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,7 +108,7 @@ class _HistoryViewState extends State<HistoryView> {
         child: Column(
           children: [
             FutureBuilder(
-              future: API.HistoryBookingID(),
+              future: _historyBookingFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center();
@@ -160,12 +179,12 @@ class _HistoryViewState extends State<HistoryView> {
                       border: Border.all(color: MyColors.select),
                     ),
                     child: Row(
-                      children: [
-                        const SizedBox(width: 10),
-                        Icon(Icons.search_rounded, color: MyColors.appPrimaryColor),
-                        const SizedBox(width: 10),
-                        Text('Cari Transaksi', style: GoogleFonts.nunito(color: Colors.grey)),
-                      ],
+                        children: [
+                          const SizedBox(width: 10),
+                          Icon(Icons.search_rounded, color: MyColors.appPrimaryColor),
+                          const SizedBox(width: 10),
+                          Text('Cari Transaksi', style: GoogleFonts.nunito(color: Colors.grey)),
+                        ]
                     ),
                   );
                 }
@@ -242,7 +261,7 @@ class _HistoryViewState extends State<HistoryView> {
 
   Widget _buildTabContent(String status, int index) {
     return FutureBuilder<HistoryBooking>(
-      future: API.HistoryBookingID(),
+      future: _historyBookingFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return ListView.builder(
@@ -252,21 +271,21 @@ class _HistoryViewState extends State<HistoryView> {
             },
           );
         } else if (snapshot.hasError) {
-          return Center(child: Column(
+          return Center(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-            Image.asset(
-              'assets/logo/forbidden.png',
-              width: 60,
-              fit: BoxFit.contain,
-            ),
-            SizedBox(height: 10,),
-            Text('Belum ada Data History Booking')
-              ]
+                Image.asset(
+                  'assets/logo/forbidden.png',
+                  width: 60,
+                  fit: BoxFit.contain,
+                ),
+                SizedBox(height: 10),
+                Text('Belum ada Data History Booking')
+              ],
             ),
           );
-
         } else if (!snapshot.hasData || snapshot.data!.datahistory!.isEmpty) {
           return Center(child: Text('Belum ada Data History Booking'));
         }
@@ -278,7 +297,8 @@ class _HistoryViewState extends State<HistoryView> {
         }).toList();
 
         if (filteredBookings == null || filteredBookings.isEmpty) {
-          return Center(child: Column(
+          return Center(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -287,13 +307,11 @@ class _HistoryViewState extends State<HistoryView> {
                   width: 60,
                   fit: BoxFit.contain,
                 ),
-                SizedBox(height: 10,),
+                SizedBox(height: 10),
                 Text('Belum ada Data History Booking')
-              ]
-          ),
+              ],
+            ),
           );
-
-
         }
 
         return SmartRefresher(
@@ -314,17 +332,7 @@ class _HistoryViewState extends State<HistoryView> {
                   return ListHistory(
                     booking: booking,
                     onTap: () {
-                      Get.toNamed(
-                        Routes.DETAILHISTORY,
-                        arguments: {
-                          'alamat': booking.alamat ?? '',
-                          'nama_cabang': booking.namaCabang ?? '',
-                          'nama_jenissvc': booking.namaJenissvc ?? '',
-                          'nama_status': booking.namaStatus ?? '',
-                          'jasa': booking.jasa?.map((item) => item.toJson()).toList() ?? [],
-                          'part': booking.part?.map((item) => item.toJson()).toList() ?? [],
-                        },
-                      );
+                      handleBookingTap(booking);
                     },
                   );
                 }).toList(),
@@ -334,15 +342,5 @@ class _HistoryViewState extends State<HistoryView> {
         );
       },
     );
-  }
-
-  void _onRefresh(int index) async {
-    try {
-      await API.HistoryBookingID();
-      _refreshControllers[index].refreshCompleted();
-    } catch (e) {
-      _refreshControllers[index].refreshFailed();
-      print('Error during refresh: $e');
-    }
   }
 }
